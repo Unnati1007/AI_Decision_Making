@@ -1,25 +1,80 @@
-# Python
+# -------------------------------
+# 🔹 Python
+# -------------------------------
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.env
+*.py[cod]
+*$py.class
+
+# Virtual environments
 .venv/
 venv/
 env/
 ENV/
+myenv/
+
+# Environment variables
+.env
+*.env
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
 *.egg-info/
+.installed.cfg
+*.egg
 
-# VS Code
+# -------------------------------
+# 🔹 IDE / Editor
+# -------------------------------
 .vscode/
+.idea/
+*.swp
+*.swo
 
-# Logs
+# -------------------------------
+# 🔹 Logs
+# -------------------------------
 *.log
+logs/
 
-# OS
+# -------------------------------
+# 🔹 OS files
+# -------------------------------
 .DS_Store
 Thumbs.db
 
-# Database / cache
+# -------------------------------
+# 🔹 Database / Cache (your project)
+# -------------------------------
 vector_db/
 cache_db/
+*.sqlite3
+
+# -------------------------------
+# 🔹 Jupyter Notebook
+# -------------------------------
+.ipynb_checkpoints/
+
+# -------------------------------
+# 🔹 Node (if frontend exists)
+# -------------------------------
+node_modules/
+dist/
+build/
+
+# -------------------------------
+# 🔹 Misc
+# -------------------------------
+*.bak
+*.tmp
+*.temp
