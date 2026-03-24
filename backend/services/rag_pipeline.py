@@ -3,10 +3,10 @@ from services.domain_router import detect_domain
 
 def process_query(query: str):
     # Step 1: Guard
-    is_valid, message, _ = guard_pipeline(query)
-
-    if not is_valid:
-        return message
+    result = guard_pipeline(query)
+    
+    if not result.passed:
+        return result.message
 
     # Step 2: Domain Detection
     domain = detect_domain(query)
