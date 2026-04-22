@@ -1,82 +1,100 @@
-function LineChart({ data }) {
-  const width = 440;
-  const height = 210;
-  const maxValue = Math.max(...data.map((item) => item.value));
-  const points = data
-    .map((item, index) => {
-      const x = (index / (data.length - 1)) * width;
-      const y = height - (item.value / maxValue) * height;
-      return `${x},${y}`;
-    })
-    .join(" ");
+import React from "react";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Legend
+} from "recharts";
 
+function ModernAreaChart({ data }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h3 className="mb-4 text-sm font-semibold text-slate-700">Queries Over Time</h3>
-      <svg viewBox={`0 0 ${width} ${height}`} className="h-48 w-full">
-        <polyline fill="none" stroke="#2563eb" strokeWidth="3" points={points} />
-      </svg>
-      <div className="mt-3 grid grid-cols-7 text-center text-xs text-slate-500">
-        {data.map((item) => (
-          <span key={item.day}>{item.day}</span>
-        ))}
+    <div className="h-64 w-full rounded-[2rem] border border-slate-100 bg-white p-6 shadow-premium transition-all hover:shadow-premium-lg">
+      <h3 className="mb-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Decision Traffic Trends</h3>
+      <div className="h-44">
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={data}>
+            <defs>
+              <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#2563eb" stopOpacity={0.1}/>
+                <stop offset="95%" stopColor="#2563eb" stopOpacity={0}/>
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+            <XAxis 
+              dataKey="day" 
+              axisLine={false} 
+              tickLine={false} 
+              tick={{ fontSize: 10, fill: "#94a3b8", fontWeight: 600 }}
+              dy={10}
+            />
+            <YAxis hide />
+            <Tooltip 
+              contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', fontSize: '12px' }}
+            />
+            <Area 
+               type="monotone" 
+               dataKey="value" 
+               stroke="#2563eb" 
+               strokeWidth={3}
+               fillOpacity={1} 
+               fill="url(#colorValue)" 
+            />
+          </AreaChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );
 }
 
-function PieChart({ data }) {
-  const total = data.reduce((sum, item) => sum + item.value, 0);
-  let cumulative = 0;
-
-  const circles = data.map((item) => {
-    const percentage = item.value / total;
-    const dashArray = `${percentage * 100} ${100 - percentage * 100}`;
-    const dashOffset = -cumulative * 100;
-    cumulative += percentage;
-
-    return (
-      <circle
-        key={item.label}
-        r="16"
-        cx="20"
-        cy="20"
-        fill="transparent"
-        stroke={item.color}
-        strokeWidth="5"
-        strokeDasharray={dashArray}
-        strokeDashoffset={dashOffset}
-      />
-    );
-  });
+function ModernPieChart({ data }) {
+  const COLORS = ["#2563eb", "#6366f1", "#06b6d4", "#f43f5e"];
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h3 className="mb-4 text-sm font-semibold text-slate-700">Query Categories</h3>
-      <div className="flex flex-col items-center gap-3 md:flex-row md:items-start">
-        <svg viewBox="0 0 40 40" className="h-36 w-36 -rotate-90">
-          {circles}
-          <circle r="10" cx="20" cy="20" fill="white" />
-        </svg>
-        <div className="w-full space-y-2">
-          {data.map((item) => (
-            <div key={item.label} className="flex items-center justify-between text-sm">
-              <div className="flex items-center gap-2 text-slate-600">
-                <span className="h-3 w-3 rounded-full" style={{ backgroundColor: item.color }} />
-                {item.label}
-              </div>
-              <span className="font-medium text-slate-900">{item.value}%</span>
-            </div>
-          ))}
-        </div>
+    <div className="h-64 w-full rounded-[2rem] border border-slate-100 bg-white p-6 shadow-premium transition-all hover:shadow-premium-lg">
+      <h3 className="mb-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Distribution Analysis</h3>
+      <div className="h-48">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              data={data}
+              cx="50%"
+              cy="50%"
+              innerRadius={45}
+              outerRadius={70}
+              paddingAngle={8}
+              dataKey="value"
+              stroke="none"
+            >
+              {data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip 
+               contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', fontSize: '10px' }}
+            />
+            <Legend 
+               verticalAlign="bottom" 
+               align="center"
+               iconType="circle"
+               formatter={(value) => <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{value}</span>}
+            />
+          </PieChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );
 }
 
 function ChartComponent({ type, data }) {
-  if (type === "line") return <LineChart data={data} />;
-  return <PieChart data={data} />;
+  if (type === "line") return <ModernAreaChart data={data} />;
+  return <ModernPieChart data={data} />;
 }
 
 export default ChartComponent;

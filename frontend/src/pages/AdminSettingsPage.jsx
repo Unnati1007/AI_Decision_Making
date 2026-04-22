@@ -1,44 +1,127 @@
-import Navbar from "../components/layout/Navbar";
-import { adminSettingsData } from "../data/dummyData";
+import { useState } from "react";
+import { User, Mail, Lock, ShieldCheck, CheckCircle2, Save, Terminal, Globe } from "lucide-react";
+import { useApp } from "../context/AppContext";
 
-function AdminSettingsPage() {
+export default function AdminSettingsPage() {
+  const { currentUser, updateProfile } = useApp();
+  const [success, setSuccess] = useState("");
+  const [formData, setFormData] = useState({
+    name: currentUser?.name || "System Admin",
+    email: currentUser?.email || "admin@intellichoice.ai",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    if (success) setSuccess("");
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateProfile(formData);
+    setSuccess("Administrative credentials updated successfully.");
+    setTimeout(() => setSuccess(""), 4000);
+  };
+
   return (
-    <div className="space-y-5">
-      <Navbar title="Settings" subtitle="Environment controls and notification preferences" />
+    <div className="max-w-2xl mx-auto space-y-8 animate-fade-up">
+      {/* Header */}
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight" style={{ color: "var(--text)" }}>Admin Settings</h1>
+        <p className="text-sm font-medium" style={{ color: "var(--text-muted)" }}>Configure global system parameters and admin account security.</p>
+      </div>
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-        <h3 className="mb-4 text-sm font-semibold text-slate-700">Environment Profiles</h3>
-        <div className="grid gap-3 md:grid-cols-3">
-          {adminSettingsData.environments.map((env) => (
-            <article key={env.name} className="rounded-xl border border-slate-100 bg-slate-50 p-4">
-              <h4 className="text-sm font-semibold text-slate-900">{env.name}</h4>
-              <p className="mt-2 text-xs text-slate-600">Model: {env.model}</p>
-              <p className="text-xs text-slate-600">Guard: {env.guardLevel}</p>
-              <p className="text-xs text-slate-600">Cache: {env.cache}</p>
-            </article>
-          ))}
+      {success && (
+        <div className="flex items-center gap-3 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 px-4 py-3 text-sm font-bold text-emerald-600 dark:text-emerald-400 animate-scale-in">
+          <CheckCircle2 size={18} />
+          {success}
         </div>
-      </section>
+      )}
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-        <h3 className="mb-4 text-sm font-semibold text-slate-700">Notification Channels</h3>
-        <div className="space-y-3">
-          {adminSettingsData.notificationChannels.map((channel) => (
-            <div key={channel.channel} className="flex items-center justify-between rounded-xl bg-slate-50 px-4 py-3">
-              <p className="text-sm text-slate-700">{channel.channel}</p>
-              <span
-                className={`rounded-full px-2 py-1 text-xs ${
-                  channel.enabled ? "bg-emerald-100 text-emerald-700" : "bg-slate-200 text-slate-600"
-                }`}
-              >
-                {channel.enabled ? "Enabled" : "Disabled"}
-              </span>
+      {/* Admin Identity */}
+      <div className="card p-8 space-y-8">
+        <div className="flex items-center gap-4 py-2 border-b border-[var(--border)]">
+             <div className="h-2 w-2 rounded-full bg-blue-600 animate-pulse" />
+             <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600">Core Administrative Identity</h3>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-1.5">
+            <label className="px-1 text-xs font-bold uppercase tracking-widest text-[var(--text-soft)]">Admin Name</label>
+            <div className="relative">
+              <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-soft)]" />
+              <input 
+                type="text" 
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="input pl-10 h-12" 
+              />
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="px-1 text-xs font-bold uppercase tracking-widest text-[var(--text-soft)]">Email Point of Contact</label>
+            <div className="relative">
+              <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-soft)]" />
+              <input 
+                type="email" 
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="input pl-10 h-12" 
+              />
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="px-1 text-xs font-bold uppercase tracking-widest text-[var(--text-soft)]">Secure Root Password</label>
+            <div className="relative">
+              <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-soft)]" />
+              <input 
+                type="password" 
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Unchanged"
+                className="input pl-10 h-12" 
+              />
+            </div>
+          </div>
+
+          <div className="pt-6 flex items-center justify-between border-t border-[var(--border)]">
+             <div className="flex items-center gap-2 text-[var(--text-soft)]">
+                <ShieldCheck size={16} />
+                <span className="text-[10px] font-bold uppercase tracking-widest leading-none">Security Level: Maximum</span>
+             </div>
+             <button type="submit" className="btn btn-primary h-12 px-10">
+               <Save size={18} />
+               Verify & Save
+             </button>
+          </div>
+        </form>
+      </div>
+
+      {/* System Config Snippet */}
+      <div className="card p-8 bg-[var(--surface-2)]">
+         <h3 className="text-xs font-bold uppercase tracking-widest text-[var(--text-soft)] mb-4">Environment Status</h3>
+         <div className="space-y-3">
+            <div className="flex items-center justify-between py-2 border-b border-[var(--border)]">
+               <div className="flex items-center gap-2">
+                  <Globe size={14} className="text-emerald-500" />
+                  <span className="text-xs font-bold" style={{ color: "var(--text)" }}>Production Global</span>
+               </div>
+               <span className="text-[10px] font-black text-emerald-600">STABLE</span>
+            </div>
+            <div className="flex items-center justify-between py-2 border-b border-[var(--border)]">
+               <div className="flex items-center gap-2">
+                  <Terminal size={14} className="text-blue-500" />
+                  <span className="text-xs font-bold" style={{ color: "var(--text)" }}>Reasoning Engine</span>
+               </div>
+               <span className="text-[10px] font-black text-blue-600">v2.4.128</span>
+            </div>
+         </div>
+      </div>
     </div>
   );
 }
-
-export default AdminSettingsPage;

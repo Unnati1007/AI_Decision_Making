@@ -1,124 +1,162 @@
 import { useState } from "react";
+import { LogIn, UserPlus, Brain, Eye, EyeOff } from "lucide-react";
+import { useApp } from "../context/AppContext";
+import { cn } from "../lib/utils";
 
-function LoginPage({ onLogin, onRegister, onGoogleLogin, authError }) {
-  const [isRegisterMode, setIsRegisterMode] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [localError, setLocalError] = useState("");
+export default function LoginPage() {
+  const [activeTab, setActiveTab] = useState("login");
+  const [showPassword, setShowPassword] = useState(false);
+  const { login, register, authError, setAuthError } = useApp();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setLocalError("");
-    if (!email || !password) {
-      setLocalError("Email and password are required.");
-      return;
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "user@intellichoice.ai",
+    password: "user123",
+  });
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    if (authError) setAuthError("");
+  };
+
+  const validate = () => {
+    if (!formData.email.includes("@")) {
+      setAuthError("Please enter a valid email address.");
+      return false;
     }
-
-    if (isRegisterMode) {
-      if (password !== confirmPassword) {
-        setLocalError("Password and confirm password must match.");
-        return;
-      }
-      onRegister({ email: email.toLowerCase().trim(), password });
-      return;
+    if (formData.password.length < 6) {
+      setAuthError("Password must be at least 6 characters long.");
+      return false;
     }
+    if (activeTab === "register" && !formData.name.trim()) {
+      setAuthError("Please enter your full name.");
+      return false;
+    }
+    return true;
+  };
 
-    onLogin({ email: email.toLowerCase().trim(), password });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    if (activeTab === "login") {
+      login({ email: formData.email, password: formData.password });
+    } else {
+      register(formData);
+    }
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center p-4">
-      <section className="w-full max-w-md rounded-3xl border border-slate-200 bg-white/95 p-8 shadow-xl shadow-blue-100">
-        <h1 className="text-center text-3xl font-semibold text-slate-900">IntelliChoice</h1>
-        <p className="mt-2 bg-gradient-to-r from-blue-700 via-indigo-600 to-cyan-500 bg-clip-text text-center text-sm font-semibold text-transparent">
-          Your Intelligent Choice
-        </p>
+    <div className="flex min-h-screen items-center justify-center p-6 bg-[var(--bg)] transition-colors duration-300">
+      <div className="relative w-full max-w-md animate-scale-in">
+        {/* Decorative elements */}
+        <div className="absolute -top-12 -left-12 h-24 w-24 rounded-full bg-blue-500/10 blur-2xl" />
+        <div className="absolute -bottom-12 -right-12 h-24 w-24 rounded-full bg-indigo-500/10 blur-2xl" />
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-          <div>
-            <label htmlFor="email" className="mb-1 block text-sm text-slate-600">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
-              placeholder="you@intellichoice.ai"
-            />
+        <div className="card card-lg p-8 z-10 relative">
+          <div className="mb-8 text-center">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-500/20">
+              <Brain size={32} />
+            </div>
+            <h1 className="text-2xl font-bold tracking-tight">IntelliChoice</h1>
+            <p className="mt-2 text-sm text-[var(--text-muted)] font-medium">
+              Advanced AI Decision Support System
+            </p>
           </div>
-          <div>
-            <label htmlFor="password" className="mb-1 block text-sm text-slate-600">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
-              placeholder="Enter password"
-            />
+
+          {/* Tabs */}
+          <div className="mb-8 flex rounded-xl bg-[var(--surface-2)] p-1">
+            <button
+              onClick={() => { setActiveTab("login"); setAuthError(""); }}
+              className={cn(
+                "flex-1 flex items-center justify-center gap-2 rounded-lg py-2 text-sm font-bold transition-all",
+                activeTab === "login" ? "bg-[var(--surface)] text-[var(--text)] shadow-sm" : "text-[var(--text-soft)] hover:text-[var(--text-muted)]"
+              )}
+            >
+              <LogIn size={16} /> Sign In
+            </button>
+            <button
+              onClick={() => { setActiveTab("register"); setAuthError(""); }}
+              className={cn(
+                "flex-1 flex items-center justify-center gap-2 rounded-lg py-2 text-sm font-bold transition-all",
+                activeTab === "register" ? "bg-[var(--surface)] text-[var(--text)] shadow-sm" : "text-[var(--text-soft)] hover:text-[var(--text-muted)]"
+              )}
+            >
+              <UserPlus size={16} /> Register
+            </button>
           </div>
-          {isRegisterMode ? (
-            <div>
-              <label htmlFor="confirm-password" className="mb-1 block text-sm text-slate-600">
-                Confirm Password
-              </label>
+
+          {authError && (
+            <div className="mb-6 rounded-xl bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 px-4 py-3 text-sm font-semibold text-red-600 dark:text-red-400 animate-fade-up">
+              {authError}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {activeTab === "register" && (
+              <div className="space-y-1.5">
+                <label className="px-1 text-xs font-bold uppercase tracking-widest text-[var(--text-soft)]">Full Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Enter your name"
+                  className="input"
+                  required
+                />
+              </div>
+            )}
+
+            <div className="space-y-1.5">
+              <label className="px-1 text-xs font-bold uppercase tracking-widest text-[var(--text-soft)]">Email Address</label>
               <input
-                id="confirm-password"
-                type="password"
-                value={confirmPassword}
-                onChange={(event) => setConfirmPassword(event.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
-                placeholder="Confirm password"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="name@intellichoice.ai"
+                className="input"
+                required
               />
             </div>
-          ) : null}
 
-          {localError || authError ? (
-            <p className="rounded-xl bg-red-50 px-3 py-2 text-sm text-red-600">{localError || authError}</p>
-          ) : null}
+            <div className="space-y-1.5">
+              <label className="px-1 text-xs font-bold uppercase tracking-widest text-[var(--text-soft)]">Password</label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="••••••••"
+                  className="input pr-11"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-soft)] hover:text-[var(--text-muted)]"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </div>
 
-          <button
-            type="submit"
-            className="w-full rounded-xl bg-blue-600 px-4 py-2.5 font-medium text-white transition hover:bg-blue-700"
-          >
-            {isRegisterMode ? "Register" : "Login"}
-          </button>
-          <button
-            type="button"
-            onClick={onGoogleLogin}
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 font-medium text-slate-700 transition hover:bg-slate-50"
-          >
-            <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
-              <path
-                fill="#EA4335"
-                d="M12 10.2v3.9h5.5c-.2 1.3-1.5 3.9-5.5 3.9-3.3 0-6-2.8-6-6.2s2.7-6.2 6-6.2c1.9 0 3.2.8 3.9 1.5l2.7-2.7C17 2.8 14.7 2 12 2 6.9 2 2.8 6.2 2.8 11.4S6.9 20.8 12 20.8c6.9 0 9.1-4.9 9.1-7.4 0-.5 0-.9-.1-1.2H12z"
-              />
-            </svg>
-            Login with Google
-          </button>
-
-          <p className="text-center text-sm text-slate-600">
-            {isRegisterMode ? "Already have an account?" : "New here?"}{" "}
-            <button
-              type="button"
-              onClick={() => {
-                setIsRegisterMode((prev) => !prev);
-                setLocalError("");
-              }}
-              className="font-semibold text-blue-600 hover:text-blue-700"
-            >
-              {isRegisterMode ? "Login" : "Register"}
+            <button type="submit" className="btn btn-primary w-full mt-4 h-11">
+              {activeTab === "login" ? "Sign In to Console" : "Create Account"}
             </button>
-          </p>
-        </form>
-      </section>
-    </main>
+          </form>
+
+          <div className="mt-8 pt-6 border-t border-[var(--border)] text-center">
+            <p className="text-xs font-semibold text-[var(--text-soft)] uppercase tracking-widest">Demo Access</p>
+            <div className="mt-3 flex justify-center gap-4 text-[10px] font-bold text-[var(--text-muted)]">
+              <div className="bg-[var(--surface-2)] px-2 py-1 rounded">USER: user / user123</div>
+              <div className="bg-[var(--surface-2)] px-2 py-1 rounded">ADMIN: admin / admin123</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
-
-export default LoginPage;

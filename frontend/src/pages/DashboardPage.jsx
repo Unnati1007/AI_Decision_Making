@@ -1,44 +1,78 @@
-import { useMemo } from "react";
-import ChartComponent from "../components/dashboard/ChartComponent";
+import React from "react";
 import DashboardCard from "../components/dashboard/DashboardCard";
-import RecentActivityTable from "../components/dashboard/RecentActivityTable";
-import SystemHealth from "../components/dashboard/SystemHealth";
-import Navbar from "../components/layout/Navbar";
-import { dashboardStats, queryCategories, queryTrend, recentActivity } from "../data/dummyData";
+import ChartComponent from "../components/dashboard/ChartComponent";
+import { 
+  dashboardStats, 
+  userDecisionTraffic, 
+  userCategoryDistribution 
+} from "../data/dummyData";
+import { BrainCircuit, Target, TrendingUp, ShieldAlert } from "lucide-react";
 
 function DashboardPage() {
-  const cards = useMemo(
-    () => [
-      { label: "Total Decisions", value: dashboardStats.totalDecisions, hint: "+12% this month" },
-      { label: "Active Users", value: dashboardStats.activeUsers, hint: "+5 users this week" },
-      { label: "Cache Hit Rate", value: `${dashboardStats.cacheHits}%`, hint: "Optimized response path" },
-      { label: "LLM Usage", value: `${dashboardStats.llmUsage}k tokens`, hint: "Daily average load" },
-    ],
-    []
-  );
-
-  const cacheLabel = Math.random() > 0.5 ? "Cache Hit" : "Cache Miss";
+  const iconMap = {
+    "Total Decisions": BrainCircuit,
+    "Success Rate": Target,
+    "Active Domain": TrendingUp,
+    "Risk Mitigation": ShieldAlert
+  };
 
   return (
-    <div className="space-y-5">
-      <Navbar
-        title="Admin Dashboard"
-        subtitle="System analytics, guard monitoring, and operational insights"
-      />
+    <div className="space-y-8 animate-fade-in p-4 lg:p-0">
+      {/* Header */}
+      <div className="flex flex-col gap-2">
+        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          System Analytics
+        </h1>
+        <p className="text-sm font-medium text-slate-500 leading-relaxed max-w-2xl">
+          Comprehensive overview of localized AI decision simulations and system performance metrics for the current session.
+        </p>
+      </div>
 
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {cards.map((card) => (
-          <DashboardCard key={card.label} label={card.label} value={card.value} hint={card.hint} />
+      {/* Stat Cards */}
+      <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+        {dashboardStats.map((stat) => (
+          <DashboardCard 
+            key={stat.label} 
+            {...stat} 
+            icon={iconMap[stat.label]} 
+            trend={stat.label === "Success Rate" ? "+2.4%" : (stat.label === "Total Decisions" ? "+12" : null)}
+          />
         ))}
-      </section>
+      </div>
 
-      <section className="grid gap-4 xl:grid-cols-2">
-        <ChartComponent type="line" data={queryTrend} />
-        <ChartComponent type="pie" data={queryCategories} />
-      </section>
+      {/* Charts Section */}
+      <div className="grid gap-6 lg:grid-cols-2">
+        <ChartComponent type="line" data={userDecisionTraffic} />
+        <ChartComponent type="pie" data={userCategoryDistribution} />
+      </div>
 
-      <RecentActivityTable rows={recentActivity} />
-      <SystemHealth cacheLabel={cacheLabel} />
+      {/* Recent Activity Mini-Section */}
+      <div className="rounded-[2.5rem] border border-slate-100 bg-white p-8 shadow-premium">
+        <h3 className="mb-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Contextual Learning Progress</h3>
+        <div className="grid gap-6 md:grid-cols-3">
+            <div className="space-y-2">
+                <p className="text-sm font-bold text-slate-800">Domain Calibration</p>
+                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-full w-[85%] bg-blue-600 rounded-full" />
+                </div>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest text-right">85% Complete</p>
+            </div>
+            <div className="space-y-2">
+                <p className="text-sm font-bold text-slate-800">Risk Model Synergy</p>
+                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-full w-[62%] bg-indigo-500 rounded-full" />
+                </div>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest text-right">62% Optimized</p>
+            </div>
+            <div className="space-y-2">
+                <p className="text-sm font-bold text-slate-800">Simulation Depth</p>
+                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-full w-[94%] bg-cyan-500 rounded-full" />
+                </div>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest text-right">94% Capacity</p>
+            </div>
+        </div>
+      </div>
     </div>
   );
 }

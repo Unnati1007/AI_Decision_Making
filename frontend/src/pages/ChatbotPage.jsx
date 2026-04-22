@@ -1,524 +1,365 @@
-import { useMemo, useRef, useState } from "react";
-import ChatInput from "../components/chat/ChatInput";
-import ChatMessage from "../components/chat/ChatMessage";
-import RecommendationCard from "../components/chat/RecommendationCard";
-import ResourceCard from "../components/chat/ResourceCard";
-import {
-  dummyResponse,
-  userDummyInsights,
-  userQuickPrompts,
-  userRecentDomainActivity,
-  userTopics,
-} from "../data/dummyData";
+import { useState, useRef, useEffect } from "react";
+import { Send, Brain, AlertCircle, Loader2, Sparkles, ChevronRight, User, Bot, CheckCircle2, ListFilter } from "lucide-react";
+import { useApp } from "../context/AppContext";
+import { validateQuery, matchQueryToDomain, thinkingSteps, isGibberish } from "../utils/aiUtils";
+import { DOMAINS } from "../data/dummyData";
+import { cn } from "../lib/utils";
 
-function ChatbotPage({ onLogout }) {
-  const [activeTab, setActiveTab] = useState("Dashboard");
+export default function ChatPage() {
+  const { currentUser, addArchiveEntry } = useApp();
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isThinking, setIsThinking] = useState(false);
-  const [selectedTopic, setSelectedTopic] = useState("");
-  const [chat, setChat] = useState([]);
-  const [decisionStage, setDecisionStage] = useState("idle");
-  const [followUpIndex, setFollowUpIndex] = useState(-1);
-  const [followUpPlan, setFollowUpPlan] = useState([]);
-  const [followUpTargetCount, setFollowUpTargetCount] = useState(3);
-  const [followUpAnswers, setFollowUpAnswers] = useState([]);
-  const [draftMainQuestion, setDraftMainQuestion] = useState("");
-  const [savedCurrentSessionId, setSavedCurrentSessionId] = useState("");
-  const [history, setHistory] = useState([]);
-  const [isHistoryReadOnly, setIsHistoryReadOnly] = useState(false);
-  const [profile, setProfile] = useState({ name: "Demo User", email: "user@intellichoice.ai" });
-  const panelRef = useRef(null);
+  const [thinkingStep, setThinkingStep] = useState(0);
+  const [pendingResponse, setPendingResponse] = useState(null);
+  const [mcqFlow, setMcqFlow] = useState(null);
+  
+  const messagesEndRef = useRef(null);
+  const domain = currentUser?.domain;
+  const domainInfo = DOMAINS[domain];
 
-  const activeResponse = selectedTopic ? dummyResponse[selectedTopic] : null;
-  const userTabs = ["Dashboard", "Decisions", "History", "Settings"];
-
-  const selectedTopicLabel = useMemo(() => {
-    const found = userTopics.find((topic) => topic.key === selectedTopic);
-    return found?.label ?? "";
-  }, [selectedTopic]);
-
-  const getAdaptiveQuestion = (question, answer, step) => {
-    if (!answer) return question;
-    const shortAnswer = answer.length > 60 ? `${answer.slice(0, 60)}...` : answer;
-    if (step === 0) return `${question} (Noted: "${shortAnswer}")`;
-    if (step === 1) return `Got it. ${question}`;
-    return `Thanks, one last thing: ${question}`;
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const getFollowUpCount = (query) => {
-    const text = query.toLowerCase();
-    const detailSignals = [
-      "budget",
-      "timeline",
-      "goal",
-      "experience",
-      "salary",
-      "risk",
-      "deadline",
-      "cgpa",
-    ];
-    const vagueSignals = ["help", "suggest", "advice", "what to do", "not sure", "confused"];
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isThinking, thinkingStep]);
 
-    const detailScore =
-      (text.length > 90 ? 2 : 0) +
-      (/\d/.test(text) ? 1 : 0) +
-      detailSignals.reduce((sum, term) => sum + (text.includes(term) ? 1 : 0), 0);
+  const handleSend = async (text = input) => {
+    const query = text.trim();
+    if (!query || isThinking) return;
 
-    const vagueScore =
-      (text.length < 22 ? 2 : 0) +
-      vagueSignals.reduce((sum, term) => sum + (text.includes(term) ? 1 : 0), 0);
-
-    if (detailScore >= 3) return 3;
-    if (vagueScore >= 3) return 7;
-    if (vagueScore === 2) return 6;
-    if (detailScore >= 1) return 4;
-    return 5;
-  };
-
-  const buildQuestionPlan = (query, domain) => {
-    const target = getFollowUpCount(query);
-    const bank = domain.questionBank ?? [];
-    const lowered = query.toLowerCase();
-    const prioritized = bank.filter(
-      (item) =>
-        lowered.includes("budget") ||
-        lowered.includes("salary") ||
-        lowered.includes("stress") ||
-        lowered.includes("legal") ||
-        lowered.includes("study")
-          ? true
-          : true
-    );
-    return prioritized.slice(0, Math.min(target, 7));
-  };
-
-  const startDecision = (topic) => {
-    setSelectedTopic(topic.key);
-    setDecisionStage("awaitingMain");
-    setFollowUpIndex(-1);
-    setFollowUpPlan([]);
-    setFollowUpTargetCount(3);
-    setFollowUpAnswers([]);
-    setDraftMainQuestion("");
-    setSavedCurrentSessionId("");
-    setIsHistoryReadOnly(false);
-    setInput("");
-    setChat([
-      {
-        role: "assistant",
-        text: `Hi! Great to see you. You selected ${topic.label}. What decision are you trying to make today?`,
-      },
-    ]);
-    setActiveTab("Decisions");
-  };
-
-  const handleSend = () => {
-    if (!input.trim() || isThinking || !selectedTopic || !activeResponse || activeTab !== "Decisions") return;
-    const message = input.trim();
+    // Add user message
+    const userMsg = { id: Date.now(), role: "user", text: query, type: "text" };
+    setMessages((prev) => [...prev, userMsg]);
     setInput("");
 
-    if (decisionStage === "awaitingMain") {
-      setChat((prev) => [...prev, { role: "user", text: message }]);
-      setDraftMainQuestion(message);
-      setIsThinking(true);
+    // Validation
+    const validation = validateQuery(query, domain);
+    if (!validation.valid) {
       setTimeout(() => {
-        const questionPlan = buildQuestionPlan(message, activeResponse);
-        const firstQuestion = getAdaptiveQuestion(questionPlan[0].question, message, 0);
-        setChat((prev) => [
+        setMessages((prev) => [
           ...prev,
           {
-            role: "assistant", text: `Thanks. I will ask ${questionPlan.length} quick follow-up MCQs.`,
+            id: Date.now() + 1,
+            role: "assistant",
+            text: validation.error,
+            type: "error",
           },
-          { role: "assistant", text: firstQuestion },
         ]);
-        setFollowUpPlan(questionPlan);
-        setFollowUpTargetCount(questionPlan.length);
-        setDecisionStage("followups");
-        setFollowUpIndex(0);
-        setIsThinking(false);
       }, 600);
       return;
     }
-  };
 
-  const handleFollowUpOptionSelect = (option) => {
-    if (decisionStage !== "followups" || followUpIndex < 0) return;
-    const prompt = followUpPlan[followUpIndex]?.question ?? "";
-    const updatedAnswers = [...followUpAnswers, { question: prompt, answer: option }];
-    const updatedChat = [...chat, { role: "user", text: option }];
-    setFollowUpAnswers(updatedAnswers);
-    setChat(updatedChat);
-    const isLast = followUpIndex >= followUpPlan.length - 1;
+    // AI Thinking Sequence
+    setIsThinking(true);
+    setThinkingStep(0);
 
-    if (!isLast) {
-      const nextIdx = followUpIndex + 1;
-      const nextQuestion = getAdaptiveQuestion(followUpPlan[nextIdx].question, option, nextIdx);
-      setIsThinking(true);
-      setTimeout(() => {
-        setChat((prev) => [...prev, { role: "assistant", text: nextQuestion }]);
-        setFollowUpIndex(nextIdx);
-        setIsThinking(false);
-      }, 500);
-    } else {
-      setDecisionStage("complete");
-      setChat((prev) => [
-        ...prev,
-        { role: "assistant", text: "Perfect. Your recommendation is now ready with reasoning and research references." },
-      ]);
-      if (!savedCurrentSessionId) {
-        const newSession = {
-          id: `session-${Date.now()}`,
-          topicKey: selectedTopic,
-          topicLabel: activeResponse.label,
-          mainQuestion: draftMainQuestion,
-          followUpAnswers: updatedAnswers,
-          recommendation: activeResponse.recommendation,
-          reasoning: activeResponse.reasoning,
-          resources: activeResponse.resources,
-          futureOutlook:
-            "If you stay consistent in this direction, your future outcomes are likely to remain stable and positive.",
-          createdAt: new Date().toLocaleString(),
-          transcript: updatedChat,
-        };
-        setHistory((prev) => [newSession, ...prev]);
-        setSavedCurrentSessionId(newSession.id);
+    for (let i = 0; i < 3; i++) {
+      setThinkingStep(i);
+      await new Promise((r) => setTimeout(r, 600));
+    }
+
+    // Match Query
+    const response = matchQueryToDomain(query, domain);
+    setIsThinking(false);
+
+    if (response) {
+      if (response.followUps && response.followUps.length > 0) {
+        // Start MCQ Flow
+        const flowId = Date.now();
+        setMcqFlow({
+          response,
+          originalQuery: query,
+          questions: response.followUps,
+          currentIndex: 0,
+          flowId
+        });
+        
+        const firstQ = response.followUps[0];
+        setMessages(prev => [...prev, {
+          id: Date.now() + 2,
+          role: "assistant",
+          type: "mcq",
+          question: firstQ.q,
+          options: firstQ.options,
+          flowId
+        }]);
+      } else {
+        showRecommendation(response, query);
       }
     }
-    panelRef.current?.scrollTo({ top: panelRef.current.scrollHeight, behavior: "smooth" });
   };
 
-  const handleNewDecision = () => {
-    setSelectedTopic("");
-    setDecisionStage("idle");
-    setChat([]);
-    setInput("");
-    setFollowUpIndex(-1);
-    setFollowUpPlan([]);
-    setFollowUpTargetCount(3);
-    setFollowUpAnswers([]);
-    setDraftMainQuestion("");
-    setSavedCurrentSessionId("");
-    setIsHistoryReadOnly(false);
-    setActiveTab("Dashboard");
+  const showRecommendation = (response, query) => {
+    const assistantMsg = {
+      id: Date.now() + 2,
+      role: "assistant",
+      type: "response",
+      ...response,
+    };
+    setMessages((prev) => [...prev, assistantMsg]);
+    setPendingResponse(response);
+    
+    // Save to archive
+    addArchiveEntry({
+      query,
+      domain,
+      response,
+    });
   };
 
-  const renderDashboard = () => (
-    <section className="rounded-3xl border border-[#e6e6f1] bg-[#f9f9fd] p-5 md:p-7">
-      <div className="rounded-2xl bg-gradient-to-r from-[#2f3f98] via-[#4558c5] to-[#06b6d4] p-5 text-white shadow-md">
-        <h2 className="text-xl font-semibold">Choose your aspect</h2>
-        <p className="mt-1 text-sm text-blue-100">Select a path to continue</p>
-      </div>
-      <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        {userTopics.map((topic) => (
-          <button
-            key={topic.key}
-            type="button"
-            onClick={() => startDecision(topic)}
-            className="group rounded-2xl border border-[#e3e3ef] bg-white px-4 py-5 text-left transition hover:-translate-y-0.5 hover:border-[#cfd2f7] hover:shadow-md"
-          >
-            <p className="text-base font-semibold text-[#2f3f98]">{topic.label}</p>
-            <p className="mt-1 text-xs text-slate-500">Start decision analysis</p>
-            <p className="mt-4 text-xs font-medium text-[#2f3f98] opacity-0 transition group-hover:opacity-100">
-              Continue -&gt;
-            </p>
-          </button>
-        ))}
-      </div>
+  const handleMCQAnswer = (msgId, optionText) => {
+    // Mark as answered
+    setMessages(prev => prev.map(m => 
+      m.id === msgId ? { ...m, answered: true, selectedOption: optionText } : m
+    ));
 
-      <div className="mt-6 grid gap-4 lg:grid-cols-2">
-        <article className="rounded-2xl border border-[#e3e3ef] bg-white p-5">
-          <h3 className="text-sm font-semibold text-[#2f3f98]">Trending Insights</h3>
-          <div className="mt-3 space-y-2">
-            {userDummyInsights.map((insight) => (
-              <p key={insight} className="rounded-xl bg-slate-50 px-3 py-2 text-sm text-slate-700">
-                {insight}
-              </p>
-            ))}
-          </div>
-        </article>
+    // Add user's answer
+    setMessages(prev => [...prev, {
+      id: Date.now(),
+      role: "user",
+      type: "text",
+      text: optionText,
+    }]);
 
-        <article className="rounded-2xl border border-[#e3e3ef] bg-white p-5">
-          <h3 className="text-sm font-semibold text-[#2f3f98]">Quick Start Prompts</h3>
-          <div className="mt-3 space-y-2">
-            {userQuickPrompts.map((prompt) => (
-              <button
-                key={prompt}
-                type="button"
-                onClick={() => {
-                  const firstTopic = userTopics[0];
-                  startDecision(firstTopic);
-                  setInput(prompt);
-                }}
-                className="block w-full rounded-xl border border-slate-100 bg-slate-50 px-3 py-2 text-left text-sm text-slate-700 transition hover:bg-blue-50 hover:text-blue-700"
-              >
-                {prompt}
-              </button>
-            ))}
-          </div>
-        </article>
-      </div>
+    if (!mcqFlow) return;
 
-      <article className="mt-4 rounded-2xl border border-[#e3e3ef] bg-white p-5">
-        <h3 className="text-sm font-semibold text-[#2f3f98]">Domain Activity (Dummy)</h3>
-        <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-          {userRecentDomainActivity.map((item) => (
-            <div key={item.domain} className="rounded-xl bg-slate-50 p-3">
-              <p className="text-xs text-slate-500">{item.domain}</p>
-              <p className="mt-1 text-lg font-semibold text-slate-900">{item.sessions} sessions</p>
-              <p className="text-xs text-emerald-700">Completion: {item.completion}</p>
-            </div>
-          ))}
-        </div>
-      </article>
-    </section>
-  );
+    const nextIndex = mcqFlow.currentIndex + 1;
 
-  const renderDecisions = () => (
-    <section className="rounded-3xl border border-[#e6e6f1] bg-[#f9f9fd] p-4 md:p-6">
-      {!selectedTopic ? (
-        <div className="rounded-2xl border border-dashed border-[#d7d9ef] bg-white p-8 text-center">
-          <h3 className="text-lg font-semibold text-[#2f3f98]">No path selected</h3>
-          <p className="mt-2 text-sm text-slate-600">Go to Dashboard, select one aspect, and continue.</p>
-        </div>
-      ) : (
-        <>
-          <div ref={panelRef} className="space-y-4 overflow-y-auto md:max-h-[58vh]">
-            <div className="rounded-2xl border border-[#dfe3ff] bg-[#3347b9] px-4 py-3 text-sm text-white shadow-sm">
-              Selected Path: <span className="font-semibold">{selectedTopicLabel}</span>
-            </div>
-            {chat.map((message, index) => (
-              <ChatMessage key={`${message.role}-${index}`} role={message.role} text={message.text} />
-            ))}
-
-            {isThinking ? (
-              <div className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600">
-                <span className="h-2 w-2 animate-bounce rounded-full bg-blue-500" />
-                <span className="h-2 w-2 animate-bounce rounded-full bg-blue-400 [animation-delay:120ms]" />
-                <span className="h-2 w-2 animate-bounce rounded-full bg-blue-300 [animation-delay:240ms]" />
-                AI is thinking...
-              </div>
-            ) : null}
-
-            {decisionStage === "complete" && activeResponse ? (
-              <div className="space-y-4 rounded-2xl border border-[#e5e6f4] bg-white p-5">
-                <RecommendationCard
-                  recommendation={activeResponse.recommendation}
-                  reasoning={activeResponse.reasoning}
-                />
-                <div>
-                  <h4 className="mb-2 text-lg font-semibold text-[#2f3f98]">Research Papers & Data</h4>
-                  <div className="grid gap-3 md:grid-cols-2">
-                    {activeResponse.resources.map((resource) => (
-                      <ResourceCard key={resource.title} {...resource} />
-                    ))}
-                  </div>
-                </div>
-                <div className="rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
-                  If you keep moving in this direction, your future outcomes are likely to remain stable and strong.
-                </div>
-              </div>
-            ) : null}
-          </div>
-          {!isHistoryReadOnly && decisionStage === "awaitingMain" ? (
-            <div className="mt-4">
-              <ChatInput
-                value={input}
-                onChange={setInput}
-                onSend={handleSend}
-                disabled={isThinking}
-                placeholder="Tell me your decision..."
-              />
-            </div>
-          ) : null}
-
-          {!isHistoryReadOnly && decisionStage === "followups" && followUpPlan[followUpIndex] ? (
-            <div className="mt-4 rounded-2xl border border-[#e5e6f4] bg-white p-4">
-              <p className="text-sm font-medium text-slate-600">
-                Follow-up {followUpIndex + 1} / {followUpTargetCount}
-              </p>
-              <div className="mt-3 grid gap-2 md:grid-cols-2">
-                {followUpPlan[followUpIndex].options.map((option) => (
-                  <button
-                    key={option}
-                    type="button"
-                    onClick={() => handleFollowUpOptionSelect(option)}
-                    className="rounded-xl border border-[#dfe3ff] bg-[#f6f8ff] px-3 py-2 text-left text-sm text-[#2f3f98] transition hover:bg-[#edf1ff]"
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : null}
-        </>
-      )}
-    </section>
-  );
-
-  const renderHistory = () => (
-    <section className="rounded-3xl border border-[#e6e6f1] bg-[#f9f9fd] p-5 md:p-7">
-      <h2 className="text-xl font-semibold text-[#2f3f98]">History</h2>
-      <p className="mt-1 text-sm text-slate-600">Open any completed decision as full chat.</p>
-      <div className="mt-4 space-y-3">
-        {history.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-[#d7d9ef] bg-white p-4 text-sm text-slate-500">
-            No completed decisions yet.
-          </div>
-        ) : (
-          history.map((item) => (
-            <article key={item.id} className="rounded-2xl border border-[#e3e3ef] bg-white p-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-[#2f3f98]">{item.topicLabel}</p>
-              <p className="mt-1 text-sm text-slate-700">{item.mainQuestion}</p>
-              <p className="mt-2 text-xs text-slate-500">{item.createdAt}</p>
-              <div className="mt-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedTopic(item.topicKey);
-                    setChat(item.transcript);
-                    setDecisionStage("complete");
-                    setIsHistoryReadOnly(true);
-                    setActiveTab("Decisions");
-                  }}
-                  className="rounded-lg bg-[#2f3f98] px-3 py-1.5 text-xs font-medium text-white"
-                >
-                  View
-                </button>
-              </div>
-            </article>
-          ))
-        )}
-      </div>
-    </section>
-  );
-
-  const renderSettings = () => (
-    <section className="rounded-3xl border border-[#e6e6f1] bg-[#f9f9fd] p-5 md:p-7">
-      <h2 className="text-xl font-semibold text-[#2f3f98]">Profile Edit</h2>
-      <p className="mt-1 text-sm text-slate-600">Update your profile information.</p>
-      <div className="mt-5 grid max-w-lg gap-4">
-        <div>
-          <label htmlFor="profile-name" className="mb-1 block text-sm text-slate-600">
-            Name
-          </label>
-          <input
-            id="profile-name"
-            type="text"
-            value={profile.name}
-            onChange={(event) => setProfile((prev) => ({ ...prev, name: event.target.value }))}
-            className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2 outline-none focus:border-blue-400"
-          />
-        </div>
-        <div>
-          <label htmlFor="profile-email" className="mb-1 block text-sm text-slate-600">
-            Email
-          </label>
-          <input
-            id="profile-email"
-            type="email"
-            value={profile.email}
-            onChange={(event) => setProfile((prev) => ({ ...prev, email: event.target.value }))}
-            className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2 outline-none focus:border-blue-400"
-          />
-        </div>
-        <button
-          type="button"
-          className="w-fit rounded-xl bg-[#2f3f98] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#25317a]"
-        >
-          Save Profile
-        </button>
-      </div>
-    </section>
-  );
-
-  const renderProfileSummary = () => (
-    <div className="mt-auto rounded-2xl border border-[#d9ddff] bg-white p-3">
-      <p className="text-xs text-slate-500">Profile</p>
-      <p className="text-sm font-semibold text-slate-800">{profile.name}</p>
-      <button type="button" onClick={() => setActiveTab("Settings")} className="mt-2 text-xs font-medium text-[#2f3f98]">
-        Edit Profile
-      </button>
-    </div>
-  );
+    if (nextIndex < mcqFlow.questions.length) {
+      // Show next question
+      setMcqFlow(prev => ({ ...prev, currentIndex: nextIndex }));
+      const nextQ = mcqFlow.questions[nextIndex];
+      
+      setTimeout(() => {
+        setMessages(prev => [...prev, {
+          id: Date.now(),
+          role: "assistant",
+          type: "mcq",
+          question: nextQ.q,
+          options: nextQ.options,
+          flowId: mcqFlow.flowId
+        }]);
+      }, 500);
+    } else {
+      // Finished all questions, show conclusion
+      setMcqFlow(null);
+      setTimeout(() => {
+        setIsThinking(true);
+        setThinkingStep(4); // "Generating recommendation..."
+        
+        setTimeout(() => {
+            setIsThinking(false);
+            showRecommendation(mcqFlow.response, mcqFlow.originalQuery);
+        }, 1500);
+      }, 500);
+    }
+  };
 
   return (
-    <div className="flex min-h-[92vh] overflow-hidden rounded-[28px] border border-slate-200 bg-[#f2f2f8] shadow-xl shadow-slate-200">
-      <aside className="hidden w-64 border-r border-[#e4e4ef] bg-[#ececf6] p-5 lg:flex lg:flex-col">
-        <div>
-          <h1 className="text-xl font-semibold text-[#2f3f98]">IntelliChoice</h1>
-          <p className="bg-gradient-to-r from-[#3445ac] via-[#5a67d8] to-[#06b6d4] bg-clip-text text-[11px] font-semibold uppercase tracking-[0.2em] text-transparent">
-            Your Intelligent Choice
-          </p>
+    <div className="flex h-[calc(100vh-120px)] flex-col bg-[var(--bg)] animate-fade-up">
+      {/* Domain Header */}
+      <div className="border-b border-[var(--border)] bg-[var(--surface)] px-6 py-4 flex items-center justify-between shadow-sm z-10">
+        <div className="flex items-center gap-3">
+          <div className={`flex h-10 w-10 items-center justify-center rounded-xl bg-${domainInfo?.color || 'blue'}-50 dark:bg-${domainInfo?.color || 'blue'}-500/10 text-${domainInfo?.color || 'blue'}-600 dark:text-${domainInfo?.color || 'blue'}-400`}>
+            <Brain size={20} />
+          </div>
+          <div>
+            <h2 className="text-sm font-bold leading-tight" style={{ color: "var(--text)" }}>AI {domainInfo?.label || "Decision"} Agent</h2>
+            <div className="flex items-center gap-1.5 mt-0.5">
+              <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">System Ready</span>
+            </div>
+          </div>
         </div>
-        <button
-          type="button"
-          onClick={handleNewDecision}
-          className="mt-6 rounded-2xl bg-white px-4 py-3 text-left text-sm font-semibold text-[#2f3f98] shadow-sm"
-        >
-          + New Decision
-        </button>
-        <div className="mt-6 space-y-2 text-sm">
-          {userTabs.map((tab) => (
-            <button
-              key={tab}
-              type="button"
-              onClick={() => setActiveTab(tab)}
-              className={`block w-full rounded-xl px-3 py-2 text-left transition ${
-                activeTab === tab
-                  ? "bg-[#dfe3ff] font-semibold text-[#2f3f98]"
-                  : "text-slate-600 hover:bg-white/80 hover:text-slate-900"
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
+        <div className="hidden sm:flex items-center gap-2 rounded-lg bg-[var(--surface-2)] px-3 py-1.5">
+            <ListFilter size={14} className="text-[var(--text-soft)]" />
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--text-muted)]">Locked Domain: {domain || "General"}</span>
         </div>
-        {renderProfileSummary()}
-        <button
-          type="button"
-          onClick={onLogout}
-          className="mt-3 text-left text-sm font-medium text-slate-700 hover:text-slate-950"
-        >
-          Logout
-        </button>
-      </aside>
+      </div>
 
-      <div className="flex w-full flex-col p-4 md:p-6">
-        <header className="flex items-center justify-between">
-          <nav className="flex gap-5 text-sm">
-            {userTabs.map((tab) => (
-              <button
-                key={tab}
-                type="button"
-                onClick={() => setActiveTab(tab)}
-                className={`pb-1 ${
-                  activeTab === tab
-                    ? "border-b-2 border-[#2f3f98] font-semibold text-[#2f3f98]"
-                    : "text-slate-500 hover:text-slate-800"
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
-          </nav>
+      {/* Messages Area */}
+      <div className="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar">
+        {messages.length === 0 && (
+          <div className="flex flex-col items-center justify-center h-full text-center space-y-6 max-w-md mx-auto">
+             <div className="h-20 w-20 rounded-3xl bg-blue-600 flex items-center justify-center text-white shadow-xl shadow-blue-500/20">
+                <Sparkles size={40} />
+             </div>
+             <div className="space-y-2">
+                <h3 className="text-xl font-bold" style={{ color: "var(--text)" }}>Knowledge Engine Active</h3>
+                <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
+                  I'm ready to assist with your <span className="font-bold text-blue-600">{domainInfo?.label}</span> decisions. Please describe your situation in detail.
+                </p>
+             </div>
+             <div className="grid grid-cols-1 gap-2 w-full pt-4">
+                {domain === "Career" && (
+                  <>
+                    <button onClick={() => setInput("Should I pursue an MBA now or wait for 2 years?")} className="text-xs font-semibold p-3 card hover:bg-[var(--surface-2)] text-left">"Should I pursue an MBA now or wait for 2 years?"</button>
+                    <button onClick={() => setInput("Startup vs Corporate: which is better for skill growth?")} className="text-xs font-semibold p-3 card hover:bg-[var(--surface-2)] text-left">"Startup vs Corporate: which is better for skill growth?"</button>
+                  </>
+                )}
+                {domain === "Finance" && (
+                   <button onClick={() => setInput("How should I diversify my portfolio for long term wealth?")} className="text-xs font-semibold p-3 card hover:bg-[var(--surface-2)] text-left">"How should I diversify my portfolio for long term wealth?"</button>
+                )}
+             </div>
+          </div>
+        )}
+
+        {messages.map((msg) => (
+          <div key={msg.id} className={cn("flex w-full animate-fade-up", msg.role === "user" ? "justify-end" : "justify-start")}>
+            <div className={cn("flex max-w-[85%] gap-4", msg.role === "user" ? "flex-row-reverse" : "flex-row")}>
+              <div className={cn("flex h-10 w-10 shrink-0 select-none items-center justify-center rounded-xl shadow-sm", 
+                msg.role === "user" ? "bg-blue-600 text-white" : "bg-[var(--surface-2)] text-[var(--text-muted)]")}>
+                {msg.role === "user" ? <User size={18} /> : <Bot size={18} />}
+              </div>
+
+              <div className="space-y-4">
+                {msg.type === "text" && (
+                   <div className={cn("rounded-2xl px-5 py-3 text-sm font-medium leading-relaxed shadow-sm",
+                    msg.role === "user" ? "bg-blue-600 text-white" : "bg-[var(--surface)] border border-[var(--border)]")}>
+                    {msg.text}
+                  </div>
+                )}
+
+                {msg.type === "error" && (
+                  <div className="rounded-2xl px-5 py-4 bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 flex gap-3">
+                    <AlertCircle size={18} className="text-amber-600 shrink-0" />
+                    <p className="text-sm font-semibold text-amber-700 dark:text-amber-400">{msg.text}</p>
+                  </div>
+                )}
+
+                {msg.type === "response" && (
+                  <div className="space-y-4">
+                     <div className="card p-6 space-y-6">
+                        <div className="space-y-2">
+                           <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
+                              <Sparkles size={16} />
+                              <span className="text-[10px] font-black uppercase tracking-widest">Recommendation</span>
+                           </div>
+                           <p className="text-lg font-bold leading-tight" style={{ color: "var(--text)" }}>{msg.recommendation}</p>
+                        </div>
+
+                        <div className="space-y-3">
+                           <h4 className="text-[10px] font-black uppercase tracking-widest text-[var(--text-soft)]">Key Observations</h4>
+                           <div className="space-y-2">
+                              {msg.reasoning.map((r, i) => (
+                                <div key={i} className="flex gap-2 items-start text-sm font-medium" style={{ color: "var(--text-muted)" }}>
+                                   <CheckCircle2 size={14} className="mt-0.5 text-blue-500 shrink-0" />
+                                   {r}
+                                </div>
+                              ))}
+                           </div>
+                        </div>
+
+                        <div className="grid sm:grid-cols-2 gap-4">
+                           <div className="rounded-xl bg-red-50 dark:bg-red-500/10 p-4 space-y-2">
+                              <h5 className="text-[10px] font-black uppercase tracking-widest text-red-600 dark:text-red-400">Risks Identified</h5>
+                              <ul className="space-y-1">
+                                 {msg.risks.map((r, i) => (
+                                   <li key={i} className="text-[11px] font-bold text-red-700/80 dark:text-red-400/80 flex items-center gap-1.5">• {r}</li>
+                                 ))}
+                              </ul>
+                           </div>
+                           <div className="rounded-xl bg-emerald-50 dark:bg-emerald-500/10 p-4 space-y-2">
+                              <h5 className="text-[10px] font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Outcome Simulation</h5>
+                              <p className="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 leading-tight">
+                                <span className="opacity-60">Best:</span> {msg.simulation.best_case}
+                              </p>
+                              <p className="text-[11px] font-bold opacity-70 text-emerald-700 dark:text-emerald-400">
+                                <span className="opacity-60">Timeline:</span> {msg.simulation.timeline}
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                )}
+
+                {msg.type === "mcq" && (
+                  <div className="space-y-4">
+                     <div className="card p-6 space-y-4">
+                        <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
+                           <Bot size={16} />
+                           <span className="text-[10px] font-black uppercase tracking-widest">Clarification Needed</span>
+                        </div>
+                        <p className="text-sm font-bold leading-tight" style={{ color: "var(--text)" }}>{msg.question}</p>
+                        <div className="grid grid-cols-1 gap-2 pt-2">
+                           {msg.options.map((opt, i) => (
+                             <button 
+                               key={i} 
+                               onClick={() => !msg.answered && handleMCQAnswer(msg.id, opt)}
+                               disabled={msg.answered}
+                               className={cn(
+                                 "text-xs font-semibold p-3 rounded-xl border text-left transition-all",
+                                 msg.answered 
+                                   ? msg.selectedOption === opt 
+                                     ? "bg-blue-600 text-white border-blue-600" 
+                                     : "bg-[var(--surface-2)] border-transparent opacity-50 text-[var(--text-muted)] cursor-not-allowed"
+                                   : "bg-[var(--surface)] border-[var(--border)] hover:bg-[var(--surface-2)] hover:border-blue-500/30 text-[var(--text)] cursor-pointer"
+                               )}
+                             >
+                               {opt}
+                             </button>
+                           ))}
+                        </div>
+                     </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {isThinking && (
+          <div className="flex w-full justify-start animate-fade-up">
+            <div className="flex gap-4">
+               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--surface-2)] text-blue-600 animate-pulse">
+                  <Brain size={18} />
+               </div>
+               <div className="flex flex-col gap-2">
+                  <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl px-5 py-3 flex items-center gap-3">
+                     <Loader2 size={16} className="animate-spin text-blue-600" />
+                     <span className="text-sm font-bold text-[var(--text-muted)]">{thinkingSteps[thinkingStep]}</span>
+                  </div>
+               </div>
+            </div>
+          </div>
+        )}
+
+
+
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Input Area */}
+      <div className="border-t border-[var(--border)] bg-[var(--surface)] p-6">
+        <form
+          onSubmit={(e) => { e.preventDefault(); handleSend(); }}
+          className="mx-auto max-w-4xl relative"
+        >
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder={`Ask about ${domainInfo?.label || 'anything'}...`}
+            disabled={isThinking}
+            className="input pr-12 h-14 bg-[var(--surface-2)] border-none focus:bg-[var(--surface)] focus:ring-2 focus:ring-blue-500/20 text-base font-medium shadow-inner"
+          />
           <button
-            type="button"
-            onClick={onLogout}
-            className="rounded-full bg-white px-3 py-2 text-xs font-medium text-slate-700 shadow-sm lg:hidden"
+            type="submit"
+            disabled={!input.trim() || isThinking}
+            className={cn(
+              "absolute right-2 top-2 h-10 w-10 flex items-center justify-center rounded-xl transition-all",
+              input.trim() ? "bg-blue-600 text-white shadow-lg shadow-blue-500/30 hover:-rotate-12" : "text-[var(--text-soft)]"
+            )}
           >
-            Logout
+            {isThinking ? <Loader2 size={20} className="animate-spin" /> : <Send size={20} />}
           </button>
-        </header>
-
-        <div className="mt-6 flex-1">
-          {activeTab === "Dashboard" ? renderDashboard() : null}
-          {activeTab === "Decisions" ? renderDecisions() : null}
-          {activeTab === "History" ? renderHistory() : null}
-          {activeTab === "Settings" ? renderSettings() : null}
-        </div>
+        </form>
+        <p className="mt-3 text-center text-[10px] font-bold text-[var(--text-soft)] uppercase tracking-widest">
+           AI responses can vary. Always verify high-stakes decisions.
+        </p>
       </div>
     </div>
   );
 }
-
-export default ChatbotPage;
