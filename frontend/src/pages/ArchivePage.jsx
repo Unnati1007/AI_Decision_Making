@@ -109,6 +109,29 @@ export default function ArchivePage() {
                                 <span>Estimated Horizon: {item.response.simulation.timeline}</span>
                              </div>
                           </div>
+
+                          {item.response.resources && item.response.resources.length > 0 && (
+                            <div className="card p-4 bg-[var(--surface)] space-y-4">
+                               <h4 className="text-[10px] font-black uppercase tracking-widest text-blue-500">Recommended Resources</h4>
+                               <div className="grid gap-2">
+                                  {item.response.resources.map((res, i) => (
+                                     <a 
+                                       key={i} 
+                                       href={res.url} 
+                                       target="_blank" 
+                                       rel="noopener noreferrer"
+                                       className="group flex items-center justify-between p-2.5 rounded-lg bg-[var(--surface-2)] border border-transparent hover:border-blue-500/20 hover:bg-white dark:hover:bg-[var(--surface-2)] transition-all duration-300"
+                                     >
+                                        <div className="flex items-center gap-2 min-w-0">
+                                           <ExternalLink size={12} className="text-blue-500 shrink-0" />
+                                           <span className="text-[11px] font-bold text-[var(--text)] truncate">{res.title}</span>
+                                        </div>
+                                        <ChevronRight size={12} className="text-[var(--text-soft)] group-hover:text-blue-500 transition-colors" />
+                                     </a>
+                                  ))}
+                               </div>
+                            </div>
+                          )}
                        </div>
                     </div>
                   </div>

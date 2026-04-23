@@ -55,7 +55,7 @@ export default function AdminSettingsPage() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="input pl-10 h-12" 
+                className="input !pl-10 h-12" 
               />
             </div>
           </div>
@@ -69,7 +69,7 @@ export default function AdminSettingsPage() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="input pl-10 h-12" 
+                className="input !pl-10 h-12" 
               />
             </div>
           </div>
@@ -84,7 +84,7 @@ export default function AdminSettingsPage() {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Unchanged"
-                className="input pl-10 h-12" 
+                className="input !pl-10 h-12" 
               />
             </div>
           </div>

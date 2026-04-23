@@ -159,12 +159,12 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex h-[calc(100vh-120px)] flex-col bg-[var(--bg)] animate-fade-up">
+    <div className="flex h-[calc(100vh-80px)] flex-col bg-[var(--bg)] animate-fade-up">
       {/* Domain Header */}
-      <div className="border-b border-[var(--border)] bg-[var(--surface)] px-6 py-4 flex items-center justify-between shadow-sm z-10">
+      <div className="border-b border-[var(--border)] bg-[var(--surface)] px-6 py-2.5 flex items-center justify-between shadow-sm z-10">
         <div className="flex items-center gap-3">
-          <div className={`flex h-10 w-10 items-center justify-center rounded-xl bg-${domainInfo?.color || 'blue'}-50 dark:bg-${domainInfo?.color || 'blue'}-500/10 text-${domainInfo?.color || 'blue'}-600 dark:text-${domainInfo?.color || 'blue'}-400`}>
-            <Brain size={20} />
+          <div className={`flex h-9 w-9 items-center justify-center rounded-xl bg-${domainInfo?.color || 'blue'}-50 dark:bg-${domainInfo?.color || 'blue'}-500/10 text-${domainInfo?.color || 'blue'}-600 dark:text-${domainInfo?.color || 'blue'}-400`}>
+            <Brain size={18} />
           </div>
           <div>
             <h2 className="text-sm font-bold leading-tight" style={{ color: "var(--text)" }}>AI {domainInfo?.label || "Decision"} Agent</h2>
@@ -181,27 +181,46 @@ export default function ChatPage() {
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-6 custom-scrollbar">
         {messages.length === 0 && (
-          <div className="flex flex-col items-center justify-center h-full text-center space-y-6 max-w-md mx-auto">
-             <div className="h-20 w-20 rounded-3xl bg-blue-600 flex items-center justify-center text-white shadow-xl shadow-blue-500/20">
-                <Sparkles size={40} />
+          <div className="flex flex-col items-center justify-center h-full text-center space-y-4 max-w-4xl mx-auto">
+             <div className="h-14 w-14 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-xl shadow-blue-500/20">
+                <Sparkles size={28} />
              </div>
-             <div className="space-y-2">
-                <h3 className="text-xl font-bold" style={{ color: "var(--text)" }}>Knowledge Engine Active</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
+             <div className="space-y-1">
+                <h3 className="text-lg font-bold" style={{ color: "var(--text)" }}>Knowledge Engine Active</h3>
+                <p className="text-xs font-medium leading-relaxed" style={{ color: "var(--text-muted)" }}>
                   I'm ready to assist with your <span className="font-bold text-blue-600">{domainInfo?.label}</span> decisions. Please describe your situation in detail.
                 </p>
              </div>
-             <div className="grid grid-cols-1 gap-2 w-full pt-4">
+             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full pt-2">
                 {domain === "Career" && (
                   <>
-                    <button onClick={() => setInput("Should I pursue an MBA now or wait for 2 years?")} className="text-xs font-semibold p-3 card hover:bg-[var(--surface-2)] text-left">"Should I pursue an MBA now or wait for 2 years?"</button>
-                    <button onClick={() => setInput("Startup vs Corporate: which is better for skill growth?")} className="text-xs font-semibold p-3 card hover:bg-[var(--surface-2)] text-left">"Startup vs Corporate: which is better for skill growth?"</button>
+                    <button onClick={() => setInput("Should I pursue an MBA now or wait for 2 years?")} className="text-[10px] font-bold p-3 card hover:bg-[var(--surface-2)] text-left transition-colors border-dashed bg-transparent">"Should I pursue an MBA now or wait for 2 years?"</button>
+                    <button onClick={() => setInput("Startup vs Corporate: which is better for skill growth?")} className="text-[10px] font-bold p-3 card hover:bg-[var(--surface-2)] text-left transition-colors border-dashed bg-transparent">"Startup vs Corporate: which is better for skill growth?"</button>
+                    <button onClick={() => setInput("How do I transition from engineering to product management?")} className="text-[10px] font-bold p-3 card hover:bg-[var(--surface-2)] text-left transition-colors border-dashed bg-transparent">"How do I transition from engineering to product management?"</button>
                   </>
                 )}
                 {domain === "Finance" && (
-                   <button onClick={() => setInput("How should I diversify my portfolio for long term wealth?")} className="text-xs font-semibold p-3 card hover:bg-[var(--surface-2)] text-left">"How should I diversify my portfolio for long term wealth?"</button>
+                  <>
+                    <button onClick={() => setInput("How should I diversify my portfolio for long term wealth?")} className="text-[10px] font-bold p-3 card hover:bg-[var(--surface-2)] text-left transition-colors border-dashed bg-transparent">"How should I diversify my portfolio for long term wealth?"</button>
+                    <button onClick={() => setInput("Is it better to buy a house or continue renting in the current market?")} className="text-[10px] font-bold p-3 card hover:bg-[var(--surface-2)] text-left transition-colors border-dashed bg-transparent">"Is it better to buy a house or continue renting in the current market?"</button>
+                    <button onClick={() => setInput("What are the best tax-saving investment options for salaried employees?")} className="text-[10px] font-bold p-3 card hover:bg-[var(--surface-2)] text-left transition-colors border-dashed bg-transparent">"What are the best tax-saving investment options for salaried employees?"</button>
+                  </>
+                )}
+                {domain === "Legal" && (
+                  <>
+                    <button onClick={() => setInput("What are the legal steps to register a tech startup?")} className="text-[10px] font-bold p-3 card hover:bg-[var(--surface-2)] text-left transition-colors border-dashed bg-transparent">"What are the legal steps to register a tech startup?"</button>
+                    <button onClick={() => setInput("How do I protect my intellectual property and source code?")} className="text-[10px] font-bold p-3 card hover:bg-[var(--surface-2)] text-left transition-colors border-dashed bg-transparent">"How do I protect my intellectual property and source code?"</button>
+                    <button onClick={() => setInput("What clauses should I look out for in a co-founder agreement?")} className="text-[10px] font-bold p-3 card hover:bg-[var(--surface-2)] text-left transition-colors border-dashed bg-transparent">"What clauses should I look out for in a co-founder agreement?"</button>
+                  </>
+                )}
+                {domain === "Wellbeing" && (
+                  <>
+                    <button onClick={() => setInput("How can I avoid burnout while working in a high-pressure tech job?")} className="text-[10px] font-bold p-3 card hover:bg-[var(--surface-2)] text-left transition-colors border-dashed bg-transparent">"How can I avoid burnout while working in a high-pressure tech job?"</button>
+                    <button onClick={() => setInput("What are effective strategies for maintaining work-life balance while working remotely?")} className="text-[10px] font-bold p-3 card hover:bg-[var(--surface-2)] text-left transition-colors border-dashed bg-transparent">"What are effective strategies for maintaining work-life balance while working remotely?"</button>
+                    <button onClick={() => setInput("How do I manage anxiety before an important performance review?")} className="text-[10px] font-bold p-3 card hover:bg-[var(--surface-2)] text-left transition-colors border-dashed bg-transparent">"How do I manage anxiety before an important performance review?"</button>
+                  </>
                 )}
              </div>
           </div>
@@ -212,7 +231,7 @@ export default function ChatPage() {
             <div className={cn("flex max-w-[85%] gap-4", msg.role === "user" ? "flex-row-reverse" : "flex-row")}>
               <div className={cn("flex h-10 w-10 shrink-0 select-none items-center justify-center rounded-xl shadow-sm", 
                 msg.role === "user" ? "bg-blue-600 text-white" : "bg-[var(--surface-2)] text-[var(--text-muted)]")}>
-                {msg.role === "user" ? <User size={18} /> : <Bot size={18} />}
+                {msg.role === "user" ? <User size={18} /> : <Brain size={18} />}
               </div>
 
               <div className="space-y-4">
@@ -272,6 +291,34 @@ export default function ChatPage() {
                               </p>
                            </div>
                         </div>
+
+                        {msg.resources && msg.resources.length > 0 && (
+                           <div className="pt-5 border-t border-[var(--border)] mt-2">
+                              <div className="flex items-center gap-2 mb-4">
+                                 <div className="h-5 w-5 rounded-md bg-blue-600/10 text-blue-600 flex items-center justify-center">
+                                    <ListFilter size={12} />
+                                 </div>
+                                 <h4 className="text-[10px] font-black uppercase tracking-widest text-[var(--text-soft)]">Strategic Resources</h4>
+                              </div>
+                              <div className="grid gap-3 sm:grid-cols-2">
+                                 {msg.resources.map((resource, i) => (
+                                    <a 
+                                      key={i} 
+                                      href={resource.url} 
+                                      target="_blank" 
+                                      rel="noopener noreferrer"
+                                      className="group flex flex-col p-3 rounded-xl bg-[var(--surface-2)] border border-transparent hover:border-blue-500/30 hover:bg-[var(--surface)] transition-all duration-300 shadow-sm"
+                                    >
+                                       <div className="flex items-center justify-between gap-2 mb-1">
+                                          <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400 group-hover:translate-x-0.5 transition-transform truncate">{resource.title}</span>
+                                          <ChevronRight size={14} className="text-[var(--text-soft)] group-hover:text-blue-500 transition-colors" />
+                                       </div>
+                                       <p className="text-[9px] font-medium text-[var(--text-muted)] line-clamp-1 opacity-60">Source: External Repository</p>
+                                    </a>
+                                 ))}
+                              </div>
+                           </div>
+                        )}
                      </div>
                   </div>
                 )}
@@ -280,7 +327,7 @@ export default function ChatPage() {
                   <div className="space-y-4">
                      <div className="card p-6 space-y-4">
                         <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
-                           <Bot size={16} />
+                           <Brain size={16} />
                            <span className="text-[10px] font-black uppercase tracking-widest">Clarification Needed</span>
                         </div>
                         <p className="text-sm font-bold leading-tight" style={{ color: "var(--text)" }}>{msg.question}</p>
@@ -333,7 +380,7 @@ export default function ChatPage() {
       </div>
 
       {/* Input Area */}
-      <div className="border-t border-[var(--border)] bg-[var(--surface)] p-6">
+      <div className="border-t border-[var(--border)] bg-[var(--surface)] p-4 lg:px-8">
         <form
           onSubmit={(e) => { e.preventDefault(); handleSend(); }}
           className="mx-auto max-w-4xl relative"
@@ -343,20 +390,20 @@ export default function ChatPage() {
             onChange={(e) => setInput(e.target.value)}
             placeholder={`Ask about ${domainInfo?.label || 'anything'}...`}
             disabled={isThinking}
-            className="input pr-12 h-14 bg-[var(--surface-2)] border-none focus:bg-[var(--surface)] focus:ring-2 focus:ring-blue-500/20 text-base font-medium shadow-inner"
+            className="input pr-12 h-12 bg-[var(--surface-2)] border-none focus:bg-[var(--surface)] focus:ring-2 focus:ring-blue-500/10 text-sm font-medium shadow-inner"
           />
           <button
             type="submit"
             disabled={!input.trim() || isThinking}
             className={cn(
-              "absolute right-2 top-2 h-10 w-10 flex items-center justify-center rounded-xl transition-all",
+              "absolute right-1.5 top-1.5 h-9 w-9 flex items-center justify-center rounded-lg transition-all",
               input.trim() ? "bg-blue-600 text-white shadow-lg shadow-blue-500/30 hover:-rotate-12" : "text-[var(--text-soft)]"
             )}
           >
-            {isThinking ? <Loader2 size={20} className="animate-spin" /> : <Send size={20} />}
+            {isThinking ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
           </button>
         </form>
-        <p className="mt-3 text-center text-[10px] font-bold text-[var(--text-soft)] uppercase tracking-widest">
+        <p className="mt-2 text-center text-[9px] font-bold text-[var(--text-soft)] uppercase tracking-widest opacity-60">
            AI responses can vary. Always verify high-stakes decisions.
         </p>
       </div>

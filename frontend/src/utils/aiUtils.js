@@ -77,10 +77,7 @@ export const matchQueryToDomain = (text, domain, numFollowUps = 4) => {
     risks: best.risks,
     simulation: best.simulation,
     followUps,
-    sources: [
-      { title: `${domain} Research — IntelliChoice DB`, url: "#" },
-      { title: "AI Reasoning Engine v2.4", url: "#" },
-    ],
+    resources: best.resources || [],
   };
 };
 

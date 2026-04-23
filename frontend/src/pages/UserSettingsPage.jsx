@@ -66,7 +66,7 @@ export default function UserSettingsPage() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="input pl-10" 
+                  className="input !pl-10" 
                 />
               </div>
             </div>
@@ -79,7 +79,7 @@ export default function UserSettingsPage() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="input pl-10" 
+                  className="input !pl-10" 
                 />
               </div>
             </div>
@@ -95,7 +95,7 @@ export default function UserSettingsPage() {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Leave blank to keep current"
-                className="input pl-10" 
+                className="input !pl-10" 
               />
             </div>
           </div>

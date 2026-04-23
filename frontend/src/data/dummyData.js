@@ -53,6 +53,10 @@ export const domainKnowledge = {
         { q: "Are you considering Indian or foreign institutes?", options: ["India (IIM/ISB)", "Abroad (INSEAD/Wharton)", "Online program"] },
         { q: "What is your target time frame?", options: ["Within 1 year", "1-2 years", "Flexible"] },
       ],
+      resources: [
+        { title: "HBR: Is an MBA Still Worth It?", url: "https://hbr.org/2020/09/is-an-mba-still-worth-it" },
+        { title: "FT Top Global MBA Rankings", url: "https://rankings.ft.com/" }
+      ]
     },
     {
       keywords: ["startup", "corporate", "switch", "job change"],
@@ -65,6 +69,10 @@ export const domainKnowledge = {
         { q: "What stage startup interests you?", options: ["Early (Seed/Series A)", "Growth (Series B/C)", "Pre-IPO"] },
         { q: "Do you have financial runway for lower initial salary?", options: ["Yes (6+ months)", "Partially", "No"] },
       ],
+      resources: [
+        { title: "Y Combinator: How to Evaluate Startups", url: "https://www.ycombinator.com/library/4D-how-to-evaluate-startups" },
+        { title: "Equity vs Salary Calculator", url: "https://example.com/equity-calculator" }
+      ]
     },
     {
       keywords: ["salary", "negotiation", "raise", "promotion", "hike"],
@@ -77,6 +85,10 @@ export const domainKnowledge = {
         { q: "What is your leverage (competing offer)?", options: ["Yes, I have one", "Exploring options", "No competing offer"] },
         { q: "How long have you been in your current role?", options: ["Less than 1 year", "1-3 years", "3+ years"] },
       ],
+      resources: [
+        { title: "Harvard Law School: Negotiation Tactics", url: "https://www.pon.harvard.edu/daily/salary-negotiations/" },
+        { title: "Glassdoor Salary Benchmarking", url: "https://www.glassdoor.com/Salaries/" }
+      ]
     },
   ],
   Finance: [
@@ -92,6 +104,10 @@ export const domainKnowledge = {
         { q: "What is your current risk appetite?", options: ["Conservative", "Moderate", "Aggressive"] },
         { q: "Do you have an emergency fund in place?", options: ["Yes (6 months)", "Partially", "No"] },
       ],
+      resources: [
+        { title: "Investopedia: Asset Allocation Strategies", url: "https://www.investopedia.com/managing-wealth/achieve-optimal-asset-allocation/" },
+        { title: "Vanguard Index Fund Guide", url: "https://investor.vanguard.com/investment-products/index-funds" }
+      ]
     },
     {
       keywords: ["real estate", "property", "house", "flat", "rent"],
@@ -104,6 +120,10 @@ export const domainKnowledge = {
         { q: "Is this your first property?", options: ["Yes", "No — additional property"] },
         { q: "What city/tier are you targeting?", options: ["Metro (Mumbai/Delhi)", "Tier 2 (Pune/Hyderabad)", "Other"] },
       ],
+      resources: [
+        { title: "Rent vs Buy Calculator", url: "https://www.nytimes.com/interactive/2024/upshot/buy-rent-calculator.html" },
+        { title: "Real Estate Market Reports", url: "https://www.knightfrank.com/research" }
+      ]
     },
     {
       keywords: ["tax", "saving", "80c", "itr", "return"],
@@ -116,6 +136,10 @@ export const domainKnowledge = {
         { q: "Are you salaried or self-employed?", options: ["Salaried", "Self-employed/Freelance", "Business owner"] },
         { q: "Do you currently file ITR yourself?", options: ["Yes", "No — CA handles it"] },
       ],
+      resources: [
+        { title: "ClearTax: 80C Investment Options", url: "https://cleartax.in/s/80c-80-deductions" },
+        { title: "Income Tax Department Official Portal", url: "https://www.incometax.gov.in/iec/foportal/" }
+      ]
     },
   ],
   Legal: [
@@ -131,6 +155,10 @@ export const domainKnowledge = {
         { q: "What is the contract duration?", options: ["< 6 months", "6-12 months", "Multi-year"] },
         { q: "Do you have access to a lawyer?", options: ["Yes", "Need to find one", "Want to self-review"] },
       ],
+      resources: [
+        { title: "Nolo: Contracts 101", url: "https://www.nolo.com/legal-encyclopedia/contracts-101-make-legally-valid-30247.html" },
+        { title: "Standard NDA Templates", url: "https://www.ycombinator.com/documents" }
+      ]
     },
     {
       keywords: ["copyright", "ip", "intellectual property", "trademark", "patent"],
@@ -143,6 +171,10 @@ export const domainKnowledge = {
         { q: "Is this for a business or personal use?", options: ["Business/Startup", "Personal/Freelance"] },
         { q: "Have competitors already copied your work?", options: ["Yes", "No — preventive", "Unsure"] },
       ],
+      resources: [
+        { title: "India IP Office Official Website", url: "https://ipindia.gov.in/" },
+        { title: "WIPO: Intellectual Property Handbook", url: "https://www.wipo.int/publications/en/details.jsp?id=4517" }
+      ]
     },
     {
       keywords: ["rights", "dispute", "sue", "court", "litigation"],
@@ -155,6 +187,10 @@ export const domainKnowledge = {
         { q: "What is the value at stake?", options: ["< ₹1L (Small claims)", "₹1L-10L", "> ₹10L"] },
         { q: "Has the other party been unresponsive?", options: ["Yes", "We've spoken but disagree", "Haven't reached out"] },
       ],
+      resources: [
+        { title: "Mediation vs Litigation Overview", url: "https://www.findlaw.com/litigation/going-to-court/mediation-vs-litigation.html" },
+        { title: "National Legal Services Authority (India)", url: "https://nalsa.gov.in/" }
+      ]
     },
   ],
   Wellbeing: [
@@ -170,6 +206,10 @@ export const domainKnowledge = {
         { q: "Have you spoken to a professional?", options: ["Yes, currently in therapy", "No — open to it", "Prefer self-help first"] },
         { q: "What triggers it most?", options: ["Work overload", "Relationships", "Financial pressure", "Uncertainty"] },
       ],
+      resources: [
+        { title: "Mayo Clinic: Understanding Job Burnout", url: "https://www.mayoclinic.org/healthy-lifestyle/adult-health/in-depth/burnout/art-20046642" },
+        { title: "Headspace: Meditation for Stress", url: "https://www.headspace.com/meditation/stress" }
+      ]
     },
     {
       keywords: ["diet", "fasting", "weight", "nutrition", "eat", "food"],
@@ -183,6 +223,10 @@ export const domainKnowledge = {
         { q: "Current activity level?", options: ["Sedentary", "Light exercise", "Moderate (3-4x/week)", "High (5+/week)"] },
         { q: "Have you tried structured dieting before?", options: ["Yes, unsuccessfully", "Yes, with some success", "First time"] },
       ],
+      resources: [
+        { title: "Johns Hopkins: Intermittent Fasting Guide", url: "https://www.hopkinsmedicine.org/health/wellness-and-prevention/intermittent-fasting-what-is-it-and-how-does-it-work" },
+        { title: "Harvard Nutrition Source: Protein", url: "https://www.hsph.harvard.edu/nutritionsource/what-should-you-eat/protein/" }
+      ]
     },
     {
       keywords: ["sleep", "insomnia", "tired", "rest", "fatigue"],
@@ -195,6 +239,10 @@ export const domainKnowledge = {
         { q: "Do you use screens before bed?", options: ["Yes, heavily", "Occasionally", "Rarely"] },
         { q: "Do you consume caffeine after 2PM?", options: ["Yes, daily", "Sometimes", "No"] },
       ],
+      resources: [
+        { title: "Sleep Foundation: Sleep Hygiene", url: "https://www.sleepfoundation.org/sleep-hygiene" },
+        { title: "Huberman Lab: Master Your Sleep", url: "https://hubermanlab.com/toolkit-for-sleep/" }
+      ]
     },
   ],
 };

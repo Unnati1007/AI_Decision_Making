@@ -1,21 +1,28 @@
 import { useState } from "react";
-import { Search, MoreVertical, Ban, ClipboardEdit, CheckCircle, ShieldAlert, Mail } from "lucide-react";
-import { adminUsers } from "../data/dummyData";
+import { Search, MoreVertical, Ban, ClipboardEdit, CheckCircle, ShieldAlert, Mail, X } from "lucide-react";
+import { useApp } from "../context/AppContext";
 import { cn } from "../lib/utils";
 
 export default function AdminUsersPage() {
-  const [users, setUsers] = useState(adminUsers);
+  const { users, toggleUserStatus, updateUserData } = useApp();
   const [search, setSearch] = useState("");
+  const [editingUser, setEditingUser] = useState(null);
+  const [editFormData, setEditFormData] = useState({ name: "", email: "" });
 
-  const filtered = users.filter(u => 
+  const filtered = users.filter(u => u.role !== "admin" && (
     u.name.toLowerCase().includes(search.toLowerCase()) || 
     u.email.toLowerCase().includes(search.toLowerCase())
-  );
+  ));
 
-  const toggleBlock = (id) => {
-    setUsers(curr => curr.map(u => 
-      u.id === id ? { ...u, status: u.status === "Blocked" ? "Active" : "Blocked" } : u
-    ));
+  const startEdit = (user) => {
+    setEditingUser(user);
+    setEditFormData({ name: user.name, email: user.email });
+  };
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    updateUserData(editingUser.id, editFormData);
+    setEditingUser(null);
   };
 
   return (
@@ -26,9 +33,9 @@ export default function AdminUsersPage() {
           <h1 className="text-2xl font-bold tracking-tight" style={{ color: "var(--text)" }}>User Management</h1>
           <p className="text-sm font-medium" style={{ color: "var(--text-muted)" }}>Control access and monitor individual account activity.</p>
         </div>
-        <div className="flex items-center gap-2 text-[10px] items-center font-bold text-blue-600 bg-blue-50 dark:bg-blue-500/10 px-3 py-1.5 rounded-lg border border-blue-100 dark:border-blue-500/20">
+        <div className="flex items-center gap-2 text-[10px] font-bold text-blue-600 bg-blue-50 dark:bg-blue-500/10 px-3 py-1.5 rounded-lg border border-blue-100 dark:border-blue-500/20">
            <CheckCircle size={14} />
-           {users.filter(u => u.status === "Active").length} ACTIVE NODES
+           {users.filter(u => u.role !== "admin" && u.status === "Active").length} ACTIVE NODES
         </div>
       </div>
 
@@ -62,8 +69,8 @@ export default function AdminUsersPage() {
                 <tr key={user.id} className="hover:bg-[var(--surface-2)]/50 transition-colors group">
                   <td className="p-4">
                     <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 flex items-center justify-center rounded-xl bg-blue-600/10 text-blue-600 font-bold text-sm">
-                        {user.name[0]}
+                      <div className="h-10 w-10 flex items-center justify-center rounded-xl bg-blue-600/10 text-blue-600 font-bold text-sm uppercase">
+                        {user.name ? user.name[0].toUpperCase() : "?"}
                       </div>
                       <div className="min-w-0">
                         <p className="text-sm font-bold truncate" style={{ color: "var(--text)" }}>{user.name}</p>
@@ -72,13 +79,13 @@ export default function AdminUsersPage() {
                     </div>
                   </td>
                   <td className="p-4">
-                    <span className="badge bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-none font-bold">
-                       {user.domain}
+                    <span className="badge bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-none font-bold uppercase">
+                       {user.domain || "NONE"}
                     </span>
                   </td>
                   <td className="p-4">
                     <div className="space-y-1">
-                       <p className="text-xs font-bold" style={{ color: "var(--text)" }}>{user.queries} Queries</p>
+                       <p className="text-xs font-bold" style={{ color: "var(--text)" }}>{user.queryCount || 0} Queries</p>
                        <p className="text-[10px] font-medium" style={{ color: "var(--text-soft)" }}>Joined {user.joined}</p>
                     </div>
                   </td>
@@ -94,13 +101,17 @@ export default function AdminUsersPage() {
                   <td className="p-4 text-right">
                     <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                       <button 
-                        onClick={() => toggleBlock(user.id)}
+                        onClick={() => toggleUserStatus(user.id)}
                         className="btn btn-ghost h-8 px-2.5 text-xs border-none hover:bg-red-50 hover:text-red-600" 
                         title={user.status === "Active" ? "Block Access" : "Unblock Access"}
                       >
                         <Ban size={14} />
                       </button>
-                      <button className="btn btn-ghost h-8 px-2.5 text-xs border-none" title="Send Remark">
+                      <button 
+                        onClick={() => startEdit(user)}
+                        className="btn btn-ghost h-8 px-2.5 text-xs border-none hover:bg-blue-50 hover:text-blue-600" 
+                        title="Edit User"
+                      >
                         <ClipboardEdit size={14} />
                       </button>
                       <button className="btn btn-ghost h-8 px-2.5 text-xs border-none" title="Contact User">
@@ -114,6 +125,60 @@ export default function AdminUsersPage() {
           </table>
         </div>
       </div>
+
+      {/* Edit Modal */}
+      {editingUser && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
+          <div className="card w-full max-w-md p-6 space-y-6 shadow-2xl">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-bold" style={{ color: "var(--text)" }}>Edit User Profile</h2>
+              <button onClick={() => setEditingUser(null)} className="p-2 hover:bg-[var(--surface-2)] rounded-full transition-colors">
+                <X size={20} className="text-[var(--text-soft)]" />
+              </button>
+            </div>
+            
+            <form onSubmit={handleUpdate} className="space-y-4">
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black uppercase tracking-widest text-[var(--text-soft)]">Full Name</label>
+                <input 
+                  type="text" 
+                  value={editFormData.name}
+                  onChange={(e) => setEditFormData({ ...editFormData, name: e.target.value })}
+                  className="input bg-[var(--surface-2)] border-[var(--border)]"
+                  placeholder="Enter name"
+                  required
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black uppercase tracking-widest text-[var(--text-soft)]">Email Address</label>
+                <input 
+                  type="email" 
+                  value={editFormData.email}
+                  onChange={(e) => setEditFormData({ ...editFormData, email: e.target.value })}
+                  className="input bg-[var(--surface-2)] border-[var(--border)]"
+                  placeholder="Enter email"
+                  required
+                />
+              </div>
+              <div className="pt-4 flex gap-3">
+                <button 
+                  type="button" 
+                  onClick={() => setEditingUser(null)}
+                  className="btn btn-ghost flex-1 text-xs font-bold"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit" 
+                  className="btn btn-primary flex-1 text-xs font-bold shadow-blue-500/20"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

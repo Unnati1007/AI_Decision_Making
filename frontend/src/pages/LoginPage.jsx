@@ -2,11 +2,13 @@ import { useState } from "react";
 import { LogIn, UserPlus, Brain, Eye, EyeOff } from "lucide-react";
 import { useApp } from "../context/AppContext";
 import { cn } from "../lib/utils";
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 
 export default function LoginPage() {
   const [activeTab, setActiveTab] = useState("login");
   const [showPassword, setShowPassword] = useState(false);
-  const { login, register, authError, setAuthError } = useApp();
+  const { login, register, googleAuth, authError, setAuthError } = useApp();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -44,6 +46,20 @@ export default function LoginPage() {
     } else {
       register(formData);
     }
+  };
+
+  const handleGoogleSuccess = (credentialResponse) => {
+    try {
+      const decoded = jwtDecode(credentialResponse.credential);
+      const { name, email } = decoded;
+      googleAuth({ name, email });
+    } catch (err) {
+      setAuthError("Failed to authenticate with Google.");
+    }
+  };
+
+  const handleGoogleError = () => {
+    setAuthError("Google Sign-In was unsuccessful. Please try again.");
   };
 
   return (
@@ -147,6 +163,24 @@ export default function LoginPage() {
               {activeTab === "login" ? "Sign In to Console" : "Create Account"}
             </button>
           </form>
+
+          <div className="mt-6 flex items-center gap-4">
+            <div className="h-px flex-1 bg-[var(--border)]" />
+            <span className="text-xs font-semibold text-[var(--text-soft)] uppercase tracking-widest">OR</span>
+            <div className="h-px flex-1 bg-[var(--border)]" />
+          </div>
+
+          <div className="mt-6 flex justify-center">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
+              useOneTap
+              theme="outline"
+              size="large"
+              shape="pill"
+              text={activeTab === "login" ? "signin_with" : "signup_with"}
+            />
+          </div>
 
           <div className="mt-8 pt-6 border-t border-[var(--border)] text-center">
             <p className="text-xs font-semibold text-[var(--text-soft)] uppercase tracking-widest">Demo Access</p>

@@ -4,7 +4,7 @@ import { DOMAINS } from "../data/dummyData";
 import { cn } from "../lib/utils";
 
 export default function UserDashboard({ onTabChange }) {
-  const { currentUser, selectDomain } = useApp();
+  const { currentUser, selectDomain, getUserArchive } = useApp();
 
   const handleDomainSelect = (domainKey) => {
     selectDomain(domainKey);
@@ -12,11 +12,19 @@ export default function UserDashboard({ onTabChange }) {
   };
 
   const domainList = Object.values(DOMAINS);
+  const archives = getUserArchive(currentUser?.id);
+  
+  let lastActivityDate = "No Activity";
+  if (archives?.length > 0) {
+    const rawDate = archives[0].date;
+    // Extract just the date part, handling both comma-separated and space-separated formats
+    lastActivityDate = rawDate.includes(",") ? rawDate.split(",")[0] : rawDate.split(" ")[0];
+  }
 
   const stats = [
     { label: "Total Queries", value: currentUser?.queryCount || 0, icon: MessageSquareText, color: "blue" },
     { label: "Selected Domain", value: currentUser?.domain || "None", icon: LayoutDashboard, color: "indigo" },
-    { label: "Last Activity", value: "Today", icon: History, color: "emerald" },
+    { label: "Last Activity", value: lastActivityDate, icon: History, color: "emerald" },
   ];
 
   return (
@@ -24,7 +32,7 @@ export default function UserDashboard({ onTabChange }) {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold tracking-tight" style={{ color: "var(--text)" }}>
-          Welcome back, {currentUser?.name?.split(" ")[0]}
+          Welcome back, {currentUser?.name ? currentUser.name.split(" ")[0] : "User"}
         </h1>
         <p className="text-sm font-medium" style={{ color: "var(--text-muted)" }}>
           Select a domain to start a new AI-guided decision session.

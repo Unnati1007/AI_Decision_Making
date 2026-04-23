@@ -1,8 +1,10 @@
-import { auditLogs } from "../data/dummyData";
 import { Shield, Clock, User, Info, AlertTriangle, AlertCircle } from "lucide-react";
+import { useApp } from "../context/AppContext";
 import { cn } from "../lib/utils";
 
 export default function AdminAuditPage() {
+  const { auditLogs } = useApp();
+
   return (
     <div className="space-y-8 animate-fade-up">
       {/* Header */}
@@ -45,7 +47,7 @@ export default function AdminAuditPage() {
                   <div>
                     <div className="flex items-center gap-1.5">
                        <User size={12} className="text-[var(--text-soft)]" />
-                       <p className="text-xs font-bold leading-none" style={{ color: "var(--text)" }}>{log.user}</p>
+                       <p className="text-xs font-bold leading-none truncate max-w-[120px]" style={{ color: "var(--text)" }}>{log.user}</p>
                     </div>
                     <div className="flex items-center gap-1.5 mt-2">
                        <Clock size={12} className="text-[var(--text-soft)]" />
