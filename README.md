@@ -16,6 +16,13 @@ It helps users make better decisions by:
 
 ---
 
+## 🌐 Live Demo & Deployment
+
+- **Frontend Application**: [https://ai-decision-making-lilac.vercel.app/](https://ai-decision-making-lilac.vercel.app/) (Deployed on Vercel)
+- **Backend API**: [https://ai-decision-making.onrender.com/](https://ai-decision-making.onrender.com/) (Deployed on Render)
+
+---
+
 ## 🎯 Objectives
 
 - Provide data-driven decision support  
@@ -165,20 +172,24 @@ Predicts:
 
 ## 🛠️ Setup
 
-    # Clone repo
-    git clone https://github.com/yourusername/intellichoice.git
+```bash
+# Clone repo
+git clone https://github.com/Unnati1007/AI_Decision_Making.git
 
-    # Move into folder
-    cd intellichoice
+# Move into project directory
+cd ai-decision-system
 
-    # Install dependencies
-    pip install -r requirements.txt
+# Install backend dependencies
+pip install -r requirements.txt
 
-    # Run backend
-    uvicorn backend.main:app --reload
+# Run backend server
+python -m uvicorn backend.main:app --reload
 
-    # Run frontend
-    streamlit run frontend/app.py
+# In another terminal, run frontend
+cd frontend
+npm install
+npm run dev
+```
 
 ---
 
