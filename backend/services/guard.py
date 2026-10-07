@@ -39,10 +39,24 @@ def get_embed_model():
         _embed_model = SentenceTransformer(EMBED_MODEL_NAME)
     return _embed_model
 
-# ── Constants ──────────────────────────────────────────────
-MIN_QUERY_LENGTH = 8
-MAX_QUERY_LENGTH = 1000
-RELEVANCE_THRESHOLD = 0.35   # tune between 0.30–0.40
+from backend.config import (
+    MIN_QUERY_LENGTH,
+    MAX_QUERY_LENGTH,
+    RELEVANCE_THRESHOLD,
+    EMBED_MODEL_NAME,
+    LLM_MODEL_NAME,
+    get_domain_keywords,
+    get_security_rules
+)
+
+def get_keyword_embeddings():
+    global _keyword_embeddings
+    if _keyword_embeddings is None:
+        model = get_embed_model()
+        domain_keywords = get_domain_keywords()
+        _keyword_embeddings = model.encode(domain_keywords, convert_to_tensor=True)
+    return _keyword_embeddings
+
 
 # ── Guard Failure Reasons ──────────────────────────────────
 class GuardFailReason(str, Enum):
@@ -63,38 +77,6 @@ class GuardResult(BaseModel):
     layer: Optional[str] = None
     relevance_score: Optional[float] = None
     latency_ms: Optional[int] = None
-
-# ── Domain Keywords ────────────────────────────────────────
-DOMAIN_KEYWORDS = [
-    "career decision", "job offer", "mba admission", "internship", "career switch", "salary negotiation", "promotion",
-    "investment decision", "financial planning", "stocks", "loan", "mutual funds", "tax saving", "portfolio", "wealth management", "real estate buying",
-    "legal advice", "tenant rights", "contract dispute", "intellectual property", "trademark registration", "legal compliance",
-    "mental health", "stress management", "anxiety", "wellbeing", "burnout recovery", "work-life balance", "sleep hygiene", "nutrition plan",
-    "business decision", "startup strategy", "marketing plan", "hiring decision", "partnership agreement",
-    "should I choose", "help me decide", "pros and cons", "compare options", "which option better", "career confusion"
-]
-
-def get_keyword_embeddings():
-    global _keyword_embeddings
-    if _keyword_embeddings is None:
-        model = get_embed_model()
-        _keyword_embeddings = model.encode(DOMAIN_KEYWORDS, convert_to_tensor=True)
-    return _keyword_embeddings
-
-# ── Blocked Keywords & Injection Patterns ─────────────────
-BLOCKED_KEYWORDS = [
-    "hack", "bypass", "exploit", "jailbreak",
-    "ignore instructions", "override",
-    "steal data", "fraud", "scam", "malware", "ddos"
-]
-
-INJECTION_PATTERNS = [
-    r"ignore\s+(all\s+)?(previous|above)\s+instructions",
-    r"you\s+are\s+now",
-    r"act\s+as\s+an?\s+unrestricted",
-    r"pretend\s+you\s+are",
-    r"system\s+prompt\s+override",
-]
 
 # ============================================================
 # LAYER 1 — Quality Check
@@ -122,7 +104,7 @@ def check_query_quality(query: str) -> GuardResult:
         return GuardResult(
             passed=False,
             reason=GuardFailReason.TOO_SHORT,
-            message="Query too short. Please provide a clear question (min 8 characters).",
+            message=f"Query too short. Please provide a clear question (min {MIN_QUERY_LENGTH} characters).",
             layer="Layer 1: Quality Check"
         )
 
@@ -153,8 +135,11 @@ def check_query_quality(query: str) -> GuardResult:
 # ============================================================
 def check_safety(query: str) -> GuardResult:
     q = query.lower()
+    rules = get_security_rules()
+    blocked_words = rules.get("blocked_keywords", [])
+    injection_patterns = rules.get("injection_patterns", [])
 
-    for word in BLOCKED_KEYWORDS:
+    for word in blocked_words:
         if re.search(rf"\b{re.escape(word)}\b", q):
             return GuardResult(
                 passed=False,
@@ -163,7 +148,7 @@ def check_safety(query: str) -> GuardResult:
                 layer="Layer 2: Rule-Based Safety"
             )
 
-    for pattern in INJECTION_PATTERNS:
+    for pattern in injection_patterns:
         if re.search(pattern, q):
             return GuardResult(
                 passed=False,

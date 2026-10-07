@@ -1,0 +1,25 @@
+{
+  "domains": {
+    "Career": [
+      "career decision", "job offer", "mba admission", "internship", "career switch",
+      "salary negotiation", "promotion", "corporate vs startup", "resume review"
+    ],
+    "Finance": [
+      "investment decision", "financial planning", "stocks", "loan", "mutual funds",
+      "tax saving", "portfolio", "wealth management", "real estate buying", "savings strategy"
+    ],
+    "Legal": [
+      "legal advice", "tenant rights", "contract dispute", "intellectual property",
+      "trademark registration", "legal compliance", "co-founder agreement"
+    ],
+    "Wellbeing": [
+      "mental health", "stress management", "anxiety", "wellbeing", "burnout recovery",
+      "work-life balance", "sleep hygiene", "nutrition plan", "intermittent fasting"
+    ],
+    "General_Decision": [
+      "business decision", "startup strategy", "marketing plan", "hiring decision",
+      "partnership agreement", "should I choose", "help me decide", "pros and cons",
+      "compare options", "which option better", "career confusion"
+    ]
+  }
+}

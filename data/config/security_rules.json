@@ -1,0 +1,13 @@
+{
+  "blocked_keywords": [
+    "hack", "bypass", "exploit", "jailbreak", "ignore instructions",
+    "override", "steal data", "fraud", "scam", "malware", "ddos", "keylogger"
+  ],
+  "injection_patterns": [
+    "ignore\\s+(all\\s+)?(previous|above)\\s+instructions",
+    "you\\s+are\\s+now",
+    "act\\s+as\\s+an?\\s+unrestricted",
+    "pretend\\s+you\\s+are",
+    "system\\s+prompt\\s+override"
+  ]
+}
