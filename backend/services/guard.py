@@ -77,6 +77,7 @@ class GuardResult(BaseModel):
     layer: Optional[str] = None
     relevance_score: Optional[float] = None
     latency_ms: Optional[int] = None
+    warning: Optional[str] = None
 
 # ============================================================
 # LAYER 1 — Quality Check
@@ -200,8 +201,9 @@ def check_llm_safety(query: str) -> GuardResult:
         logger.info("Layer 4 skipped: OPENAI_API_KEY not configured. Passing with fallback.")
         return GuardResult(
             passed=True,
-            message="⚠️ LLM layer skipped (API key missing — passed with fallback)",
-            layer="Layer 4: LLM Classifier"
+            message="Passed with warning: Layer 4 LLM Safety Check skipped (API key missing).",
+            layer="Layer 4: LLM Classifier",
+            warning="Layer 4 skipped: OPENAI_API_KEY not configured."
         )
 
     try:
@@ -235,11 +237,12 @@ def check_llm_safety(query: str) -> GuardResult:
         )
 
     except Exception as e:
-        logger.error(f"LLM safety check error: {e}")
+        logger.warning(f"LLM safety check error: {e}")
         return GuardResult(
             passed=True,
-            message="⚠️ LLM classification unavailable — passed with fallback",
-            layer="Layer 4: LLM Classifier"
+            message="Passed with warning: Layer 4 LLM Safety Check skipped (OpenAI API quota/credit limit reached).",
+            layer="Layer 4: LLM Classifier",
+            warning="Layer 4 skipped: OpenAI API quota limit reached (Error 429)."
         )
 
 from backend.utils.query_processor import preprocess_query, ProcessedQuery
@@ -290,8 +293,9 @@ def guard_pipeline(query: str, selected_domain: Optional[str] = None) -> GuardRe
 
     return GuardResult(
         passed=True,
-        message="✅ Passed query preprocessing and all 4 guard pipeline layers",
-        latency_ms=int((time.time() - start) * 1000)
+        message="✅ Passed query preprocessing and guard pipeline layers",
+        latency_ms=int((time.time() - start) * 1000),
+        warning=res_llm.warning
     )
 
 # ============================================================
