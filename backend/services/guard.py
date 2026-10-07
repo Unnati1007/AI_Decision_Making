@@ -104,7 +104,7 @@ def check_query_quality(query: str) -> GuardResult:
         return GuardResult(
             passed=False,
             reason=GuardFailReason.TOO_SHORT,
-            message=f"Query too short. Please provide a clear question (min {MIN_QUERY_LENGTH} characters).",
+            message="Please enter a meaningful query",
             layer="Layer 1: Quality Check"
         )
 
@@ -120,7 +120,7 @@ def check_query_quality(query: str) -> GuardResult:
         return GuardResult(
             passed=False,
             reason=GuardFailReason.GIBBERISH,
-            message="Please enter a meaningful, valid decision-related query.",
+            message="Please re-enter a valid query",
             layer="Layer 1: Quality Check"
         )
 
@@ -166,7 +166,7 @@ def check_safety(query: str) -> GuardResult:
 # ============================================================
 # LAYER 3 — MiniLM Relevance Check
 # ============================================================
-def check_relevance(query: str) -> GuardResult:
+def check_relevance(query: str, selected_domain: Optional[str] = None) -> GuardResult:
     model = get_embed_model()
     keyword_embeddings = get_keyword_embeddings()
 
@@ -174,13 +174,13 @@ def check_relevance(query: str) -> GuardResult:
     similarity = util.cos_sim(query_embedding, keyword_embeddings)
     score = round(similarity.max().item(), 4)
 
-    logger.info(f"Layer 3 MiniLM Relevance score: {score}")
+    logger.info(f"Layer 3 MiniLM Relevance score: {score} (domain: {selected_domain})")
 
     if score < RELEVANCE_THRESHOLD:
         return GuardResult(
             passed=False,
             reason=GuardFailReason.NOT_RELEVANT,
-            message=f"Query is outside the supported decision-making domains (relevance score: {score}).",
+            message="Please ask queries related to your selected domain",
             layer="Layer 3: MiniLM Relevance",
             relevance_score=score
         )
@@ -206,7 +206,7 @@ def check_llm_safety(query: str) -> GuardResult:
 
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=LLM_MODEL_NAME,
             messages=[{
                 "role": "system",
                 "content": "You are a safety filter for a decision-support system. Reply ONLY 'SAFE' or 'UNSAFE'."
@@ -245,20 +245,48 @@ def check_llm_safety(query: str) -> GuardResult:
 from backend.utils.query_processor import preprocess_query, ProcessedQuery
 
 # ============================================================
-# FULL PIPELINE WITH PREPROCESSING (Section 5.2 + Guard 4 Layers)
+# FULL PIPELINE WITH PREPROCESSING (Section 5.6 Data Flow)
 # ============================================================
-def guard_pipeline(query: str) -> GuardResult:
+def guard_pipeline(query: str, selected_domain: Optional[str] = None) -> GuardResult:
+    """
+    5.6 Data Flow:
+    1. User enters query
+    2. Query is preprocessed (Section 5.2)
+    3. Quality check (Stage 1)
+    4. Safety check (Stage 2)
+    5. Relevance check (Stage 3)
+    6. LLM safety validation (Stage 4)
+    7. Valid query forwarded to AI engine
+    """
     start = time.time()
 
-    # Step 0: Query Preprocessing (Section 5.2)
+    # Step 2 in Data Flow: Preprocessing
     processed: ProcessedQuery = preprocess_query(query)
     clean_q = processed.normalized_query
 
-    for check in [check_query_quality, check_safety, check_relevance, check_llm_safety]:
-        result = check(clean_q)
-        if not result.passed:
-            result.latency_ms = int((time.time() - start) * 1000)
-            return result
+    # Step 3: Quality Check
+    res_quality = check_query_quality(clean_q)
+    if not res_quality.passed:
+        res_quality.latency_ms = int((time.time() - start) * 1000)
+        return res_quality
+
+    # Step 4: Safety Check
+    res_safety = check_safety(clean_q)
+    if not res_safety.passed:
+        res_safety.latency_ms = int((time.time() - start) * 1000)
+        return res_safety
+
+    # Step 5: Relevance Check
+    res_relevance = check_relevance(clean_q, selected_domain=selected_domain)
+    if not res_relevance.passed:
+        res_relevance.latency_ms = int((time.time() - start) * 1000)
+        return res_relevance
+
+    # Step 6: LLM Safety Validation
+    res_llm = check_llm_safety(clean_q)
+    if not res_llm.passed:
+        res_llm.latency_ms = int((time.time() - start) * 1000)
+        return res_llm
 
     return GuardResult(
         passed=True,
