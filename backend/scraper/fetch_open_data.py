@@ -27,7 +27,22 @@ TARGET_TOPICS = {
         "Remote_work",
         "Executive_education",
         "Career_management",
-        "Job_interview"
+        "Job_interview",
+        "Curriculum_vitae",
+        "Mentorship",
+        "Performance_appraisal",
+        "Work%E2%80%93life_balance",
+        "Gig_economy",
+        "Professional_network",
+        "Soft_skills",
+        "Apprenticeship",
+        "Executive_coaching",
+        "Severance_package",
+        "Performance_improvement_plan",
+        "Employment_contract",
+        "Career_development",
+        "Job_satisfaction",
+        "Organizational_culture"
     ],
     "finance": [
         "Mutual_fund",
@@ -93,7 +108,10 @@ def fetch_roadmap_sh_guides() -> list:
         ("Frontend Developer Roadmap", "https://raw.githubusercontent.com/kamranahmedse/developer-roadmap/master/src/data/roadmaps/frontend/frontend.md", "career"),
         ("Backend Developer Roadmap", "https://raw.githubusercontent.com/kamranahmedse/developer-roadmap/master/src/data/roadmaps/backend/backend.md", "career"),
         ("DevOps Roadmap", "https://raw.githubusercontent.com/kamranahmedse/developer-roadmap/master/src/data/roadmaps/devops/devops.md", "career"),
-        ("AI Engineer Roadmap", "https://raw.githubusercontent.com/kamranahmedse/developer-roadmap/master/src/data/roadmaps/ai-engineer/ai-engineer.md", "career")
+        ("AI Engineer Roadmap", "https://raw.githubusercontent.com/kamranahmedse/developer-roadmap/master/src/data/roadmaps/ai-engineer/ai-engineer.md", "career"),
+        ("Data Analyst Roadmap", "https://raw.githubusercontent.com/kamranahmedse/developer-roadmap/master/src/data/roadmaps/data-analyst/data-analyst.md", "career"),
+        ("Cyber Security Roadmap", "https://raw.githubusercontent.com/kamranahmedse/developer-roadmap/master/src/data/roadmaps/cyber-security/cyber-security.md", "career"),
+        ("System Design Roadmap", "https://raw.githubusercontent.com/kamranahmedse/developer-roadmap/master/src/data/roadmaps/system-design/system-design.md", "career")
     ]
     results = []
     headers = {"User-Agent": "IntelliChoiceBot/1.0"}
@@ -106,7 +124,7 @@ def fetch_roadmap_sh_guides() -> list:
                 logger.info(f"Fetched roadmap: {title}")
         except Exception as e:
             logger.error(f"Error fetching roadmap {title}: {e}")
-        time.sleep(0.5) # respect rate limit
+        time.sleep(0.3)
         
     return results
 
