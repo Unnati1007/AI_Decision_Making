@@ -78,3 +78,7 @@ build/
 *.bak
 *.tmp
 *.temp
+
+# Temporary scratch and raw roadmaps node files
+scratch/
+data/career/roadmaps/

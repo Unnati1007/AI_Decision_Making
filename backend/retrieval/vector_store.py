@@ -1,5 +1,5 @@
 # ============================================================
-# IntelliChoice — FAISS Vector Store Manager
+# IntelliChoice — FAISS Vector Store Manager (Cosine Similarity)
 # ============================================================
 
 import os
@@ -17,8 +17,8 @@ METADATA_FILENAME = "metadata.pkl"
 class FAISSVectorStore:
     def __init__(self, dimension: int = 384):
         self.dimension = dimension
-        # Flat L2 index over normalized vectors (L2 distance on normalized vectors = 2 * (1 - cosine_similarity))
-        self.index = faiss.IndexFlatL2(self.dimension)
+        # Inner Product index over L2-normalized vectors = Cosine Similarity (1.0 = identical, higher is better)
+        self.index = faiss.IndexFlatIP(self.dimension)
         self.chunks: List[str] = []
         self.metadatas: List[Dict[str, Any]] = []
 
@@ -27,17 +27,19 @@ class FAISSVectorStore:
         return self.index.ntotal
 
     def add_documents(self, chunks: List[str], embeddings: np.ndarray, metadatas: List[Dict[str, Any]]):
-        """Adds text chunks, vector embeddings, and metadata dictionaries to the index."""
+        """Adds text chunks, vector embeddings, and metadata dictionaries to the index after L2-normalization."""
         if len(chunks) != len(embeddings) or len(chunks) != len(metadatas):
             raise ValueError("Lengths of chunks, embeddings, and metadatas must match.")
         
         if embeddings.dtype != np.float32:
             embeddings = embeddings.astype(np.float32)
 
+        # Normalize L2 for Cosine Similarity via Inner Product
+        faiss.normalize_L2(embeddings)
         self.index.add(embeddings)
         self.chunks.extend(chunks)
         self.metadatas.extend(metadatas)
-        logger.info(f"Added {len(chunks)} chunks to FAISS index. Total index size: {self.index.ntotal}")
+        logger.info(f"Added {len(chunks)} chunks to FAISS Cosine Index. Total index size: {self.index.ntotal}")
 
     def save(self, directory: str):
         """Persists the FAISS index binary and metadata pkl to specified directory."""
@@ -67,7 +69,7 @@ class FAISSVectorStore:
                 self.chunks = data.get("chunks", [])
                 self.metadatas = data.get("metadatas", [])
                 self.dimension = data.get("dimension", 384)
-            logger.info(f"Successfully loaded FAISS index with {self.index.ntotal} vectors from {directory}")
+            logger.info(f"Successfully loaded FAISS Cosine index with {self.index.ntotal} vectors from {directory}")
             return True
         except Exception as e:
             logger.error(f"Error loading vector store from {directory}: {e}")
@@ -76,11 +78,12 @@ class FAISSVectorStore:
     def similarity_search_with_score(
         self,
         query_vector: np.ndarray,
-        k: int = 5,
+        k: int = 4,
         domain_filter: Optional[str] = None
     ) -> List[Tuple[str, Dict[str, Any], float]]:
         """
-        Performs nearest-neighbor search. Returns list of (chunk_text, metadata, L2_distance_score).
+        Performs Cosine Similarity search. Returns list of (chunk_text, metadata, cosine_similarity_score).
+        Higher score = greater similarity (range: 0.0 to 1.0).
         If domain_filter is supplied, over-fetches and filters by domain.
         """
         if self.index.ntotal == 0:
@@ -92,12 +95,15 @@ class FAISSVectorStore:
         if query_vector.dtype != np.float32:
             query_vector = query_vector.astype(np.float32)
 
+        # L2 Normalize Query Vector for Cosine Similarity
+        faiss.normalize_L2(query_vector)
+
         # Over-fetch to allow post-filtering if domain is specified
         fetch_k = min(self.index.ntotal, k * 5 if domain_filter else k)
-        distances, indices = self.index.search(query_vector, fetch_k)
+        similarities, indices = self.index.search(query_vector, fetch_k)
 
         results = []
-        for dist, idx in zip(distances[0], indices[0]):
+        for sim, idx in zip(similarities[0], indices[0]):
             if idx < 0 or idx >= len(self.chunks):
                 continue
             meta = self.metadatas[idx]
@@ -105,7 +111,9 @@ class FAISSVectorStore:
                 continue
             
             chunk = self.chunks[idx]
-            results.append((chunk, meta, float(dist)))
+            # Clip cosine similarity to [0.0, 1.0] for display
+            cos_score = max(0.0, min(1.0, float(sim)))
+            results.append((chunk, meta, cos_score))
             if len(results) >= k:
                 break
 

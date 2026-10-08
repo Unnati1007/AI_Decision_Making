@@ -27,7 +27,7 @@ LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", "gpt-4o-mini")
 
 MIN_QUERY_LENGTH = int(os.getenv("MIN_QUERY_LENGTH", "8"))
 MAX_QUERY_LENGTH = int(os.getenv("MAX_QUERY_LENGTH", "1000"))
-RELEVANCE_THRESHOLD = float(os.getenv("RELEVANCE_THRESHOLD", "0.35"))
+RELEVANCE_THRESHOLD = float(os.getenv("RELEVANCE_THRESHOLD", "0.20"))
 
 # ── Dynamic Config Loaders ─────────────────────────────────
 def load_json_config(filename: str, default: dict) -> dict:

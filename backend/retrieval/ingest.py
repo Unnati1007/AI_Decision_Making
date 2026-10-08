@@ -69,8 +69,8 @@ def run_ingestion():
     all_metadatas: List[Dict[str, Any]] = []
 
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=2000,    # ~350-400 words per chunk for full rich context
-        chunk_overlap=250,  # ~50 words overlap
+        chunk_size=1200,    # ~250 words per chunk to fit strictly within 1800 token budget
+        chunk_overlap=150,  # ~30 words overlap
         separators=["\n\n", "\n", " ", ""]
     )
 

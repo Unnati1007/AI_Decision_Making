@@ -36,7 +36,7 @@ def reload_vector_store() -> FAISSVectorStore:
 def retrieve_context(
     query: str,
     domain: Optional[str] = None,
-    top_k: int = 5,
+    top_k: int = 4,
     max_token_budget: int = 1800
 ) -> Tuple[str, List[Dict[str, Any]], List[Tuple[str, Dict[str, Any], float]]]:
     """
@@ -96,8 +96,8 @@ def retrieve_context(
                 "similarity_score": round(score, 4)
             })
 
-    # Optional Live Web Search Fallback via Tavily API
-    if not results or (results and results[0][2] > 1.25):
+    # Optional Live Web Search Fallback via Tavily API (Trigger if local cosine similarity < 0.35)
+    if not results or (results and results[0][2] < 0.35):
         from backend.retrieval.tavily_search import search_tavily
         logger.info(f"Local vector similarity low (or no results). Invoking Tavily Live Web Search for: '{query}'")
         web_results = search_tavily(query, max_results=3)
