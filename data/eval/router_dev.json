@@ -1,0 +1,182 @@
+[
+  {
+    "id": "E1",
+    "group": "English",
+    "query": "How to prepare for a software engineering technical interview",
+    "expected_domain": "career"
+  },
+  {
+    "id": "E2",
+    "group": "English",
+    "query": "What is the difference between term insurance and health insurance",
+    "expected_domain": "finance"
+  },
+  {
+    "id": "E3",
+    "group": "English",
+    "query": "What are my rights if my landlord refuses to return my security deposit",
+    "expected_domain": "legal"
+  },
+  {
+    "id": "E4",
+    "group": "English",
+    "query": "How many hours of sleep are recommended for daily mental wellness",
+    "expected_domain": "wellbeing"
+  },
+  {
+    "id": "E5",
+    "group": "English",
+    "query": "How to handle a performance improvement plan from my manager",
+    "expected_domain": "career"
+  },
+  {
+    "id": "E6",
+    "group": "English",
+    "query": "How to file an income tax return for salaried employees",
+    "expected_domain": "finance"
+  },
+  {
+    "id": "E7",
+    "group": "English",
+    "query": "What steps are required to file a consumer forum complaint",
+    "expected_domain": "legal"
+  },
+  {
+    "id": "E8",
+    "group": "English",
+    "query": "Best posture setup for working long hours at a desk",
+    "expected_domain": "wellbeing"
+  },
+  {
+    "id": "E9",
+    "group": "English",
+    "query": "Comparing equity stock investments vs fixed deposits for long term",
+    "expected_domain": "finance"
+  },
+  {
+    "id": "E10",
+    "group": "English",
+    "query": "How to deal with workplace burnout and physical exhaustion",
+    "expected_domain": "wellbeing"
+  },
+  {
+    "id": "H1",
+    "group": "Hinglish",
+    "query": "Mujhe naye project me tech stack switch karna chahiye ya nahi",
+    "expected_domain": "career"
+  },
+  {
+    "id": "H2",
+    "group": "Hinglish",
+    "query": "Mera employer notice period waive nahi kar rha, kya legal options hain",
+    "expected_domain": "legal"
+  },
+  {
+    "id": "H3",
+    "group": "Hinglish",
+    "query": "Salary aane par mutual funds SIP me kitna invest karna sahi rahega",
+    "expected_domain": "finance"
+  },
+  {
+    "id": "H4",
+    "group": "Hinglish",
+    "query": "Din bhar screen ke samne baithne se aakhon aur kamar me dard hota hai",
+    "expected_domain": "wellbeing"
+  },
+  {
+    "id": "H5",
+    "group": "Hinglish",
+    "query": "Product company me interview clear karne ke liye kaunsi skills zaruri hain",
+    "expected_domain": "career"
+  },
+  {
+    "id": "H6",
+    "group": "Hinglish",
+    "query": "Har mahine 80C ke under tax bachat kaise karein",
+    "expected_domain": "finance"
+  },
+  {
+    "id": "H7",
+    "group": "Hinglish",
+    "query": "Landlord agar bina notice rent badha de toh police complaint kar sakte hain",
+    "expected_domain": "legal"
+  },
+  {
+    "id": "H8",
+    "group": "Hinglish",
+    "query": "Raat ko der tak neend nahi aati aur stress rehta hai kya karu",
+    "expected_domain": "wellbeing"
+  },
+  {
+    "id": "H9",
+    "group": "Hinglish",
+    "query": "Company me 3 saal se same role pe hu promotion ke liye kaise baat karein",
+    "expected_domain": "career"
+  },
+  {
+    "id": "H10",
+    "group": "Hinglish",
+    "query": "Emergency fund kitne mahine ke kharche ke barabar hona chahiye",
+    "expected_domain": "finance"
+  },
+  {
+    "id": "T1",
+    "group": "Typos",
+    "query": "How to negotiat salry after geting job offr",
+    "expected_domain": "career"
+  },
+  {
+    "id": "T2",
+    "group": "Typos",
+    "query": "Is mutual fund SIP safer than stock marckets for beginner",
+    "expected_domain": "finance"
+  },
+  {
+    "id": "T3",
+    "group": "Typos",
+    "query": "What is non disclsure agrement clause in employment contract",
+    "expected_domain": "legal"
+  },
+  {
+    "id": "T4",
+    "group": "Typos",
+    "query": "Best exercise for lower back painn and posture baseline",
+    "expected_domain": "wellbeing"
+  },
+  {
+    "id": "T5",
+    "group": "Typos",
+    "query": "Resigning from toxic job without notice period penaltyy",
+    "expected_domain": "career"
+  },
+  {
+    "id": "A1",
+    "group": "Ambiguous",
+    "query": "Can my current employer stop me legally from joining a direct competitor",
+    "expected_domain": ["career", "legal"]
+  },
+  {
+    "id": "A2",
+    "group": "Ambiguous",
+    "query": "Should I take an education loan to fund my executive MBA abroad",
+    "expected_domain": ["career", "finance"]
+  },
+  {
+    "id": "A3",
+    "group": "Ambiguous",
+    "query": "Company not paying pending salary and severance package after layoff",
+    "expected_domain": ["career", "legal"]
+  },
+  {
+    "id": "A4",
+    "group": "Ambiguous",
+    "query": "Is it safe to invest employee provident fund into stock market index funds",
+    "expected_domain": ["finance", "legal"]
+  },
+  {
+    "id": "A5",
+    "group": "Ambiguous",
+    "query": "Taking a health sabbatical due to severe work stress and burnout",
+    "expected_domain": ["career", "wellbeing"]
+  }
+]
