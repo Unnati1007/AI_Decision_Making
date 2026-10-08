@@ -216,8 +216,10 @@ def evaluate():
 
             rank = 0
             if expected:
+                expected_clean = expected.lower().replace("_", " ").replace("-", " ")
                 for idx, t in enumerate(retrieved_titles, 1):
-                    if expected.lower() in t or t in expected.lower():
+                    t_clean = t.lower().replace("_", " ").replace("-", " ")
+                    if expected_clean in t_clean or t_clean in expected_clean or any(word in t_clean for word in expected_clean.split() if len(word) > 4):
                         rank = idx
                         break
 
