@@ -69,8 +69,8 @@ def run_ingestion():
     all_metadatas: List[Dict[str, Any]] = []
 
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=500,
-        chunk_overlap=50,
+        chunk_size=2000,    # ~350-400 words per chunk for full rich context
+        chunk_overlap=250,  # ~50 words overlap
         separators=["\n\n", "\n", " ", ""]
     )
 
@@ -80,7 +80,7 @@ def run_ingestion():
         if not os.path.exists(domain_dir):
             continue
 
-        md_files = glob.glob(os.path.join(domain_dir, "*.md"))
+        md_files = glob.glob(os.path.join(domain_dir, "**", "*.md"), recursive=True)
         for filepath in md_files:
             body, meta = parse_markdown_file(filepath, domain)
             if not body or len(body.strip()) < 10:
