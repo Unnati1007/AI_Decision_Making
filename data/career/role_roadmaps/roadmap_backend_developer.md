@@ -2,7 +2,7 @@
 title: Backend Developer Roadmap
 url: https://roadmap.sh/backend
 domain: career
-source_type: official
+source_type: roadmap_derived
 last_updated: '2026-10-08'
 ---
 

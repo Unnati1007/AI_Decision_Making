@@ -1,0 +1,41 @@
+---
+title: "Product management"
+url: "https://en.wikipedia.org/wiki/Product_management"
+domain: career
+source_type: wikipedia
+license: "CC BY-SA 4.0"
+last_updated: "2026-10-09"
+---
+
+# Product management
+
+Product management is the business process of planning, developing, launching, and managing a product or service. It includes the entire lifecycle of a product, from ideation to development to go to market. Product managers are responsible for ensuring that a product meets the needs of its target market and contributes to the business strategy, while managing a product or products at all stages of the product lifecycle. Software product management adapts the fundamentals of product management for digital products.
+
+
+## History
+The concept of product management originates from a 1931 memo by Procter & Gamble President Neil H. McElroy. McElroy, requesting additional employees focused on brand management, needed "Brand Men" who would take on the role of managing products, packaging, positioning, distribution, and sales performance. 
+The memo defined a brand man's work as:
+
+Study carefully the shipments of his brands by units.
+Where brand development is heavy ... examine carefully the combination of effort that seems to be clicking, and try to apply this same treatment to other territories.
+Where brand development is light:
+Study the advertising and promotion history of the brand.
+After uncovering our weaknesses, develop a plan that can be applied to this local sore spot.
+Outline this plan in detail for the division manager.
+Prepare sales helps and all other necessary material for carrying out the plan.
+Keep whatever records are necessary and make whatever field studies are necessary to determine whether the plan has produced the expected results.
+Take full responsibility ... for the general printed word plans for his brands.
+Take full responsibility for all other advertising expenditures.
+Experiment with and recommend wrapper revisions.
+Sees the district manager a number of times a year to discuss with him any possible faults in our promotion plans for that territory.
+In modern terms, McElroy defined the role as: analyzing product distribution, optimizing working distribution strategies, diagnosing and solving distribution issues, optimizing product positioning and product marketing, and collaborating with regional distribution managers.
+
+
+## Role of product managers
+Product managers are responsible for managing a company's product line on a day-to-day basis. As a result, product managers are critical in driving a company's growth, margins, and revenue. They are responsible for the business case, conceptualizing, planning, product development, product marketing, and delivering products to their target market. Depending on the company's size, industry, and history, product management has a variety of functions and roles. Frequently there is an income statement (or profit and loss) responsibility as a key metric for evaluating product manager performance. 
+
+
+## Tasks
+Product managers analyze information including customer research, competitive intelligence, industry analysis, trends, economic signals, and competitive activity, as well as documenting requirements, setting product strategy, and creating the roadmap. Product managers align across departments within their company including product design and development, marketing, sales, customer support, and legal.
+
+

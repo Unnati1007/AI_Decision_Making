@@ -2,7 +2,7 @@
 title: Full Stack Developer Roadmap
 url: https://roadmap.sh/full-stack
 domain: career
-source_type: official
+source_type: roadmap_derived
 last_updated: '2026-10-08'
 ---
 
