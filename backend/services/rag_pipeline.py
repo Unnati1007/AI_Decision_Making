@@ -9,7 +9,7 @@ import httpx
 from typing import Dict, Any, List, Optional
 from openai import OpenAI
 
-from backend.config import LLM_MODEL_NAME
+from backend.config import LLM_MODEL_NAME, TOP_K_DEFAULT, MAX_TOKEN_BUDGET
 from backend.services.guard import guard_pipeline, GuardResult
 from backend.services.domain_router import detect_domain
 from backend.retrieval.retriever import retrieve_context
@@ -117,7 +117,7 @@ def execute_turn_1(query: str, domain_override: Optional[str] = None) -> Dict[st
         domain = "career" # Safe default fallback
 
     # Step 3: RAG Retrieval
-    rag_context, sources, raw_results = retrieve_context(query, domain=domain, top_k=5, max_token_budget=1800)
+    rag_context, sources, raw_results = retrieve_context(query, domain=domain, top_k=TOP_K_DEFAULT, max_token_budget=MAX_TOKEN_BUDGET)
 
     # Step 4: Turn 1 LLM Generation (Clarifying MCQs)
     mcqs = None
@@ -190,7 +190,7 @@ def execute_turn_2(
     domain RAG context, and user MCQ answers.
     """
     # Step 1: Re-retrieve RAG Context
-    rag_context, sources, _ = retrieve_context(query, domain=domain, top_k=5, max_token_budget=1800)
+    rag_context, sources, _ = retrieve_context(query, domain=domain, top_k=TOP_K_DEFAULT, max_token_budget=MAX_TOKEN_BUDGET)
     if context_sources:
         # Merge sources preserving uniqueness
         seen = {s["title"] for s in sources}

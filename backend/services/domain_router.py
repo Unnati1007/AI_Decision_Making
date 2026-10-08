@@ -6,6 +6,7 @@ import logging
 import numpy as np
 from typing import Dict
 from backend.retrieval.embedder import embed_query
+from backend.config import DOMAIN_ROUTER_THRESHOLD
 
 logger = logging.getLogger("intellichoice.domain_router")
 
@@ -66,7 +67,7 @@ def detect_domain(query: str) -> str:
             best_domain = domain
 
     # Cutoff if query similarity to all domain prototypes is below threshold
-    if best_score < 0.25:
+    if best_score < DOMAIN_ROUTER_THRESHOLD:
         return "unknown"
 
     return best_domain

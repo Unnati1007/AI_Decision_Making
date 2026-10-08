@@ -15,6 +15,7 @@ if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from backend.config import EMBEDDING_DIM
 from backend.retrieval.embedder import embed_texts
 from backend.retrieval.vector_store import FAISSVectorStore
 
@@ -192,7 +193,7 @@ def run_ingestion():
 
     embeddings = embed_texts(all_chunks)
 
-    vector_store = FAISSVectorStore(dimension=384)
+    vector_store = FAISSVectorStore(dimension=EMBEDDING_DIM)
     vector_store.add_documents(all_chunks, embeddings, all_metadatas)
     vector_store.save(VECTOR_DB_DIR)
 

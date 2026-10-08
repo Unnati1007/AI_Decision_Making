@@ -27,27 +27,26 @@ client = OpenAI(api_key=openai_api_key, http_client=httpx.Client()) if openai_ap
 if not openai_api_key:
     logger.warning("⚠️ OPENAI_API_KEY not set → LLM layer will pass with fallback")
 
-# ── Embedding Model ────────────────────────────────────────
-EMBED_MODEL_NAME = "all-MiniLM-L6-v2"
+from backend.config import (
+    MIN_QUERY_LENGTH,
+    MAX_QUERY_CHARS,
+    MIN_VALID_WORD_RATIO,
+    RELEVANCE_THRESHOLD,
+    EMBEDDING_MODEL,
+    LLM_MODEL_NAME,
+    get_domain_keywords,
+    get_security_rules
+)
+
 _embed_model = None
 _keyword_embeddings = None
 
 def get_embed_model():
     global _embed_model
     if _embed_model is None:
-        logger.info(f"Loading embedding model: {EMBED_MODEL_NAME}")
-        _embed_model = SentenceTransformer(EMBED_MODEL_NAME)
+        logger.info(f"Loading embedding model: {EMBEDDING_MODEL}")
+        _embed_model = SentenceTransformer(EMBEDDING_MODEL)
     return _embed_model
-
-from backend.config import (
-    MIN_QUERY_LENGTH,
-    MAX_QUERY_LENGTH,
-    RELEVANCE_THRESHOLD,
-    EMBED_MODEL_NAME,
-    LLM_MODEL_NAME,
-    get_domain_keywords,
-    get_security_rules
-)
 
 def get_keyword_embeddings():
     global _keyword_embeddings
@@ -93,7 +92,7 @@ def is_gibberish(text: str) -> bool:
         
     # Check valid word character ratio
     valid_words = [w for w in words if re.match(r"^[a-zA-Z0-9\?\!\,\.\'\"]+$", w)]
-    if len(valid_words) / max(len(words), 1) < 0.5:
+    if len(valid_words) / max(len(words), 1) < MIN_VALID_WORD_RATIO:
         return True
 
     return False
@@ -109,7 +108,7 @@ def check_query_quality(query: str) -> GuardResult:
             layer="Layer 1: Quality Check"
         )
 
-    if len(q) > MAX_QUERY_LENGTH:
+    if len(q) > MAX_QUERY_CHARS:
         return GuardResult(
             passed=False,
             reason=GuardFailReason.TOO_LONG,
@@ -165,7 +164,7 @@ def check_safety(query: str) -> GuardResult:
     )
 
 # ============================================================
-# LAYER 3 — MiniLM Relevance Check
+# LAYER 3 — Embedding Relevance Check
 # ============================================================
 def check_relevance(query: str, selected_domain: Optional[str] = None) -> GuardResult:
     model = get_embed_model()
@@ -175,21 +174,21 @@ def check_relevance(query: str, selected_domain: Optional[str] = None) -> GuardR
     similarity = util.cos_sim(query_embedding, keyword_embeddings)
     score = round(similarity.max().item(), 4)
 
-    logger.info(f"Layer 3 MiniLM Relevance score: {score} (domain: {selected_domain})")
+    logger.info(f"Layer 3 Embedding Relevance score: {score} (domain: {selected_domain})")
 
     if score < RELEVANCE_THRESHOLD:
         return GuardResult(
             passed=False,
             reason=GuardFailReason.NOT_RELEVANT,
             message="Please ask queries related to your selected domain",
-            layer="Layer 3: MiniLM Relevance",
+            layer="Layer 3: Embedding Relevance",
             relevance_score=score
         )
 
     return GuardResult(
         passed=True,
         message=f"✅ Passed relevance check ({score})",
-        layer="Layer 3: MiniLM Relevance",
+        layer="Layer 3: Embedding Relevance",
         relevance_score=score
     )
 
