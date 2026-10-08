@@ -96,5 +96,30 @@ def retrieve_context(
                 "similarity_score": round(score, 4)
             })
 
+    # Optional Live Web Search Fallback via Tavily API
+    if not results or (results and results[0][2] > 1.25):
+        from backend.retrieval.tavily_search import search_tavily
+        logger.info(f"Local vector similarity low (or no results). Invoking Tavily Live Web Search for: '{query}'")
+        web_results = search_tavily(query, max_results=3)
+        for w_idx, w_res in enumerate(web_results, 1):
+            w_title = w_res.get("title", "Live Web Result")
+            w_content = w_res.get("content", "")
+            w_url = w_res.get("url", "")
+            
+            header = f"[Live Web Source {w_idx}: {w_title}]"
+            formatted_chunk = f"{header}\n{w_content}\n"
+            
+            if current_char_count + len(formatted_chunk) <= max_char_limit:
+                context_chunks.append(formatted_chunk)
+                current_char_count += len(formatted_chunk)
+                sources.append({
+                    "id": f"WebSource-{len(sources)+1}",
+                    "title": w_title,
+                    "source": "Tavily Live Web Search",
+                    "url": w_url,
+                    "domain": domain or "general",
+                    "similarity_score": 0.0
+                })
+
     context_block = "\n---\n".join(context_chunks)
     return context_block, sources, results

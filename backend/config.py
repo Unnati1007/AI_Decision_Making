@@ -18,6 +18,8 @@ CONFIG_DIR = DATA_DIR / "config"
 
 # ── Environment & Model Configurations ────────────────────
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+TAVILY_API_KEY = os.getenv("TAVILY_API_KEY", "")
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "")
 EMBED_MODEL_NAME = os.getenv("EMBED_MODEL_NAME", "all-MiniLM-L6-v2")
 LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", "gpt-4o-mini")
 
