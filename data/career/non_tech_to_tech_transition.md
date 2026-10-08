@@ -1,6 +1,6 @@
 ---
 title: Non-Tech to Tech Career Transition Guide
-url: https://roadmap.sh
+url: ""
 domain: career
 source_type: ai_curated
 last_updated: '2026-10-08'

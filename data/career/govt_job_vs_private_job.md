@@ -1,6 +1,6 @@
 ---
 title: Government Job vs Private Corporate Career Decision Framework
-url: https://www.ncs.gov.in
+url: ""
 domain: career
 source_type: ai_curated
 last_updated: '2026-10-08'
