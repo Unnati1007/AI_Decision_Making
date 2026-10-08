@@ -5,9 +5,15 @@
 import os
 import re
 import glob
+import sys
 import yaml
 import logging
 from typing import List, Dict, Any, Tuple
+
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from backend.retrieval.embedder import embed_texts
@@ -16,7 +22,6 @@ from backend.retrieval.vector_store import FAISSVectorStore
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("intellichoice.ingest")
 
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
 VECTOR_DB_DIR = os.path.join(PROJECT_ROOT, "vector_db")
 
