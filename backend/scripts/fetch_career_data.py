@@ -157,13 +157,69 @@ def harvest_github_tech_trends():
 
     return harvested_count
 
+def harvest_news_market_updates():
+    """Fetches real-time tech market news via NewsAPI and saves as markdown."""
+    from backend.retrieval.news_fetcher import fetch_tech_market_news
+    articles = fetch_tech_market_news("tech hiring OR software engineer salary OR tech layoffs", limit=5)
+    if not articles:
+        return 0
+
+    filename = "news_tech_hiring_market_updates.md"
+    filepath = os.path.join(CAREER_DATA_DIR, filename)
+
+    lines = [
+        "# Industry Intelligence: Tech Hiring & Market News Updates",
+        "\n## 📌 Executive Summary",
+        "Recent tech industry announcements, hiring market shifts, and salary dynamics aggregated via NewsAPI.",
+        "\n## 📰 Key News Headlines & Analysis\n"
+    ]
+
+    for a in articles:
+        lines.append(f"### 🔹 [{a['title']}]({a['url']})")
+        lines.append(f"- **Source**: {a['source']} | **Published**: {a['publishedAt']}")
+        lines.append(f"- **Summary**: {a['description']}\n")
+
+    with open(filepath, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+    logger.info(f"✅ Harvested NewsAPI Updates -> {filename}")
+    return 1
+
+def harvest_arxiv_research():
+    """Fetches recent AI/CS research paper summaries via ArXiv Open API and saves as markdown."""
+    from backend.retrieval.arxiv_fetcher import fetch_arxiv_papers
+    papers = fetch_arxiv_papers("cat:cs.AI OR cat:cs.SE", max_results=5)
+    if not papers:
+        return 0
+
+    filename = "arxiv_ai_software_engineering_research.md"
+    filepath = os.path.join(CAREER_DATA_DIR, filename)
+
+    lines = [
+        "# Technical Research Digest: AI & Software Engineering (ArXiv)",
+        "\n## 📌 Executive Summary",
+        "Cutting-edge research papers in Artificial Intelligence, System Architecture, and Software Engineering sourced from ArXiv Open Corpus.",
+        "\n## 📄 Recent Technical Papers\n"
+    ]
+
+    for p in papers:
+        lines.append(f"### 📑 [{p['title']}]({p['url']})")
+        lines.append(f"- **Published**: {p['published']}")
+        lines.append(f"- **Abstract Summary**: {p['summary']}\n")
+
+    with open(filepath, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+    logger.info(f"✅ Harvested ArXiv Research Papers -> {filename}")
+    return 1
+
 def main():
     logger.info("🚀 Starting Master Career Data Harvester...")
     wiki_added = harvest_wikipedia_articles()
     gh_added = harvest_github_tech_trends()
+    news_added = harvest_news_market_updates()
+    arxiv_added = harvest_arxiv_research()
 
-    total_added = wiki_added + gh_added
-    logger.info(f"🎉 Harvesting Complete! Added {total_added} new data files.")
+    total_added = wiki_added + gh_added + news_added + arxiv_added
+    logger.info(f"🎉 Harvesting Complete! Added {total_added} new data sources.")
 
     if total_added > 0 or not os.path.exists(os.path.join(PROJECT_ROOT, "vector_db", "faiss_index.bin")):
         logger.info("⚡ Re-building FAISS Vector Embeddings...")
