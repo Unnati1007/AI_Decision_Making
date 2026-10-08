@@ -1,8 +1,9 @@
 ---
-title: "Cybercrime"
-url: "https://en.wikipedia.org/wiki/Cybercrime"
-source: "Wikipedia Open Corpus (CC BY-SA 3.0)"
-domain: "Legal"
+title: Cybercrime
+url: https://en.wikipedia.org/wiki/Cybercrime
+domain: legal
+source_type: wikipedia
+last_updated: '2026-10-08'
 ---
 
 # Cybercrime

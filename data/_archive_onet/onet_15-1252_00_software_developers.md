@@ -1,17 +1,18 @@
 ---
-title: "O*NET Occupation Profile: Database Administrators"
-code: "15-1242.00"
-source: "O*NET OnLine (U.S. Department of Labor)"
-domain: "Career"
+title: 'O*NET Occupation Profile: Software Developers'
+url: https://www.onetonline.org/link/summary/15-1252.00
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
-# O*NET Occupational Profile: Database Administrators (Code: 15-1242.00)
+# O*NET Occupational Profile: Software Developers (Code: 15-1252.00)
 
-**Source Citation**: [O*NET OnLine - Database Administrators](https://www.onetonline.org/link/summary/15-1242.00)
-**Category**: Data Infrastructure
+**Source Citation**: [O*NET OnLine - Software Developers](https://www.onetonline.org/link/summary/15-1252.00)
+**Category**: Technology
 
 ## 📌 Executive Summary
-Database Administrators develop, create, and modify general computer applications software or specialized utility programs. Analyze user needs and develop software solutions.
+Software Developers develop, create, and modify general computer applications software or specialized utility programs. Analyze user needs and develop software solutions.
 
 ## 🛠️ Key Tasks & Responsibilities
 - Design, develop, and test software systems and applications.

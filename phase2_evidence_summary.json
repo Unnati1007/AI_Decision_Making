@@ -1,0 +1,85 @@
+{
+  "total_chunks": 211,
+  "min_char": 203,
+  "avg_char": 459.1184834123223,
+  "max_char": 1025,
+  "min_token": 50,
+  "avg_token": 114.37914691943128,
+  "max_token": 256,
+  "mid_sentence_cuts": 11,
+  "mid_sentence_pct": 5.213270142180095,
+  "top_k_tokens": 457.5165876777251,
+  "fits_budget": true,
+  "samples": [
+    {
+      "sample_num": 1,
+      "source_file": "career/wiki_performance_improvement_plan.md",
+      "chunk_index": 0,
+      "char_len": 455,
+      "text": "Performance improvement\n**Source Citation**: [Wikipedia Open Corpus (CC BY-SA 3.0)](https://en.wikipedia.org/wiki/Performance_improvement)\n**Domain**: Career\n\n---\n\nPerformance improvement is a broad category of management that refers to the systematic approach of identifying, measuring, and improving the efficiency and effectiveness of processes. It can be applied to individual or organizational performance, such as athletics or commercial businesses."
+    },
+    {
+      "sample_num": 2,
+      "source_file": "career/interview_preparation_and_evaluation_rubrics.md",
+      "chunk_index": 2,
+      "char_len": 687,
+      "text": "Interview Preparation And Evaluation Rubrics > 🏗️ System Design Interview Framework (45-Minute Loop)\n1. **Scope Clarification & Functional Requirements (5 Mins)**: Clarify DAU/MAU, read/write ratios, peak throughput (QPS), and latency targets (p99).\n2. **High-Level Architecture & API Specs (15 Mins)**: Draw API endpoints, database schemas, load balancers, caching layers, and database choice (SQL vs NoSQL).\n3. **Deep Dive & Bottleneck Resolution (20 Mins)**: Address database sharding, replication lags, cache invalidation, rate limiting, and failure modes.\n4. **Trade-offs & Wrap-Up (5 Mins)**: Discuss CAP theorem choices, cost optimization, and alternative architectural decisions."
+    },
+    {
+      "sample_num": 3,
+      "source_file": "career/fresher_campus_placement_internship.md",
+      "chunk_index": 0,
+      "char_len": 294,
+      "text": "Fresher Guidance: Campus Placements vs Off-Campus vs Internships > 📌 Executive Summary\nFor college freshers and early graduates, navigating campus placements, off-campus applications, and PPO (Pre-Placement Offer) conversions sets the baseline trajectory for the first 3 years of career growth."
+    },
+    {
+      "sample_num": 4,
+      "source_file": "legal/dispute_resolution_mediation.md",
+      "chunk_index": 0,
+      "char_len": 507,
+      "text": "Dispute Resolution Mediation > 📌 Executive Summary\nResolving business and contractual disputes through alternative dispute resolution (ADR) vs Indian court litigation.\n\nDispute Resolution Mediation > ⚖️ Resolution Path Comparison\n- **Mediation / Arbitration**: Fast (3 to 6 months), confidential, lower fees, mutually agreed arbitrator. Highly recommended for commercial agreements.\n- **Court Litigation**: Public record, formal evidence requirements, long timelines (5 to 15+ years in Indian civil courts)."
+    },
+    {
+      "sample_num": 5,
+      "source_file": "career/onet/onet_15-1221_00_computer_and_information_research_scientists.md",
+      "chunk_index": 3,
+      "char_len": 551,
+      "text": "O*NET Occupation Profile: Computer and Information Research Scientists > 🧠 Core Skills & Competencies\n1. **Programming & Coding**: Writing computer code for various software applications.\n2. **Systems Analysis**: Determining how a system should work and how changes in conditions affect outcomes.\n3. **Complex Problem Solving**: Identifying complex problems and reviewing related information to evaluate options and implement solutions.\n4. **Critical Thinking**: Using logic and reasoning to identify strengths and weaknesses of alternative solutions."
+    },
+    {
+      "sample_num": 6,
+      "source_file": "career/onet/onet_15-1212_00_information_security_analysts.md",
+      "chunk_index": 0,
+      "char_len": 282,
+      "text": "O*NET Occupation Profile: Information Security Analysts > O*NET Occupational Profile: Information Security Analysts (Code: 15-1212.00)\n**Source Citation**: [O*NET OnLine - Information Security Analysts](https://www.onetonline.org/link/summary/15-1212.00)\n**Category**: Cybersecurity"
+    },
+    {
+      "sample_num": 7,
+      "source_file": "career/onet/onet_15-1211_00_computer_systems_analysts.md",
+      "chunk_index": 0,
+      "char_len": 267,
+      "text": "O*NET Occupation Profile: Computer Systems Analysts > O*NET Occupational Profile: Computer Systems Analysts (Code: 15-1211.00)\n**Source Citation**: [O*NET OnLine - Computer Systems Analysts](https://www.onetonline.org/link/summary/15-1211.00)\n**Category**: Technology"
+    },
+    {
+      "sample_num": 8,
+      "source_file": "career/layoffs_career_gaps.md",
+      "chunk_index": 0,
+      "char_len": 618,
+      "text": "Layoffs Career Gaps > 📌 Executive Summary\nNavigating unexpected job loss or explaining intentional career breaks requires a proactive, strategic communication framework.\n\nLayoffs Career Gaps > 🛠️ Layoff Recovery Steps\n1. **Immediate Financial Audit**: Secure severance package details, insurance continuity, and calculate emergency runway (aim for 6 months).\n2. **Network Activation**: Reach out directly to former colleagues, alumni, and recruiters with a concise, non-emotional status update.\n3. **Upskilling Narrative**: Frame the time between jobs as an active period of learning, consulting, or project execution."
+    },
+    {
+      "sample_num": 9,
+      "source_file": "legal/cyber_crime_data_privacy.md",
+      "chunk_index": 0,
+      "char_len": 591,
+      "text": "Cyber Crime Data Privacy > 📌 Executive Summary\nHandling online financial fraud, identity theft, data breaches, and IT Act reporting.\n\nCyber Crime Data Privacy > 🛡️ Immediate Incident Response\n1. **Financial Fraud Freeze**: Call **1930 Cyber Helpline** within the \"Golden Hour\" (first 2 hours) to freeze stolen funds in bank pipelines.\n2. **National Cyber Crime Portal**: File official complaint at cybercrime.gov.in with transaction receipts and screenshot proof.\n3. **Data Privacy Compliance**: DPDP (Digital Personal Data Protection) Act requires user consent for collecting personal data."
+    },
+    {
+      "sample_num": 10,
+      "source_file": "career/interview_preparation_and_evaluation_rubrics.md",
+      "chunk_index": 0,
+      "char_len": 277,
+      "text": "Interview Preparation And Evaluation Rubrics > 📌 Executive Summary\nTech interviews evaluate candidate competence across Coding/DSA, System Architecture, and Behavioral fit. Structuring responses using standardized evaluation rubrics significantly boosts offer conversion rates."
+    }
+  ]
+}

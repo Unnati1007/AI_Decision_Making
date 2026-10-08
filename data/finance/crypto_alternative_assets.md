@@ -1,3 +1,11 @@
+---
+title: Crypto Alternative Assets
+url: ''
+domain: finance
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Alternative Assets & Crypto Exposure Limits
 
 ## 📌 Executive Summary

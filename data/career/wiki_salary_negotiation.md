@@ -1,8 +1,9 @@
 ---
-title: "Salary"
-url: "https://en.wikipedia.org/wiki/Salary"
-source: "Wikipedia Open Corpus (CC BY-SA 3.0)"
-domain: "Career"
+title: Salary
+url: https://en.wikipedia.org/wiki/Salary
+domain: career
+source_type: wikipedia
+last_updated: '2026-10-08'
 ---
 
 # Salary

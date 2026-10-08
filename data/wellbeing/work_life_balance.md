@@ -1,3 +1,11 @@
+---
+title: Work Life Balance
+url: ''
+domain: wellbeing
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Remote Work Boundaries & Digital Detox
 
 ## 📌 Executive Summary

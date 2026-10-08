@@ -1,3 +1,11 @@
+---
+title: Remote Vs Onsite Work
+url: ''
+domain: career
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Remote vs Hybrid vs On-Site Work Decisions
 
 ## 📌 Executive Summary

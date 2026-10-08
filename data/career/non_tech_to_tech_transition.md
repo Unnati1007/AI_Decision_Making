@@ -1,9 +1,9 @@
 ---
-title: "Non-Tech to Tech Career Transition Guide"
-url: "https://roadmap.sh"
-domain: "career"
-source_type: "ai_curated"
-last_updated: "2026-10-08"
+title: Non-Tech to Tech Career Transition Guide
+url: https://roadmap.sh
+domain: career
+source_type: ai_curated
+last_updated: '2026-10-08'
 ---
 
 # Decision Framework: Non-Tech to Tech Career Transition Strategy

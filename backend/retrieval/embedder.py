@@ -5,7 +5,7 @@
 import logging
 import numpy as np
 from sentence_transformers import SentenceTransformer
-from backend.config import EMBED_MODEL_NAME
+from backend.config import EMBEDDING_MODEL
 
 logger = logging.getLogger("intellichoice.embedder")
 
@@ -15,8 +15,8 @@ def get_embedder() -> SentenceTransformer:
     """Returns the single shared instance of SentenceTransformer model."""
     global _embedder_model
     if _embedder_model is None:
-        logger.info(f"Loading SentenceTransformer model: {EMBED_MODEL_NAME}")
-        _embedder_model = SentenceTransformer(EMBED_MODEL_NAME)
+        logger.info(f"Loading SentenceTransformer model: {EMBEDDING_MODEL}")
+        _embedder_model = SentenceTransformer(EMBEDDING_MODEL)
     return _embedder_model
 
 def embed_texts(texts: list[str]) -> np.ndarray:

@@ -1,17 +1,18 @@
 ---
-title: "O*NET Occupation Profile: Software Quality Assurance Analysts and Testers"
-code: "15-1253.00"
-source: "O*NET OnLine (U.S. Department of Labor)"
-domain: "Career"
+title: 'O*NET Occupation Profile: Computer Systems Analysts'
+url: https://www.onetonline.org/link/summary/15-1211.00
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
-# O*NET Occupational Profile: Software Quality Assurance Analysts and Testers (Code: 15-1253.00)
+# O*NET Occupational Profile: Computer Systems Analysts (Code: 15-1211.00)
 
-**Source Citation**: [O*NET OnLine - Software Quality Assurance Analysts and Testers](https://www.onetonline.org/link/summary/15-1253.00)
+**Source Citation**: [O*NET OnLine - Computer Systems Analysts](https://www.onetonline.org/link/summary/15-1211.00)
 **Category**: Technology
 
 ## 📌 Executive Summary
-Software Quality Assurance Analysts and Testers develop, create, and modify general computer applications software or specialized utility programs. Analyze user needs and develop software solutions.
+Computer Systems Analysts develop, create, and modify general computer applications software or specialized utility programs. Analyze user needs and develop software solutions.
 
 ## 🛠️ Key Tasks & Responsibilities
 - Design, develop, and test software systems and applications.

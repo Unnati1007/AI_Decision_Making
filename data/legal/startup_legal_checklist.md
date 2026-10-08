@@ -1,3 +1,11 @@
+---
+title: Startup Legal Checklist
+url: ''
+domain: legal
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Startup Formation & Co-Founder Equity Vesting
 
 ## 📌 Executive Summary

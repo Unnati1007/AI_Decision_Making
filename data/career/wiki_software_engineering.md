@@ -1,8 +1,9 @@
 ---
-title: "Software engineering"
-url: "https://en.wikipedia.org/wiki/Software_engineering"
-source: "Wikipedia Open Corpus (CC BY-SA 3.0)"
-domain: "Career"
+title: Software engineering
+url: https://en.wikipedia.org/wiki/Software_engineering
+domain: career
+source_type: wikipedia
+last_updated: '2026-10-08'
 ---
 
 # Software engineering

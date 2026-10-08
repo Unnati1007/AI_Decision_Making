@@ -1,8 +1,9 @@
 ---
-title: "Master of Business Administration"
-url: "https://en.wikipedia.org/wiki/Master_of_Business_Administration"
-source: "Wikipedia Open Corpus (CC BY-SA 3.0)"
-domain: "Career"
+title: Master of Business Administration
+url: https://en.wikipedia.org/wiki/Master_of_Business_Administration
+domain: career
+source_type: wikipedia
+last_updated: '2026-10-08'
 ---
 
 # Master of Business Administration

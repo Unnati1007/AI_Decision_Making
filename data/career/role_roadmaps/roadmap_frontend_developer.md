@@ -1,8 +1,9 @@
 ---
-title: "Frontend Developer Roadmap"
-url: "https://roadmap.sh/frontend"
-source: "roadmap.sh Official Role Framework"
-domain: "Career"
+title: Frontend Developer Roadmap
+url: https://roadmap.sh/frontend
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
 # Career Roadmap: Frontend Developer

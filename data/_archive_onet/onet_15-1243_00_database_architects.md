@@ -1,17 +1,18 @@
 ---
-title: "O*NET Occupation Profile: Data Scientists"
-code: "15-2051.00"
-source: "O*NET OnLine (U.S. Department of Labor)"
-domain: "Career"
+title: 'O*NET Occupation Profile: Database Architects'
+url: https://www.onetonline.org/link/summary/15-1243.00
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
-# O*NET Occupational Profile: Data Scientists (Code: 15-2051.00)
+# O*NET Occupational Profile: Database Architects (Code: 15-1243.00)
 
-**Source Citation**: [O*NET OnLine - Data Scientists](https://www.onetonline.org/link/summary/15-2051.00)
-**Category**: Data Science
+**Source Citation**: [O*NET OnLine - Database Architects](https://www.onetonline.org/link/summary/15-1243.00)
+**Category**: System Architecture
 
 ## 📌 Executive Summary
-Data Scientists develop, create, and modify general computer applications software or specialized utility programs. Analyze user needs and develop software solutions.
+Database Architects develop, create, and modify general computer applications software or specialized utility programs. Analyze user needs and develop software solutions.
 
 ## 🛠️ Key Tasks & Responsibilities
 - Design, develop, and test software systems and applications.

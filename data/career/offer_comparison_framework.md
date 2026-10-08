@@ -1,9 +1,9 @@
 ---
-title: "Job Offer Comparison Decision Framework"
-url: "https://www.levels.fyi"
-domain: "career"
-source_type: "ai_curated"
-last_updated: "2026-10-08"
+title: Job Offer Comparison Decision Framework
+url: https://www.levels.fyi
+domain: career
+source_type: ai_curated
+last_updated: '2026-10-08'
 ---
 
 # Decision Framework: Comparing Multiple Job Offers

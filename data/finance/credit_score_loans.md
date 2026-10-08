@@ -1,3 +1,11 @@
+---
+title: Credit Score Loans
+url: ''
+domain: finance
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Credit Score Building & Credit Card Optimization
 
 ## 📌 Executive Summary

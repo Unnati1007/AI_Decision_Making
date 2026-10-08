@@ -1,9 +1,9 @@
 ---
-title: "Fresher Guidance: Campus Placements vs Off-Campus vs Internships"
-url: "https://www.ncs.gov.in"
-domain: "career"
-source_type: "ai_curated"
-last_updated: "2026-10-08"
+title: 'Fresher Guidance: Campus Placements vs Off-Campus vs Internships'
+url: https://www.ncs.gov.in
+domain: career
+source_type: ai_curated
+last_updated: '2026-10-08'
 ---
 
 # Decision Framework: Fresher Placement Strategy & Internship Selection

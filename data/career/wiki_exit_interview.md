@@ -1,8 +1,9 @@
 ---
-title: "Exit interview"
-url: "https://en.wikipedia.org/wiki/Exit_interview"
-source: "Wikipedia Open Corpus"
-domain: "Career"
+title: Exit interview
+url: https://en.wikipedia.org/wiki/Exit_interview
+domain: career
+source_type: wikipedia
+last_updated: '2026-10-08'
 ---
 
 # Exit interview

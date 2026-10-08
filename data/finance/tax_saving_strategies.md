@@ -1,3 +1,11 @@
+---
+title: Tax Saving Strategies
+url: ''
+domain: finance
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Tax Saving & Regime Optimization (India)
 
 ## 📌 Executive Summary

@@ -8,6 +8,8 @@ from typing import List, Dict, Any, Tuple, Optional
 from backend.retrieval.embedder import embed_query
 from backend.retrieval.vector_store import FAISSVectorStore
 
+from backend.config import TAVILY_TRIGGER_THRESHOLD, MAX_TOKEN_BUDGET, TOP_K_DEFAULT
+
 logger = logging.getLogger("intellichoice.retriever")
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
@@ -36,8 +38,8 @@ def reload_vector_store() -> FAISSVectorStore:
 def retrieve_context(
     query: str,
     domain: Optional[str] = None,
-    top_k: int = 4,
-    max_token_budget: int = 1800
+    top_k: int = TOP_K_DEFAULT,
+    max_token_budget: int = MAX_TOKEN_BUDGET
 ) -> Tuple[str, List[Dict[str, Any]], List[Tuple[str, Dict[str, Any], float]]]:
     """
     Retrieves top K vector matches for query, filters by domain if provided,
@@ -96,8 +98,8 @@ def retrieve_context(
                 "similarity_score": round(score, 4)
             })
 
-    # Optional Live Web Search Fallback via Tavily API (Trigger if local cosine similarity < 0.35)
-    if not results or (results and results[0][2] < 0.35):
+    # Optional Live Web Search Fallback via Tavily API (Trigger if local cosine similarity < TAVILY_TRIGGER_THRESHOLD)
+    if not results or (results and results[0][2] < TAVILY_TRIGGER_THRESHOLD):
         from backend.retrieval.tavily_search import search_tavily
         logger.info(f"Local vector similarity low (or no results). Invoking Tavily Live Web Search for: '{query}'")
         web_results = search_tavily(query, max_results=3)

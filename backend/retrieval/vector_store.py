@@ -9,14 +9,17 @@ import numpy as np
 import faiss
 from typing import List, Dict, Any, Optional, Tuple
 
+from backend.config import EMBEDDING_MODEL, EMBEDDING_DIM
+
 logger = logging.getLogger("intellichoice.vector_store")
 
 INDEX_FILENAME = "faiss_index.bin"
 METADATA_FILENAME = "metadata.pkl"
 
 class FAISSVectorStore:
-    def __init__(self, dimension: int = 384):
+    def __init__(self, dimension: int = EMBEDDING_DIM, embedding_model: str = EMBEDDING_MODEL):
         self.dimension = dimension
+        self.embedding_model = embedding_model
         # Inner Product index over L2-normalized vectors = Cosine Similarity (1.0 = identical, higher is better)
         self.index = faiss.IndexFlatIP(self.dimension)
         self.chunks: List[str] = []
@@ -49,9 +52,14 @@ class FAISSVectorStore:
 
         faiss.write_index(self.index, index_path)
         with open(metadata_path, "wb") as f:
-            pickle.dump({"chunks": self.chunks, "metadatas": self.metadatas, "dimension": self.dimension}, f)
+            pickle.dump({
+                "chunks": self.chunks,
+                "metadatas": self.metadatas,
+                "dimension": self.dimension,
+                "embedding_model": self.embedding_model
+            }, f)
 
-        logger.info(f"Saved FAISS index ({self.index.ntotal} items) to {directory}")
+        logger.info(f"Saved FAISS index ({self.index.ntotal} items, model='{self.embedding_model}') to {directory}")
 
     def load(self, directory: str) -> bool:
         """Loads FAISS index binary and metadata pkl from directory."""
@@ -68,12 +76,20 @@ class FAISSVectorStore:
                 data = pickle.load(f)
                 self.chunks = data.get("chunks", [])
                 self.metadatas = data.get("metadatas", [])
-                self.dimension = data.get("dimension", 384)
-            logger.info(f"Successfully loaded FAISS Cosine index with {self.index.ntotal} vectors from {directory}")
+                self.dimension = data.get("dimension", EMBEDDING_DIM)
+                stored_model = data.get("embedding_model")
+
+            if stored_model:
+                assert stored_model == EMBEDDING_MODEL, (
+                    f"Vector store embedding model mismatch! Index model: '{stored_model}', Config model: '{EMBEDDING_MODEL}'"
+                )
+                self.embedding_model = stored_model
+
+            logger.info(f"Successfully loaded FAISS Cosine index with {self.index.ntotal} vectors from {directory} (model='{self.embedding_model}')")
             return True
         except Exception as e:
             logger.error(f"Error loading vector store from {directory}: {e}")
-            return False
+            raise e
 
     def similarity_search_with_score(
         self,

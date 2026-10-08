@@ -1,8 +1,9 @@
 ---
-title: "Full Stack Developer Roadmap"
-url: "https://roadmap.sh/full-stack"
-source: "roadmap.sh Official Role Framework"
-domain: "Career"
+title: Full Stack Developer Roadmap
+url: https://roadmap.sh/full-stack
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
 # Career Roadmap: Full Stack Developer

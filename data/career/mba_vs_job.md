@@ -1,3 +1,11 @@
+---
+title: Mba Vs Job
+url: ''
+domain: career
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: MBA vs Job Continuation
 
 ## 📌 Executive Summary

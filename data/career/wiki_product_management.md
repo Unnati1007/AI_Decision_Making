@@ -1,8 +1,9 @@
 ---
-title: "Product management"
-url: "https://en.wikipedia.org/wiki/Product_management"
-source: "Wikipedia Open Corpus (CC BY-SA 3.0)"
-domain: "Career"
+title: Product management
+url: https://en.wikipedia.org/wiki/Product_management
+domain: career
+source_type: wikipedia
+last_updated: '2026-10-08'
 ---
 
 # Product management

@@ -1,3 +1,11 @@
+---
+title: Cardio Strength Training
+url: ''
+domain: wellbeing
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Exercise Programming — Resistance vs Cardiovascular Training
 
 ## 📌 Executive Summary

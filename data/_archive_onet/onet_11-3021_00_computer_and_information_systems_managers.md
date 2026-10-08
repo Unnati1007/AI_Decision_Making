@@ -1,17 +1,18 @@
 ---
-title: "O*NET Occupation Profile: Software Developers"
-code: "15-1252.00"
-source: "O*NET OnLine (U.S. Department of Labor)"
-domain: "Career"
+title: 'O*NET Occupation Profile: Computer and Information Systems Managers'
+url: https://www.onetonline.org/link/summary/11-3021.00
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
-# O*NET Occupational Profile: Software Developers (Code: 15-1252.00)
+# O*NET Occupational Profile: Computer and Information Systems Managers (Code: 11-3021.00)
 
-**Source Citation**: [O*NET OnLine - Software Developers](https://www.onetonline.org/link/summary/15-1252.00)
-**Category**: Technology
+**Source Citation**: [O*NET OnLine - Computer and Information Systems Managers](https://www.onetonline.org/link/summary/11-3021.00)
+**Category**: Management
 
 ## 📌 Executive Summary
-Software Developers develop, create, and modify general computer applications software or specialized utility programs. Analyze user needs and develop software solutions.
+Computer and Information Systems Managers develop, create, and modify general computer applications software or specialized utility programs. Analyze user needs and develop software solutions.
 
 ## 🛠️ Key Tasks & Responsibilities
 - Design, develop, and test software systems and applications.

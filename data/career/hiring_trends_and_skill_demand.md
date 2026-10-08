@@ -1,3 +1,11 @@
+---
+title: Hiring Trends And Skill Demand
+url: ''
+domain: career
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: High-Demand Skill Clusters & Tech Stack Transition
 
 ## 📌 Executive Summary

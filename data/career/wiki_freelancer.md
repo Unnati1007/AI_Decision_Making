@@ -1,8 +1,9 @@
 ---
-title: "Freelancer"
-url: "https://en.wikipedia.org/wiki/Freelancer"
-source: "Wikipedia Open Corpus (CC BY-SA 3.0)"
-domain: "Career"
+title: Freelancer
+url: https://en.wikipedia.org/wiki/Freelancer
+domain: career
+source_type: wikipedia
+last_updated: '2026-10-08'
 ---
 
 # Freelancer

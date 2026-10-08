@@ -1,8 +1,9 @@
 ---
-title: "Higher Education (Master's / MBA) vs Direct Work Experience Decision Framework"
-url: "https://intellichoice.ai/frameworks/career/higher-education-vs-work-exp"
-source: "IntelliChoice Expert Career Framework"
-domain: "Career"
+title: Higher Education (Master's / MBA) vs Direct Work Experience Decision Framework
+url: https://intellichoice.ai/frameworks/career/higher-education-vs-work-exp
+domain: career
+source_type: ai_curated
+last_updated: '2026-10-08'
 ---
 
 # Higher Education (MS / MBA) vs Direct Work Experience

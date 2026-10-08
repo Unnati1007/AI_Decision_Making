@@ -1,17 +1,18 @@
 ---
-title: "O*NET Occupation Profile: Computer and Information Systems Managers"
-code: "11-3021.00"
-source: "O*NET OnLine (U.S. Department of Labor)"
-domain: "Career"
+title: 'O*NET Occupation Profile: Information Security Analysts'
+url: https://www.onetonline.org/link/summary/15-1212.00
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
-# O*NET Occupational Profile: Computer and Information Systems Managers (Code: 11-3021.00)
+# O*NET Occupational Profile: Information Security Analysts (Code: 15-1212.00)
 
-**Source Citation**: [O*NET OnLine - Computer and Information Systems Managers](https://www.onetonline.org/link/summary/11-3021.00)
-**Category**: Management
+**Source Citation**: [O*NET OnLine - Information Security Analysts](https://www.onetonline.org/link/summary/15-1212.00)
+**Category**: Cybersecurity
 
 ## 📌 Executive Summary
-Computer and Information Systems Managers develop, create, and modify general computer applications software or specialized utility programs. Analyze user needs and develop software solutions.
+Information Security Analysts develop, create, and modify general computer applications software or specialized utility programs. Analyze user needs and develop software solutions.
 
 ## 🛠️ Key Tasks & Responsibilities
 - Design, develop, and test software systems and applications.

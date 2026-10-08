@@ -1,17 +1,18 @@
 ---
-title: "O*NET Occupation Profile: Computer Systems Analysts"
-code: "15-1211.00"
-source: "O*NET OnLine (U.S. Department of Labor)"
-domain: "Career"
+title: 'O*NET Occupation Profile: Computer and Information Research Scientists'
+url: https://www.onetonline.org/link/summary/15-1221.00
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
-# O*NET Occupational Profile: Computer Systems Analysts (Code: 15-1211.00)
+# O*NET Occupational Profile: Computer and Information Research Scientists (Code: 15-1221.00)
 
-**Source Citation**: [O*NET OnLine - Computer Systems Analysts](https://www.onetonline.org/link/summary/15-1211.00)
-**Category**: Technology
+**Source Citation**: [O*NET OnLine - Computer and Information Research Scientists](https://www.onetonline.org/link/summary/15-1221.00)
+**Category**: Artificial Intelligence
 
 ## 📌 Executive Summary
-Computer Systems Analysts develop, create, and modify general computer applications software or specialized utility programs. Analyze user needs and develop software solutions.
+Computer and Information Research Scientists develop, create, and modify general computer applications software or specialized utility programs. Analyze user needs and develop software solutions.
 
 ## 🛠️ Key Tasks & Responsibilities
 - Design, develop, and test software systems and applications.

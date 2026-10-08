@@ -1,8 +1,9 @@
 ---
-title: "Labour laws in India"
-url: "https://en.wikipedia.org/wiki/Labour_laws_in_India"
-source: "Wikipedia Open Corpus (CC BY-SA 3.0)"
-domain: "Legal"
+title: Labour laws in India
+url: https://en.wikipedia.org/wiki/Labour_laws_in_India
+domain: legal
+source_type: wikipedia
+last_updated: '2026-10-08'
 ---
 
 # Labour laws in India

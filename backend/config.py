@@ -9,6 +9,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv()
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 logger = logging.getLogger("intellichoice.config")
 
 # ── Base Directory Paths ───────────────────────────────────
@@ -22,12 +23,36 @@ TAVILY_API_KEY = os.getenv("TAVILY_API_KEY", "")
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "")
 NEWS_API_KEY = os.getenv("NEWS_API_KEY", "")
 STACKEXCHANGE_KEY = os.getenv("STACKEXCHANGE_KEY", "")
-EMBED_MODEL_NAME = os.getenv("EMBED_MODEL_NAME", "all-MiniLM-L6-v2")
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", os.getenv("EMBED_MODEL_NAME", "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"))
+EMBED_MODEL_NAME = EMBEDDING_MODEL
+EMBEDDING_DIM = int(os.getenv("EMBEDDING_DIM", "384"))
 LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", "gpt-4o-mini")
 
 MIN_QUERY_LENGTH = int(os.getenv("MIN_QUERY_LENGTH", "8"))
-MAX_QUERY_LENGTH = int(os.getenv("MAX_QUERY_LENGTH", "1000"))
-RELEVANCE_THRESHOLD = float(os.getenv("RELEVANCE_THRESHOLD", "0.20"))
+MAX_QUERY_CHARS = int(os.getenv("MAX_QUERY_CHARS", "1000"))
+MAX_ANSWER_CHARS = int(os.getenv("MAX_ANSWER_CHARS", "4000"))
+MIN_VALID_WORD_RATIO = float(os.getenv("MIN_VALID_WORD_RATIO", "0.50"))  # PLACEHOLDER, uncalibrated, Phase 6
+
+RELEVANCE_THRESHOLD = float(os.getenv("RELEVANCE_THRESHOLD", "0.20"))  # PLACEHOLDER, uncalibrated, Phase 6
+TAVILY_TRIGGER_THRESHOLD = float(os.getenv("TAVILY_TRIGGER_THRESHOLD", "0.35"))  # PLACEHOLDER, uncalibrated, Phase 6
+DOMAIN_ROUTER_THRESHOLD = float(os.getenv("DOMAIN_ROUTER_THRESHOLD", "0.25"))  # PLACEHOLDER, uncalibrated, Phase 6
+
+MAX_TOKEN_BUDGET = int(os.getenv("MAX_TOKEN_BUDGET", "1800"))
+TOP_K_DEFAULT = int(os.getenv("TOP_K_DEFAULT", "4"))
+
+def log_startup_config():
+    logger.info("=== IntelliChoice System Configuration Loaded ===")
+    logger.info(f"  EMBEDDING_MODEL          : {EMBEDDING_MODEL}")
+    logger.info(f"  EMBEDDING_DIM            : {EMBEDDING_DIM}")
+    logger.info(f"  LLM_MODEL_NAME           : {LLM_MODEL_NAME}")
+    logger.info(f"  MIN_VALID_WORD_RATIO     : {MIN_VALID_WORD_RATIO} (PLACEHOLDER, uncalibrated, Phase 6)")
+    logger.info(f"  RELEVANCE_THRESHOLD      : {RELEVANCE_THRESHOLD} (PLACEHOLDER, uncalibrated, Phase 6)")
+    logger.info(f"  TAVILY_TRIGGER_THRESHOLD : {TAVILY_TRIGGER_THRESHOLD} (PLACEHOLDER, uncalibrated, Phase 6)")
+    logger.info(f"  DOMAIN_ROUTER_THRESHOLD  : {DOMAIN_ROUTER_THRESHOLD} (PLACEHOLDER, uncalibrated, Phase 6)")
+    logger.info(f"  MAX_TOKEN_BUDGET         : {MAX_TOKEN_BUDGET}")
+    logger.info(f"  TOP_K_DEFAULT            : {TOP_K_DEFAULT}")
+
+log_startup_config()
 
 # ── Dynamic Config Loaders ─────────────────────────────────
 def load_json_config(filename: str, default: dict) -> dict:

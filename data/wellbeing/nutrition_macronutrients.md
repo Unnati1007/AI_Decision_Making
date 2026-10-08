@@ -1,3 +1,11 @@
+---
+title: Nutrition Macronutrients
+url: ''
+domain: wellbeing
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Macronutrient Distribution & Caloric Energy Balance
 
 ## 📌 Executive Summary

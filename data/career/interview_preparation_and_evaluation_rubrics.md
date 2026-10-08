@@ -1,3 +1,11 @@
+---
+title: Interview Preparation And Evaluation Rubrics
+url: ''
+domain: career
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Interview Preparation & Evaluation Rubrics
 
 ## 📌 Executive Summary

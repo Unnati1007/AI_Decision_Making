@@ -1,3 +1,11 @@
+---
+title: Ip Trademark Copyright
+url: ''
+domain: legal
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Intellectual Property Protection (India)
 
 ## 📌 Executive Summary

@@ -1,8 +1,9 @@
 ---
-title: "Layoff"
-url: "https://en.wikipedia.org/wiki/Layoff"
-source: "Wikipedia Open Corpus (CC BY-SA 3.0)"
-domain: "Career"
+title: Layoff
+url: https://en.wikipedia.org/wiki/Layoff
+domain: career
+source_type: wikipedia
+last_updated: '2026-10-08'
 ---
 
 # Layoff

@@ -1,17 +1,18 @@
 ---
-title: "O*NET Occupation Profile: Computer and Information Research Scientists"
-code: "15-1221.00"
-source: "O*NET OnLine (U.S. Department of Labor)"
-domain: "Career"
+title: 'O*NET Occupation Profile: Software Quality Assurance Analysts and Testers'
+url: https://www.onetonline.org/link/summary/15-1253.00
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
-# O*NET Occupational Profile: Computer and Information Research Scientists (Code: 15-1221.00)
+# O*NET Occupational Profile: Software Quality Assurance Analysts and Testers (Code: 15-1253.00)
 
-**Source Citation**: [O*NET OnLine - Computer and Information Research Scientists](https://www.onetonline.org/link/summary/15-1221.00)
-**Category**: Artificial Intelligence
+**Source Citation**: [O*NET OnLine - Software Quality Assurance Analysts and Testers](https://www.onetonline.org/link/summary/15-1253.00)
+**Category**: Technology
 
 ## 📌 Executive Summary
-Computer and Information Research Scientists develop, create, and modify general computer applications software or specialized utility programs. Analyze user needs and develop software solutions.
+Software Quality Assurance Analysts and Testers develop, create, and modify general computer applications software or specialized utility programs. Analyze user needs and develop software solutions.
 
 ## 🛠️ Key Tasks & Responsibilities
 - Design, develop, and test software systems and applications.

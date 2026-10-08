@@ -1,3 +1,11 @@
+---
+title: Labor Laws And Statutory Benefits India
+url: ''
+domain: career
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Legal & Statutory Decision Framework: Employment Laws & Benefits (India)
 
 ## 📌 Executive Summary

@@ -1,8 +1,9 @@
 ---
-title: "DevOps & Cloud Engineer Roadmap"
-url: "https://roadmap.sh/devops"
-source: "roadmap.sh Official Role Framework"
-domain: "Career"
+title: DevOps & Cloud Engineer Roadmap
+url: https://roadmap.sh/devops
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
 # Career Roadmap: DevOps & Cloud Engineer

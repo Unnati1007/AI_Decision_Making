@@ -1,17 +1,18 @@
 ---
-title: "O*NET Occupation Profile: Information Security Analysts"
-code: "15-1212.00"
-source: "O*NET OnLine (U.S. Department of Labor)"
-domain: "Career"
+title: 'O*NET Occupation Profile: Network and Computer Systems Administrators'
+url: https://www.onetonline.org/link/summary/15-1244.00
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
-# O*NET Occupational Profile: Information Security Analysts (Code: 15-1212.00)
+# O*NET Occupational Profile: Network and Computer Systems Administrators (Code: 15-1244.00)
 
-**Source Citation**: [O*NET OnLine - Information Security Analysts](https://www.onetonline.org/link/summary/15-1212.00)
-**Category**: Cybersecurity
+**Source Citation**: [O*NET OnLine - Network and Computer Systems Administrators](https://www.onetonline.org/link/summary/15-1244.00)
+**Category**: DevOps
 
 ## 📌 Executive Summary
-Information Security Analysts develop, create, and modify general computer applications software or specialized utility programs. Analyze user needs and develop software solutions.
+Network and Computer Systems Administrators develop, create, and modify general computer applications software or specialized utility programs. Analyze user needs and develop software solutions.
 
 ## 🛠️ Key Tasks & Responsibilities
 - Design, develop, and test software systems and applications.

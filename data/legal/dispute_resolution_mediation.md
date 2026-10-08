@@ -1,3 +1,11 @@
+---
+title: Dispute Resolution Mediation
+url: ''
+domain: legal
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Commercial Dispute Resolution — Mediation vs Litigation
 
 ## 📌 Executive Summary

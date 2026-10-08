@@ -1,3 +1,11 @@
+---
+title: Tech Leveling And Compensation Bands
+url: ''
+domain: career
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Tech Leveling & Total Compensation (TC) Bands
 
 ## 📌 Executive Summary
