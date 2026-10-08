@@ -211,14 +211,46 @@ def harvest_arxiv_research():
     logger.info(f"✅ Harvested ArXiv Research Papers -> {filename}")
     return 1
 
+def harvest_stackoverflow_data():
+    """Fetches popular tech tags and top voted questions from Stack Overflow API."""
+    from backend.retrieval.stack_fetcher import fetch_popular_tech_tags, fetch_top_voted_questions
+    tags = fetch_popular_tech_tags(limit=15)
+    if not tags:
+        return 0
+
+    filename = "stackoverflow_popular_developer_tags.md"
+    filepath = os.path.join(CAREER_DATA_DIR, filename)
+
+    lines = [
+        "# Industry Developer Demand: Stack Overflow Technology Tags",
+        "\n## 📌 Executive Summary",
+        "Most asked and discussed technology tags on Stack Overflow reflecting widespread developer ecosystem adoption.",
+        "\n## 📊 Top Stack Overflow Technology Tags\n",
+        "| Technology Tag | Question Count | Developer Adoption Level |",
+        "| :--- | :--- | :--- |"
+    ]
+
+    for t in tags:
+        lines.append(f"| `{t['name']}` | {t['count']:,} | High Ecosystem Usage |")
+
+    lines.append("\n## 💡 Key Takeaways for Career Planning")
+    lines.append("1. **Core Language Stability**: JavaScript, Python, Java, and C# remain foundational across enterprise and web applications.")
+    lines.append("2. **Framework Specialization**: Combining core language fluency with modern cloud/AI frameworks delivers maximum market leverage.")
+
+    with open(filepath, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+    logger.info(f"✅ Harvested Stack Overflow Tags -> {filename}")
+    return 1
+
 def main():
     logger.info("🚀 Starting Master Career Data Harvester...")
     wiki_added = harvest_wikipedia_articles()
     gh_added = harvest_github_tech_trends()
     news_added = harvest_news_market_updates()
     arxiv_added = harvest_arxiv_research()
+    so_added = harvest_stackoverflow_data()
 
-    total_added = wiki_added + gh_added + news_added + arxiv_added
+    total_added = wiki_added + gh_added + news_added + arxiv_added + so_added
     logger.info(f"🎉 Harvesting Complete! Added {total_added} new data sources.")
 
     if total_added > 0 or not os.path.exists(os.path.join(PROJECT_ROOT, "vector_db", "faiss_index.bin")):
