@@ -1,3 +1,11 @@
+---
+title: Diet Intermittent Fasting
+url: ''
+domain: wellbeing
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Intermittent Fasting & Protein-First Nutrition
 
 ## 📌 Executive Summary

@@ -1,3 +1,11 @@
+---
+title: Sleep Hygiene Circadian
+url: ''
+domain: wellbeing
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Sleep Hygiene & Circadian Alignment
 
 ## 📌 Executive Summary

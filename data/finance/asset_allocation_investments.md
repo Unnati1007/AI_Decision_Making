@@ -1,3 +1,11 @@
+---
+title: Asset Allocation Investments
+url: ''
+domain: finance
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Asset Allocation & Investment Strategy
 
 ## 📌 Executive Summary

@@ -1,3 +1,11 @@
+---
+title: Real Estate Rent Vs Buy
+url: ''
+domain: finance
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Real Estate — Rent vs Buy
 
 ## 📌 Executive Summary

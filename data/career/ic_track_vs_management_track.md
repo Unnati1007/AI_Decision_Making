@@ -1,8 +1,9 @@
 ---
-title: "Individual Contributor (IC) Track vs Engineering Management Track"
-url: "https://intellichoice.ai/frameworks/career/ic-vs-management"
-source: "IntelliChoice Expert Career Framework"
-domain: "Career"
+title: Individual Contributor (IC) Track vs Engineering Management Track
+url: https://intellichoice.ai/frameworks/career/ic-vs-management
+domain: career
+source_type: ai_curated
+last_updated: '2026-10-08'
 ---
 
 # Individual Contributor (IC) Track vs Management Track

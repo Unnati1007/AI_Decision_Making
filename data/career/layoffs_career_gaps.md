@@ -1,3 +1,11 @@
+---
+title: Layoffs Career Gaps
+url: ''
+domain: career
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Managing Layoffs & Explaining Career Gaps
 
 ## 📌 Executive Summary

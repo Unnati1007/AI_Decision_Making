@@ -1,8 +1,9 @@
 ---
-title: "Curriculum vitae"
-url: "https://en.wikipedia.org/wiki/Curriculum_vitae"
-source: "Wikipedia Open Corpus (CC BY-SA 3.0)"
-domain: "Career"
+title: Curriculum vitae
+url: https://en.wikipedia.org/wiki/Curriculum_vitae
+domain: career
+source_type: wikipedia
+last_updated: '2026-10-08'
 ---
 
 # Curriculum vitae

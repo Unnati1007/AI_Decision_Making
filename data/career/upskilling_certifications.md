@@ -1,3 +1,11 @@
+---
+title: Upskilling Certifications
+url: ''
+domain: career
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Professional Certifications vs Degrees vs Projects
 
 ## 📌 Executive Summary

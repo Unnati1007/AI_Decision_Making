@@ -1,8 +1,9 @@
 ---
-title: "O*NET Occupation Profile: Network and Computer Systems Administrators"
-code: "15-1244.00"
-source: "O*NET OnLine (U.S. Department of Labor)"
-domain: "Career"
+title: 'O*NET Occupation Profile: Network and Computer Systems Administrators'
+url: https://www.onetonline.org/link/summary/15-1244.00
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
 # O*NET Occupational Profile: Network and Computer Systems Administrators (Code: 15-1244.00)

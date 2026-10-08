@@ -1,8 +1,9 @@
 ---
-title: "Non-disclosure agreement"
-url: "https://en.wikipedia.org/wiki/Non-disclosure_agreement"
-source: "Wikipedia Open Corpus (CC BY-SA 3.0)"
-domain: "Legal"
+title: Non-disclosure agreement
+url: https://en.wikipedia.org/wiki/Non-disclosure_agreement
+domain: legal
+source_type: wikipedia
+last_updated: '2026-10-08'
 ---
 
 # Non-disclosure agreement

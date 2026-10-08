@@ -1,8 +1,9 @@
 ---
-title: "O*NET Occupation Profile: Information Security Analysts"
-code: "15-1212.00"
-source: "O*NET OnLine (U.S. Department of Labor)"
-domain: "Career"
+title: 'O*NET Occupation Profile: Information Security Analysts'
+url: https://www.onetonline.org/link/summary/15-1212.00
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
 # O*NET Occupational Profile: Information Security Analysts (Code: 15-1212.00)

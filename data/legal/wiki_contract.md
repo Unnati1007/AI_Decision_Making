@@ -1,8 +1,9 @@
 ---
-title: "Contract"
-url: "https://en.wikipedia.org/wiki/Contract"
-source: "Wikipedia Open Corpus (CC BY-SA 3.0)"
-domain: "Legal"
+title: Contract
+url: https://en.wikipedia.org/wiki/Contract
+domain: legal
+source_type: wikipedia
+last_updated: '2026-10-08'
 ---
 
 # Contract

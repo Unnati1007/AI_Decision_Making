@@ -1,8 +1,9 @@
 ---
-title: "Right to Information Act, 2005"
-url: "https://en.wikipedia.org/wiki/Right_to_Information_Act%2C_2005"
-source: "Wikipedia Open Corpus (CC BY-SA 3.0)"
-domain: "Legal"
+title: Right to Information Act, 2005
+url: https://en.wikipedia.org/wiki/Right_to_Information_Act%2C_2005
+domain: legal
+source_type: wikipedia
+last_updated: '2026-10-08'
 ---
 
 # Right to Information Act, 2005

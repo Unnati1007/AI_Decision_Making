@@ -1,8 +1,9 @@
 ---
-title: "Employee benefits"
-url: "https://en.wikipedia.org/wiki/Employee_benefits"
-source: "Wikipedia Open Corpus"
-domain: "Career"
+title: Employee benefits
+url: https://en.wikipedia.org/wiki/Employee_benefits
+domain: career
+source_type: wikipedia
+last_updated: '2026-10-08'
 ---
 
 # Employee benefits

@@ -1,3 +1,11 @@
+---
+title: Freelancer Vendor Contracts
+url: ''
+domain: legal
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Freelancer & Vendor Payment Protection Agreements
 
 ## 📌 Executive Summary

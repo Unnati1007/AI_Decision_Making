@@ -1,8 +1,9 @@
 ---
-title: "Backend Developer Roadmap"
-url: "https://roadmap.sh/backend"
-source: "roadmap.sh Official Role Framework"
-domain: "Career"
+title: Backend Developer Roadmap
+url: https://roadmap.sh/backend
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
 # Career Roadmap: Backend Developer

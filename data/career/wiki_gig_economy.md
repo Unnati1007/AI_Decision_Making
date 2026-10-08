@@ -1,8 +1,9 @@
 ---
-title: "Gig economy"
-url: "https://en.wikipedia.org/wiki/Gig_economy"
-source: "Wikipedia Open Corpus (CC BY-SA 3.0)"
-domain: "Career"
+title: Gig economy
+url: https://en.wikipedia.org/wiki/Gig_economy
+domain: career
+source_type: wikipedia
+last_updated: '2026-10-08'
 ---
 
 # Gig economy

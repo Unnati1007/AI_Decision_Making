@@ -1,8 +1,9 @@
 ---
-title: "Severance package"
-url: "https://en.wikipedia.org/wiki/Severance_package"
-source: "Wikipedia Open Corpus (CC BY-SA 3.0)"
-domain: "Career"
+title: Severance package
+url: https://en.wikipedia.org/wiki/Severance_package
+domain: career
+source_type: wikipedia
+last_updated: '2026-10-08'
 ---
 
 # Severance package

@@ -1,8 +1,9 @@
 ---
-title: "AI & Data Scientist Career Roadmap"
-url: "https://roadmap.sh/ai-data-scientist"
-source: "roadmap.sh Official Role Framework"
-domain: "Career"
+title: AI & Data Scientist Career Roadmap
+url: https://roadmap.sh/ai-data-scientist
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
 # Career Roadmap: AI & Data Scientist

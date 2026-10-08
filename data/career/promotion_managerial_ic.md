@@ -1,3 +1,11 @@
+---
+title: Promotion Managerial Ic
+url: ''
+domain: career
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Individual Contributor (IC) vs Managerial Track
 
 ## 📌 Executive Summary

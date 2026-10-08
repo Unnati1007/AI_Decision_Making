@@ -1,8 +1,9 @@
 ---
-title: "Exiting a Toxic Workplace Environment & Strategic Resignation Framework"
-url: "https://intellichoice.ai/frameworks/career/toxic-workplace-resignation"
-source: "IntelliChoice Expert Career Framework"
-domain: "Career"
+title: Exiting a Toxic Workplace Environment & Strategic Resignation Framework
+url: https://intellichoice.ai/frameworks/career/toxic-workplace-resignation
+domain: career
+source_type: ai_curated
+last_updated: '2026-10-08'
 ---
 
 # Exiting a Toxic Workplace & Strategic Resignation

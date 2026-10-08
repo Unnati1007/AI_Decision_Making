@@ -1,3 +1,11 @@
+---
+title: Tenant Landlord Rights
+url: ''
+domain: legal
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Tenant & Landlord Rights (Rent Agreements in India)
 
 ## 📌 Executive Summary

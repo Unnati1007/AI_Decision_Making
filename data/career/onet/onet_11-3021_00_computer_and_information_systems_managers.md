@@ -1,8 +1,9 @@
 ---
-title: "O*NET Occupation Profile: Computer and Information Systems Managers"
-code: "11-3021.00"
-source: "O*NET OnLine (U.S. Department of Labor)"
-domain: "Career"
+title: 'O*NET Occupation Profile: Computer and Information Systems Managers'
+url: https://www.onetonline.org/link/summary/11-3021.00
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
 # O*NET Occupational Profile: Computer and Information Systems Managers (Code: 11-3021.00)

@@ -1,8 +1,9 @@
 ---
-title: "O*NET Occupation Profile: Database Administrators"
-code: "15-1242.00"
-source: "O*NET OnLine (U.S. Department of Labor)"
-domain: "Career"
+title: 'O*NET Occupation Profile: Database Administrators'
+url: https://www.onetonline.org/link/summary/15-1242.00
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
 # O*NET Occupational Profile: Database Administrators (Code: 15-1242.00)

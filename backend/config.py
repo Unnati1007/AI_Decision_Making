@@ -22,7 +22,7 @@ TAVILY_API_KEY = os.getenv("TAVILY_API_KEY", "")
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "")
 NEWS_API_KEY = os.getenv("NEWS_API_KEY", "")
 STACKEXCHANGE_KEY = os.getenv("STACKEXCHANGE_KEY", "")
-EMBED_MODEL_NAME = os.getenv("EMBED_MODEL_NAME", "all-MiniLM-L6-v2")
+EMBED_MODEL_NAME = os.getenv("EMBED_MODEL_NAME", "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
 LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", "gpt-4o-mini")
 
 MIN_QUERY_LENGTH = int(os.getenv("MIN_QUERY_LENGTH", "8"))

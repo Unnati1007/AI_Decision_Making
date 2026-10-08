@@ -1,8 +1,9 @@
 ---
-title: "O*NET Occupation Profile: Software Quality Assurance Analysts and Testers"
-code: "15-1253.00"
-source: "O*NET OnLine (U.S. Department of Labor)"
-domain: "Career"
+title: 'O*NET Occupation Profile: Software Quality Assurance Analysts and Testers'
+url: https://www.onetonline.org/link/summary/15-1253.00
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
 # O*NET Occupational Profile: Software Quality Assurance Analysts and Testers (Code: 15-1253.00)

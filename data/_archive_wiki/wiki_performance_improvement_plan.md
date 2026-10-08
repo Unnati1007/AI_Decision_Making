@@ -1,8 +1,9 @@
 ---
-title: "Performance improvement"
-url: "https://en.wikipedia.org/wiki/Performance_improvement"
-source: "Wikipedia Open Corpus (CC BY-SA 3.0)"
-domain: "Career"
+title: Performance improvement
+url: https://en.wikipedia.org/wiki/Performance_improvement
+domain: career
+source_type: wikipedia
+last_updated: '2026-10-08'
 ---
 
 # Performance improvement

@@ -1,8 +1,9 @@
 ---
-title: "Job interview"
-url: "https://en.wikipedia.org/wiki/Job_interview"
-source: "Wikipedia Open Corpus (CC BY-SA 3.0)"
-domain: "Career"
+title: Job interview
+url: https://en.wikipedia.org/wiki/Job_interview
+domain: career
+source_type: wikipedia
+last_updated: '2026-10-08'
 ---
 
 # Job interview

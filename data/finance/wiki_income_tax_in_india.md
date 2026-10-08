@@ -1,8 +1,9 @@
 ---
-title: "Income tax in India"
-url: "https://en.wikipedia.org/wiki/Income_tax_in_India"
-source: "Wikipedia Open Corpus (CC BY-SA 3.0)"
-domain: "Finance"
+title: Income tax in India
+url: https://en.wikipedia.org/wiki/Income_tax_in_India
+domain: finance
+source_type: wikipedia
+last_updated: '2026-10-08'
 ---
 
 # Income tax in India

@@ -1,3 +1,11 @@
+---
+title: Retirement Nps Ppf
+url: ''
+domain: finance
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Retirement Planning — NPS vs PPF vs EPF
 
 ## 📌 Executive Summary

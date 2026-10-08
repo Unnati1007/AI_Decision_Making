@@ -1,8 +1,9 @@
 ---
-title: "O*NET Occupation Profile: Computer and Information Research Scientists"
-code: "15-1221.00"
-source: "O*NET OnLine (U.S. Department of Labor)"
-domain: "Career"
+title: 'O*NET Occupation Profile: Computer and Information Research Scientists'
+url: https://www.onetonline.org/link/summary/15-1221.00
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
 # O*NET Occupational Profile: Computer and Information Research Scientists (Code: 15-1221.00)

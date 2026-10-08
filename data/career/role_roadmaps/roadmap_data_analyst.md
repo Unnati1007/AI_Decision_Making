@@ -1,8 +1,9 @@
 ---
-title: "Data Analyst Career Roadmap"
-url: "https://roadmap.sh/data-analyst"
-source: "roadmap.sh Official Role Framework"
-domain: "Career"
+title: Data Analyst Career Roadmap
+url: https://roadmap.sh/data-analyst
+domain: career
+source_type: official
+last_updated: '2026-10-08'
 ---
 
 # Career Roadmap: Data Analyst

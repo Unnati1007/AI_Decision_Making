@@ -1,3 +1,11 @@
+---
+title: Debt Payoff Vs Investing
+url: ''
+domain: finance
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Debt Payoff vs Market Investing
 
 ## 📌 Executive Summary

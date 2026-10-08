@@ -1,3 +1,11 @@
+---
+title: Habit Building Consistency
+url: ''
+domain: wellbeing
+source_type: ai_curated
+last_updated: '2026-10-08'
+---
+
 # Decision Framework: Behavioral Habit Stacking & Consistency Building
 
 ## 📌 Executive Summary

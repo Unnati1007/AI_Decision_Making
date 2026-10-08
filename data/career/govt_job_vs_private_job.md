@@ -1,9 +1,9 @@
 ---
-title: "Government Job vs Private Corporate Career Decision Framework"
-url: "https://www.ncs.gov.in"
-domain: "career"
-source_type: "ai_curated"
-last_updated: "2026-10-08"
+title: Government Job vs Private Corporate Career Decision Framework
+url: https://www.ncs.gov.in
+domain: career
+source_type: ai_curated
+last_updated: '2026-10-08'
 ---
 
 # Decision Framework: Government Jobs vs Private Corporate Career
