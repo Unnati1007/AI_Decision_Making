@@ -33,12 +33,14 @@ MAX_QUERY_CHARS = int(os.getenv("MAX_QUERY_CHARS", "1000"))
 MAX_ANSWER_CHARS = int(os.getenv("MAX_ANSWER_CHARS", "4000"))
 MIN_VALID_WORD_RATIO = float(os.getenv("MIN_VALID_WORD_RATIO", "0.50"))  # PLACEHOLDER, uncalibrated, Phase 6
 
-RELEVANCE_THRESHOLD = float(os.getenv("RELEVANCE_THRESHOLD", "0.20"))  # PLACEHOLDER, uncalibrated, Phase 6
-TAVILY_TRIGGER_THRESHOLD = float(os.getenv("TAVILY_TRIGGER_THRESHOLD", "0.35"))  # PLACEHOLDER, uncalibrated, Phase 6
-DOMAIN_ROUTER_THRESHOLD = float(os.getenv("DOMAIN_ROUTER_THRESHOLD", "0.25"))  # PLACEHOLDER, uncalibrated, Phase 6
+# Thresholds are uncalibrated placeholders (to be calibrated in Phase 6)
+RELEVANCE_THRESHOLD = float(os.getenv("RELEVANCE_THRESHOLD", "0.20"))  # PLACEHOLDER, uncalibrated
+TAVILY_TRIGGER_THRESHOLD = float(os.getenv("TAVILY_TRIGGER_THRESHOLD", "0.35"))  # PLACEHOLDER, uncalibrated
+DOMAIN_ROUTER_THRESHOLD = float(os.getenv("DOMAIN_ROUTER_THRESHOLD", "0.25"))  # PLACEHOLDER, uncalibrated
 
 MAX_TOKEN_BUDGET = int(os.getenv("MAX_TOKEN_BUDGET", "1800"))
 TOP_K_DEFAULT = int(os.getenv("TOP_K_DEFAULT", "4"))
+MAX_CHUNKS_PER_FILE = int(os.getenv("MAX_CHUNKS_PER_FILE", "2"))
 
 def log_startup_config():
     logger.info("=== IntelliChoice System Configuration Loaded ===")

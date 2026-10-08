@@ -6,10 +6,17 @@ import os
 import json
 import logging
 import httpx
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Tuple
 from openai import OpenAI
 
-from backend.config import LLM_MODEL_NAME, TOP_K_DEFAULT, MAX_TOKEN_BUDGET
+from backend.config import (
+    LLM_MODEL_NAME,
+    TOP_K_DEFAULT,
+    MAX_TOKEN_BUDGET,
+    MAX_CHUNKS_PER_FILE,
+    RELEVANCE_THRESHOLD,
+    TAVILY_API_KEY
+)
 from backend.services.guard import guard_pipeline, GuardResult
 from backend.services.domain_router import detect_domain
 from backend.retrieval.retriever import retrieve_context
@@ -114,10 +121,25 @@ def execute_turn_1(query: str, domain_override: Optional[str] = None) -> Dict[st
     # Step 2: Domain Detection
     domain = domain_override or detect_domain(query)
     if domain not in DEFAULT_DOMAIN_MCQS:
-        domain = "career" # Safe default fallback
+        domain = "career"
 
     # Step 3: RAG Retrieval
     rag_context, sources, raw_results = retrieve_context(query, domain=domain, top_k=TOP_K_DEFAULT, max_token_budget=MAX_TOKEN_BUDGET)
+
+    # Check relevance threshold (Placeholder: RELEVANCE_THRESHOLD = 0.20)
+    best_score = raw_results[0][2] if raw_results else 0.0
+    if best_score < RELEVANCE_THRESHOLD and not any(s.get("source") == "Tavily Live Web Search" for s in sources):
+        logger.info(f"Turn 1 query low relevance score ({best_score:.4f} < {RELEVANCE_THRESHOLD}). Skipping LLM call.")
+        return {
+            "success": True,
+            "query": query,
+            "domain": domain,
+            "mcqs": DEFAULT_DOMAIN_MCQS.get(domain, DEFAULT_DOMAIN_MCQS["career"]),
+            "sources": sources,
+            "raw_results": raw_results,
+            "low_relevance": True,
+            "warning": "Low relevance score in Knowledge Base."
+        }
 
     # Step 4: Turn 1 LLM Generation (Clarifying MCQs)
     mcqs = None
@@ -172,6 +194,7 @@ Do NOT output markdown formatting or backticks, return ONLY valid raw JSON."""
         "domain": domain,
         "mcqs": mcqs,
         "sources": sources,
+        "raw_results": raw_results,
         "warning": warning
     }
 
@@ -183,21 +206,107 @@ def execute_turn_2(
     query: str,
     domain: str,
     mcq_answers: List[Dict[str, Any]],
-    context_sources: Optional[List[Dict[str, Any]]] = None
+    turn1_raw_results: Optional[List[Tuple[str, Dict[str, Any], float]]] = None
 ) -> Dict[str, Any]:
     """
-    Executes Turn 2 Decision Support Generation combining user query,
-    domain RAG context, and user MCQ answers.
+    Executes Turn 2 Decision Support Generation:
+    Reuses Turn 1 chunks/results + retrieves fresh context for combined query,
+    merges, dedupes by chunk text, caps at TOP_K_DEFAULT * 2, and enforces MAX_CHUNKS_PER_FILE.
     """
-    # Step 1: Re-retrieve RAG Context
-    rag_context, sources, _ = retrieve_context(query, domain=domain, top_k=TOP_K_DEFAULT, max_token_budget=MAX_TOKEN_BUDGET)
-    if context_sources:
-        # Merge sources preserving uniqueness
-        seen = {s["title"] for s in sources}
-        for s in context_sources:
-            if s.get("title") not in seen:
-                sources.append(s)
-                seen.add(s["title"])
+    # Step 1: Build combined Turn 2 query
+    ans_summary = " ".join([f"{a.get('question', a.get('id', ''))}: {a.get('selected_option', a.get('answer', ''))}" for a in mcq_answers])
+    turn2_query = f"{query} {ans_summary}".strip()
+
+    # Step 2: Fresh RAG retrieval for combined query
+    rag_context_t2, sources_t2, raw_results_t2 = retrieve_context(
+        turn2_query,
+        domain=domain,
+        top_k=TOP_K_DEFAULT * 2,
+        max_token_budget=MAX_TOKEN_BUDGET
+    )
+
+    # Merge Turn 1 and Turn 2 results
+    combined_results = list(raw_results_t2)
+    if turn1_raw_results:
+        combined_results.extend(turn1_raw_results)
+
+    # Deduplicate by chunk text
+    seen_chunks = set()
+    deduped_results: List[Tuple[str, Dict[str, Any], float]] = []
+    for chunk_text, meta, score in combined_results:
+        chunk_key = chunk_text.strip()
+        if chunk_key not in seen_chunks:
+            seen_chunks.add(chunk_key)
+            deduped_results.append((chunk_text, meta, score))
+
+    # Cap at TOP_K_DEFAULT * 2
+    deduped_results = deduped_results[:TOP_K_DEFAULT * 2]
+
+    # Filter with MAX_CHUNKS_PER_FILE limit (max 2 chunks per file)
+    final_results: List[Tuple[str, Dict[str, Any], float]] = []
+    file_chunk_counts: Dict[str, int] = {}
+
+    for chunk_text, meta, score in deduped_results:
+        source_file = meta.get("source_file", meta.get("title", "unknown"))
+        count = file_chunk_counts.get(source_file, 0)
+        if count >= MAX_CHUNKS_PER_FILE:
+            continue
+        file_chunk_counts[source_file] = count + 1
+        final_results.append((chunk_text, meta, score))
+
+    # Assemble final context and sources (Rule B4: title only if url empty)
+    context_chunks: List[str] = []
+    sources: List[Dict[str, Any]] = []
+    seen_sources = set()
+
+    for idx, (chunk_text, meta, score) in enumerate(final_results, 1):
+        source_name = meta.get("source", "Unknown Document")
+        title = meta.get("title", source_name)
+        url = meta.get("url", "").strip()
+        doc_domain = meta.get("domain", "")
+
+        header = f"[Source {idx}: {title} | Domain: {doc_domain}]"
+        context_chunks.append(f"{header}\n{chunk_text}\n")
+
+        source_key = (title, url)
+        if source_key not in seen_sources:
+            seen_sources.add(source_key)
+            src_item = {
+                "id": f"Source-{len(sources)+1}",
+                "title": title,
+                "domain": doc_domain,
+                "similarity_score": round(score, 4)
+            }
+            if url:
+                src_item["url"] = url
+                src_item["source"] = source_name
+            sources.append(src_item)
+
+    final_context = "\n---\n".join(context_chunks)
+    best_score = final_results[0][2] if final_results else 0.0
+
+    # Rule B3: Low score handling (< RELEVANCE_THRESHOLD)
+    if best_score < RELEVANCE_THRESHOLD and not any(s.get("source") == "Tavily Live Web Search" for s in sources):
+        logger.info(f"Turn 2 best score ({best_score:.4f}) < threshold ({RELEVANCE_THRESHOLD}). Returning no-answer payload without calling LLM.")
+        no_answer_decision = {
+            "executive_summary": "I do not have enough relevant information in the knowledge base to answer this query confidently.",
+            "tradeoffs": [],
+            "action_plan": [],
+            "scenario_simulation": {
+                "baseline_case": "Insufficient information to project baseline outcome.",
+                "best_case": "Insufficient information to project optimistic outcome.",
+                "worst_case": "Insufficient information to project risk mitigation."
+            }
+        }
+        return {
+            "success": True,
+            "query": query,
+            "domain": domain,
+            "decision": no_answer_decision,
+            "sources": sources,
+            "llm_called": False,
+            "warning": "Low relevance score in Knowledge Base. LLM call skipped."
+        }
 
     formatted_answers = ""
     for ans in mcq_answers:
@@ -206,8 +315,10 @@ def execute_turn_2(
         formatted_answers += f"- {q_text}: {a_text}\n"
 
     warning = None
+    llm_called = False
 
     if llm_client:
+        llm_called = True
         prompt = f"""You are IntelliChoice, a world-class Decision Support AI.
 Synthesize a structured, actionable decision recommendation based on the user's query, their specific context/preferences, and retrieved knowledge context.
 
@@ -218,7 +329,7 @@ User Context & MCQ Choices:
 {formatted_answers}
 
 Retrieved Knowledge Context:
-{rag_context[:4000]}
+{final_context[:4000]}
 
 Format your response as a valid JSON object with the following schema:
 {{
@@ -236,13 +347,14 @@ Format your response as a valid JSON object with the following schema:
     "worst_case": "Pessimistic risk mitigation"
   }}
 }}
+CRITICAL RULE (B5): Do NOT invent numerical figures or percentages in the scenario simulation or trade-offs. Use qualitative descriptions unless exact figures are explicitly present in the retrieved context.
 Return ONLY valid JSON without markdown formatting."""
 
         try:
             response = llm_client.chat.completions.create(
                 model=LLM_MODEL_NAME,
                 messages=[
-                    {"role": "system", "content": "You are a expert decision engine responding in JSON."},
+                    {"role": "system", "content": "You are an expert decision engine responding in JSON."},
                     {"role": "user", "content": prompt}
                 ],
                 temperature=0.4,
@@ -257,6 +369,7 @@ Return ONLY valid JSON without markdown formatting."""
                 "domain": domain,
                 "decision": decision_payload,
                 "sources": sources,
+                "llm_called": True,
                 "warning": warning
             }
         except Exception as e:
@@ -276,7 +389,7 @@ Return ONLY valid JSON without markdown formatting."""
             {"step": 3, "title": "Review & Scale", "description": "Assess results against initial targets after 30-60 days."}
         ],
         "scenario_simulation": {
-            "baseline_case": "Steady progress achieving 80-90% of target objectives over specified timeline.",
+            "baseline_case": "Steady progress achieving qualitative target objectives over specified timeline.",
             "best_case": "Accelerated results exceeding performance expectations with minimal friction.",
             "worst_case": "Minor delays requiring adjustment of timeline, fully protected by initial risk buffers."
         }
@@ -288,5 +401,6 @@ Return ONLY valid JSON without markdown formatting."""
         "domain": domain,
         "decision": fallback_decision,
         "sources": sources,
+        "llm_called": llm_called,
         "warning": warning
     }
