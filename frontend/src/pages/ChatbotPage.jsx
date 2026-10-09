@@ -378,19 +378,29 @@ export default function ChatPage() {
                                </div>
                              )}
                              {(msg.simulation.best_case || msg.simulation.timeline) && (
-                               <div className="rounded-xl bg-emerald-50 dark:bg-emerald-500/10 p-4 space-y-2">
-                                  <h5 className="text-[10px] font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Outcome Simulation</h5>
-                                  {msg.simulation.best_case && (
-                                    <p className="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 leading-tight">
-                                      <span className="opacity-60">Best:</span> {msg.simulation.best_case}
-                                    </p>
-                                  )}
-                                  {msg.simulation.timeline && (
-                                    <p className="text-[11px] font-bold opacity-70 text-emerald-700 dark:text-emerald-400">
-                                      <span className="opacity-60">Timeline:</span> {msg.simulation.timeline}
-                                    </p>
-                                  )}
-                               </div>
+                                msg.simulation.best_case === "not in the knowledge base, check the official source" &&
+                                msg.simulation.timeline === "not in the knowledge base, check the official source" ? (
+                                  <div className="rounded-xl bg-amber-50 dark:bg-amber-500/10 p-4 space-y-1">
+                                     <h5 className="text-[10px] font-black uppercase tracking-widest text-amber-600 dark:text-amber-400">Outcome Simulation</h5>
+                                     <p className="text-[11px] font-bold text-amber-700 dark:text-amber-400">
+                                       Outcome simulation details not in the knowledge base, check the official source.
+                                     </p>
+                                  </div>
+                                ) : (
+                                  <div className="rounded-xl bg-emerald-50 dark:bg-emerald-500/10 p-4 space-y-2">
+                                     <h5 className="text-[10px] font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Outcome Simulation</h5>
+                                     {msg.simulation.best_case && (
+                                       <p className="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 leading-tight">
+                                         <span className="opacity-60">Best:</span> {msg.simulation.best_case}
+                                       </p>
+                                     )}
+                                     {msg.simulation.timeline && (
+                                       <p className="text-[11px] font-bold opacity-70 text-emerald-700 dark:text-emerald-400">
+                                         <span className="opacity-60">Timeline:</span> {msg.simulation.timeline}
+                                       </p>
+                                     )}
+                                  </div>
+                                )
                              )}
                           </div>
                         )}
