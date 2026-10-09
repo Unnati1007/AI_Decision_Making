@@ -32,7 +32,7 @@ Track your progress through the initial 30-day period using this operational che
 4. **Structured Preparation**: Are you following a daily interview prep schedule covering coding practice, system design, and domain concepts?
 5. **Pipeline Tracking**: Are you maintaining an organized log of applications, interview rounds, and follow-up timelines?
 
-## ## Long-Term Career Resilience and Network Building
+## Long-Term Career Resilience and Network Building
 Navigating a career disruption offers an opportunity to strengthen your professional network and refine your long-term career direction. Staying connected with engineering communities, attending local technical meetups, and participating in peer code reviews maintains your technical engagement. Building a diversified network of professional contacts ensures better stability and faster job discovery during future industry shifts.
 
 ## Maintaining Mental Resilience During Career Transitions
