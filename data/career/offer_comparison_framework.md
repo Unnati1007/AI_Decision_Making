@@ -1,6 +1,6 @@
 ---
 title: Job Offer Comparison Decision Framework
-url: https://www.levels.fyi
+url: ""
 domain: career
 source_type: ai_curated
 last_updated: '2026-10-08'

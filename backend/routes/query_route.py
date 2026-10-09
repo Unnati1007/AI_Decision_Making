@@ -46,8 +46,7 @@ def handle_turn_2(payload: Turn2Request):
     result = execute_turn_2(
         query=payload.query,
         domain=payload.domain,
-        mcq_answers=mcq_dicts,
-        context_sources=payload.context_sources
+        mcq_answers=mcq_dicts
     )
     return result
 

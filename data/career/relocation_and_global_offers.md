@@ -1,6 +1,6 @@
 ---
 title: Global Job Relocation and International Offer Evaluation Framework
-url: https://intellichoice.ai/frameworks/career/global-relocation
+url: ""
 domain: career
 source_type: ai_curated
 last_updated: '2026-10-08'

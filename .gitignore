@@ -81,4 +81,5 @@ build/
 
 # Temporary scratch and raw roadmaps node files
 scratch/
+scratch_*.py
 data/career/roadmaps/

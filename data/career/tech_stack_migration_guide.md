@@ -1,6 +1,6 @@
 ---
 title: Tech Stack Modernization & Upskilling Migration Strategy for Developers
-url: https://intellichoice.ai/frameworks/career/tech-stack-migration
+url: ""
 domain: career
 source_type: ai_curated
 last_updated: '2026-10-08'
