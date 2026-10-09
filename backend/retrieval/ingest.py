@@ -42,7 +42,7 @@ def parse_markdown_sections(filepath: str, default_domain: str) -> Tuple[List[Tu
         "title": filename,
         "url": "",
         "domain": default_domain,
-        "source_type": "roadmap_derived" if "roadmap" in filepath else ("official" if "onet" in filepath else ("wikipedia" if ("wiki_" in filename or "wiki_full" in filepath) else "ai_curated")),
+        "source_type": "official_gov" if "gov" in filepath else ("official" if "onet" in filepath else ("wikipedia" if ("wiki_" in filename or "wiki_full" in filepath) else "ai_curated")),
         "source_file": rel_source_file,
         "last_updated": "2026-10-08"
     }
