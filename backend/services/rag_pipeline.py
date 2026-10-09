@@ -21,6 +21,9 @@ from backend.services.guard import guard_pipeline, GuardResult
 from backend.services.domain_router import detect_domain
 from backend.retrieval.retriever import retrieve_context
 
+from dotenv import load_dotenv
+load_dotenv(override=True)
+
 logger = logging.getLogger("intellichoice.rag_pipeline")
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
@@ -188,6 +191,7 @@ Do NOT output markdown formatting or backticks, return ONLY valid raw JSON."""
     if not mcqs:
         mcqs = DEFAULT_DOMAIN_MCQS.get(domain, DEFAULT_DOMAIN_MCQS["career"])
 
+    llm_was_called = bool(llm_client and mcqs and warning is None)
     return {
         "success": True,
         "query": query,
@@ -195,6 +199,8 @@ Do NOT output markdown formatting or backticks, return ONLY valid raw JSON."""
         "mcqs": mcqs,
         "sources": sources,
         "raw_results": raw_results,
+        "llm_called": llm_was_called,
+        "mode": "llm_generated" if llm_was_called else "template_fallback",
         "warning": warning
     }
 
@@ -370,6 +376,7 @@ Return ONLY valid JSON without markdown formatting."""
                 "decision": decision_payload,
                 "sources": sources,
                 "llm_called": True,
+                "mode": "llm_generated",
                 "warning": warning
             }
         except Exception as e:
@@ -401,6 +408,7 @@ Return ONLY valid JSON without markdown formatting."""
         "domain": domain,
         "decision": fallback_decision,
         "sources": sources,
-        "llm_called": llm_called,
+        "llm_called": False,
+        "mode": "template_fallback",
         "warning": warning
     }

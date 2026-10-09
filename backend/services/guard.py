@@ -10,7 +10,7 @@ import httpx
 from enum import Enum
 from typing import Optional
 from dotenv import load_dotenv
-load_dotenv()
+load_dotenv(override=True)
 
 from openai import OpenAI
 from pydantic import BaseModel

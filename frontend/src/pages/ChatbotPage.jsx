@@ -75,6 +75,7 @@ export default function ChatPage() {
 
       if (data.mcqs && data.mcqs.length > 0) {
         const flowId = Date.now();
+        const responseMode = data.mode || (data.llm_called ? "llm_generated" : "template_fallback");
         setMcqFlow({
           originalQuery: query,
           domain: data.domain || domain || "career",
@@ -83,6 +84,8 @@ export default function ChatPage() {
           answers: [],
           sources: data.sources || [],
           flowId,
+          mode: responseMode,
+          llm_called: Boolean(data.llm_called),
         });
 
         const firstQ = data.mcqs[0];
@@ -95,6 +98,8 @@ export default function ChatPage() {
             question: firstQ.question || firstQ.q,
             options: firstQ.options,
             flowId,
+            mode: responseMode,
+            llm_called: Boolean(data.llm_called),
           },
         ]);
         return;
@@ -116,12 +121,14 @@ export default function ChatPage() {
   const showRecommendationFromTurn2 = (data, query) => {
     const decision = data.decision || {};
     const formattedResponse = {
+      mode: data.mode || (data.llm_called ? "llm_generated" : "template_fallback"),
+      llm_called: Boolean(data.llm_called),
       recommendation: decision.executive_summary || "Recommended Decision Path",
-      reasoning: decision.tradeoffs || ["Structured trade-offs evaluated against indexed corpus."],
-      risks: decision.scenario_simulation?.worst_case ? [decision.scenario_simulation.worst_case] : ["Standard risk buffer active."],
+      reasoning: decision.tradeoffs ? (Array.isArray(decision.tradeoffs) ? decision.tradeoffs.map(t => typeof t === 'object' ? `${t.aspect || ''}: ${t.details || ''}` : str(t)) : [String(decision.tradeoffs)]) : [],
+      risks: decision.scenario_simulation?.worst_case ? [decision.scenario_simulation.worst_case] : [],
       simulation: {
-        best_case: decision.scenario_simulation?.best_case || "Optimistic target achievement.",
-        timeline: decision.scenario_simulation?.baseline_case || "30-60 day review cycle.",
+        best_case: decision.scenario_simulation?.best_case || "",
+        timeline: decision.scenario_simulation?.baseline_case || "",
       },
       actionPlan: decision.action_plan || [],
       resources: (data.sources || []).map((s) => ({
@@ -189,6 +196,8 @@ export default function ChatPage() {
             question: nextQ.question || nextQ.q,
             options: nextQ.options,
             flowId: mcqFlow.flowId,
+            mode: mcqFlow.mode,
+            llm_called: mcqFlow.llm_called,
           },
         ]);
       }, 500);
@@ -325,6 +334,14 @@ export default function ChatPage() {
 
                 {msg.type === "response" && (
                   <div className="space-y-4">
+                     {msg.mode === "template_fallback" && (
+                       <div className="rounded-2xl px-5 py-3 bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 flex items-center gap-3">
+                         <AlertCircle size={18} className="text-amber-600 shrink-0" />
+                         <p className="text-xs font-bold text-amber-700 dark:text-amber-400">
+                           LLM nahi chala, yeh template jawab hai, asli AI decision nahi.
+                         </p>
+                       </div>
+                     )}
                      <div className="card p-6 space-y-6">
                         <div className="space-y-2">
                            <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
@@ -334,37 +351,49 @@ export default function ChatPage() {
                            <p className="text-lg font-bold leading-tight" style={{ color: "var(--text)" }}>{msg.recommendation}</p>
                         </div>
 
-                        <div className="space-y-3">
-                           <h4 className="text-[10px] font-black uppercase tracking-widest text-[var(--text-soft)]">Key Observations</h4>
-                           <div className="space-y-2">
-                              {msg.reasoning.map((r, i) => (
-                                <div key={i} className="flex gap-2 items-start text-sm font-medium" style={{ color: "var(--text-muted)" }}>
-                                   <CheckCircle2 size={14} className="mt-0.5 text-blue-500 shrink-0" />
-                                   {r}
-                                </div>
-                              ))}
-                           </div>
-                        </div>
+                        {msg.reasoning && msg.reasoning.length > 0 && (
+                          <div className="space-y-3">
+                             <h4 className="text-[10px] font-black uppercase tracking-widest text-[var(--text-soft)]">Key Observations</h4>
+                             <div className="space-y-2">
+                                {msg.reasoning.map((r, i) => (
+                                  <div key={i} className="flex gap-2 items-start text-sm font-medium" style={{ color: "var(--text-muted)" }}>
+                                     <CheckCircle2 size={14} className="mt-0.5 text-blue-500 shrink-0" />
+                                     {r}
+                                  </div>
+                                ))}
+                             </div>
+                          </div>
+                        )}
 
-                        <div className="grid sm:grid-cols-2 gap-4">
-                           <div className="rounded-xl bg-red-50 dark:bg-red-500/10 p-4 space-y-2">
-                              <h5 className="text-[10px] font-black uppercase tracking-widest text-red-600 dark:text-red-400">Risks Identified</h5>
-                              <ul className="space-y-1">
-                                 {msg.risks.map((r, i) => (
-                                   <li key={i} className="text-[11px] font-bold text-red-700/80 dark:text-red-400/80 flex items-center gap-1.5">• {r}</li>
-                                 ))}
-                              </ul>
-                           </div>
-                           <div className="rounded-xl bg-emerald-50 dark:bg-emerald-500/10 p-4 space-y-2">
-                              <h5 className="text-[10px] font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Outcome Simulation</h5>
-                              <p className="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 leading-tight">
-                                <span className="opacity-60">Best:</span> {msg.simulation.best_case}
-                              </p>
-                              <p className="text-[11px] font-bold opacity-70 text-emerald-700 dark:text-emerald-400">
-                                <span className="opacity-60">Timeline:</span> {msg.simulation.timeline}
-                              </p>
-                           </div>
-                        </div>
+                        {(msg.risks.length > 0 || msg.simulation.best_case || msg.simulation.timeline) && (
+                          <div className="grid sm:grid-cols-2 gap-4">
+                             {msg.risks && msg.risks.length > 0 && (
+                               <div className="rounded-xl bg-red-50 dark:bg-red-500/10 p-4 space-y-2">
+                                  <h5 className="text-[10px] font-black uppercase tracking-widest text-red-600 dark:text-red-400">Risks Identified</h5>
+                                  <ul className="space-y-1">
+                                     {msg.risks.map((r, i) => (
+                                       <li key={i} className="text-[11px] font-bold text-red-700/80 dark:text-red-400/80 flex items-center gap-1.5">• {r}</li>
+                                     ))}
+                                  </ul>
+                               </div>
+                             )}
+                             {(msg.simulation.best_case || msg.simulation.timeline) && (
+                               <div className="rounded-xl bg-emerald-50 dark:bg-emerald-500/10 p-4 space-y-2">
+                                  <h5 className="text-[10px] font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Outcome Simulation</h5>
+                                  {msg.simulation.best_case && (
+                                    <p className="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 leading-tight">
+                                      <span className="opacity-60">Best:</span> {msg.simulation.best_case}
+                                    </p>
+                                  )}
+                                  {msg.simulation.timeline && (
+                                    <p className="text-[11px] font-bold opacity-70 text-emerald-700 dark:text-emerald-400">
+                                      <span className="opacity-60">Timeline:</span> {msg.simulation.timeline}
+                                    </p>
+                                  )}
+                               </div>
+                             )}
+                          </div>
+                        )}
 
                         {msg.resources && msg.resources.length > 0 && (
                            <div className="pt-5 border-t border-[var(--border)] mt-2">
@@ -372,7 +401,7 @@ export default function ChatPage() {
                                  <div className="h-5 w-5 rounded-md bg-blue-600/10 text-blue-600 flex items-center justify-center">
                                     <ListFilter size={12} />
                                  </div>
-                                 <h4 className="text-[10px] font-black uppercase tracking-widest text-[var(--text-soft)]">Strategic Resources</h4>
+                                 <h4 className="text-[10px] font-black uppercase tracking-widest text-[var(--text-soft)]">Sources</h4>
                               </div>
                               <div className="grid gap-3 sm:grid-cols-2">
                                  {msg.resources.map((resource, i) => (
@@ -399,6 +428,14 @@ export default function ChatPage() {
 
                 {msg.type === "mcq" && (
                   <div className="space-y-4">
+                     {msg.mode === "template_fallback" && (
+                       <div className="rounded-2xl px-5 py-3 bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 flex items-center gap-3">
+                         <AlertCircle size={18} className="text-amber-600 shrink-0" />
+                         <p className="text-xs font-bold text-amber-700 dark:text-amber-400">
+                           LLM nahi chala, yeh template jawab hai, asli AI decision nahi.
+                         </p>
+                       </div>
+                     )}
                      <div className="card p-6 space-y-4">
                         <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
                            <Brain size={16} />
