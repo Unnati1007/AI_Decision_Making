@@ -178,9 +178,14 @@ def evaluate_quality_gate(
     # Detect error markers
     detected_error_marker = None
     for err in ERROR_MARKERS:
-        if err.lower() in text.lower():
-            detected_error_marker = err
-            break
+        if err == "404":
+            if re.search(r'\b404\b', text, re.IGNORECASE):
+                detected_error_marker = err
+                break
+        else:
+            if err.lower() in text.lower():
+                detected_error_marker = err
+                break
 
     is_duplicate_url, active_dup_filepath = find_duplicate_active_url(url, current_filepath, data_dir)
 

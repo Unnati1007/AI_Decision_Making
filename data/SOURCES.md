@@ -1,7 +1,7 @@
 # IntelliChoice Knowledge Base Sources
 
-Total Active Files: 126
-Total Vector Chunks: 1997
+Total Active Files: 136
+Total Vector Chunks: 2203
 
 ## Active Files by Domain
 
@@ -110,7 +110,7 @@ Total Vector Chunks: 1997
 - `finance/wiki_taxation_in_india.md`
 - `finance/wiki_term_life_insurance.md`
 
-### Domain: legal (15 files)
+### Domain: legal (25 files)
 - `legal/consumer_rights_court.md`
 - `legal/contract_review_guide.md`
 - `legal/cyber_crime_data_privacy.md`
@@ -120,10 +120,20 @@ Total Vector Chunks: 1997
 - `legal/ip_trademark_copyright.md`
 - `legal/startup_legal_checklist.md`
 - `legal/tenant_landlord_rights.md`
+- `legal/wiki_arbitration_and_conciliation_act_1996.md`
+- `legal/wiki_code_on_wages_2019.md`
+- `legal/wiki_consumer_protection_act_2019.md`
 - `legal/wiki_contract.md`
+- `legal/wiki_copyright_law_of_india.md`
 - `legal/wiki_cybercrime.md`
-- `legal/wiki_labour_law_in_india.md`
-- `legal/wiki_non-disclosure_agreement.md`
+- `legal/wiki_digital_personal_data_protection_act_2023.md`
+- `legal/wiki_hindu_succession_act_1956.md`
+- `legal/wiki_indian_contract_act_1872.md`
+- `legal/wiki_industrial_disputes_act_1947.md`
+- `legal/wiki_information_technology_act_2000.md`
+- `legal/wiki_labour_laws_in_india.md`
+- `legal/wiki_non_disclosure_agreement.md`
+- `legal/wiki_payment_of_gratuity_act_1972.md`
 - `legal/wiki_right_to_information_act,_2005.md`
 - `legal/wills_inheritance_property.md`
 
@@ -141,7 +151,7 @@ Total Vector Chunks: 1997
 
 ## Archived Files
 
-Total Archived Files: 80
+Total Archived Files: 82
 
 - `_archive_finance/wiki_income_tax_in_india.md` (reason: replaced by full article (active file: `data/finance/wiki_income_tax_in_india.md`))
 - `_archive_gov/epf_india_official_portal.md` (reason: nav/menu text or non-English content (earlier audit))
@@ -149,6 +159,8 @@ Total Archived Files: 80
 - `_archive_gov/ncs_national_career_service_portal.md` (reason: nav/menu text or non-English content (earlier audit))
 - `_archive_gov/pib_industrial_relations_code_2020.md` (reason: nav/menu text or non-English content (earlier audit))
 - `_archive_gov/pib_labour_codes_2020_overview.md` (reason: nav/menu text or non-English content (earlier audit))
+- `_archive_legal/wiki_labour_law_in_india.md` (reason: replaced by full article (active file: `data/legal/wiki_labour_laws_in_india.md`))
+- `_archive_legal/wiki_non-disclosure_agreement.md` (reason: replaced by full article (active file: `data/legal/wiki_non_disclosure_agreement.md`))
 - `_archive_onet/onet_11-3021_00_computer_and_information_systems_managers.md` (reason: reason not recorded)
 - `_archive_onet/onet_15-1211_00_computer_systems_analysts.md` (reason: reason not recorded)
 - `_archive_onet/onet_15-1212_00_information_security_analysts.md` (reason: reason not recorded)
@@ -167,59 +179,59 @@ Total Archived Files: 80
 - `_archive_roadmaps/roadmap_fullstack_developer.md` (reason: excluded: repo license forbids redistribution)
 - `_archive_wiki/wiki_aerobic_exercise.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_applicant_tracking_system.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_apprenticeship.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_apprenticeship.md` (reason: replaced by full article (active file: `data/career/wiki_full/apprenticeship.md`))
 - `_archive_wiki/wiki_asset_allocation.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_career_counseling.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_career_development.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_career_counseling.md` (reason: replaced by full article (active file: `data/career/wiki_full/career_counseling.md`))
+- `_archive_wiki/wiki_career_development.md` (reason: replaced by full article (active file: `data/career/wiki_full/career_development.md`))
 - `_archive_wiki/wiki_career_management.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_circadian_rhythm.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_cognitive_behavioral_therapy.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_collective_bargaining.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_continuing_education.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_collective_bargaining.md` (reason: replaced by full article (active file: `data/career/wiki_full/collective_bargaining.md`))
+- `_archive_wiki/wiki_continuing_education.md` (reason: replaced by full article (active file: `data/career/wiki_full/continuing_education.md`))
 - `_archive_wiki/wiki_credit_score.md` (reason: replaced by full article (active file: `data/finance/wiki_credit_score.md`))
-- `_archive_wiki/wiki_employee_benefits.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_employee_benefits.md` (reason: replaced by full article (active file: `data/career/wiki_full/employee_benefits.md`))
 - `_archive_wiki/wiki_employee_engagement.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_employee_retention.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_employee_retention.md` (reason: replaced by full article (active file: `data/career/wiki_full/employee_retention.md`))
 - `_archive_wiki/wiki_equal_opportunity_employment.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_ergonomics.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_executive_education.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_exit_interview.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_freelancer.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_gig_economy.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_human_resource_management.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_exit_interview.md` (reason: replaced by full article (active file: `data/career/wiki_full/exit_interview.md`))
+- `_archive_wiki/wiki_freelancer.md` (reason: replaced by full article (active file: `data/career/wiki_full/freelancer.md`))
+- `_archive_wiki/wiki_gig_economy.md` (reason: replaced by full article (active file: `data/career/wiki_full/gig_economy.md`))
+- `_archive_wiki/wiki_human_resource_management.md` (reason: replaced by full article (active file: `data/career/wiki_full/human_resource_management.md`))
 - `_archive_wiki/wiki_index_fund.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_intellectual_property.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_intermittent_fasting.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_job_interview.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_job_satisfaction.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_job_interview.md` (reason: replaced by full article (active file: `data/career/wiki_full/job_interview.md`))
+- `_archive_wiki/wiki_job_satisfaction.md` (reason: replaced by full article (active file: `data/career/wiki_full/job_satisfaction.md`))
 - `_archive_wiki/wiki_job_security.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_layoff.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_layoff.md` (reason: replaced by full article (active file: `data/career/wiki_full/layoff.md`))
 - `_archive_wiki/wiki_macronutrient.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_master_of_business_administration.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_mentorship.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_master_of_business_administration.md` (reason: replaced by full article (active file: `data/career/wiki_full/master_of_business_administration.md`))
+- `_archive_wiki/wiki_mentorship.md` (reason: replaced by full article (active file: `data/career/wiki_full/mentorship.md`))
 - `_archive_wiki/wiki_mindfulness.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_mutual_fund.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_national_pension_system.md` (reason: replaced by full article (active file: `data/finance/wiki_national_pension_system.md`))
-- `_archive_wiki/wiki_occupational_burnout.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_occupational_burnout.md` (reason: replaced by full article (active file: `data/career/wiki_full/occupational_burnout.md`))
 - `_archive_wiki/wiki_occupational_stress.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_onboarding.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_organizational_culture.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_performance_appraisal.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_onboarding.md` (reason: replaced by full article (active file: `data/career/wiki_full/onboarding.md`))
+- `_archive_wiki/wiki_organizational_culture.md` (reason: replaced by full article (active file: `data/career/wiki_full/organizational_culture.md`))
+- `_archive_wiki/wiki_performance_appraisal.md` (reason: replaced by full article (active file: `data/career/wiki_full/performance_appraisal.md`))
 - `_archive_wiki/wiki_performance_improvement_plan.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_product_management.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_professional_certification.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_product_management.md` (reason: replaced by full article (active file: `data/career/wiki_full/product_management.md`))
+- `_archive_wiki/wiki_professional_certification.md` (reason: replaced by full article (active file: `data/career/wiki_full/professional_certification.md`))
 - `_archive_wiki/wiki_professional_network.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_psychological_resilience.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_public_provident_fund_(india).md` (reason: replaced by full article (active file: `data/finance/wiki_public_provident_fund_india.md`))
 - `_archive_wiki/wiki_real_estate_investment_trust.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_remote_work.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_remote_work.md` (reason: replaced by full article (active file: `data/career/wiki_full/remote_work.md`))
 - `_archive_wiki/wiki_salary_negotiation.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_severance_package.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_severance_package.md` (reason: replaced by full article (active file: `data/career/wiki_full/severance_package.md`))
 - `_archive_wiki/wiki_skills_management.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_sleep_hygiene.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_soft_skills.md` (reason: archived earlier: reason not recorded)
-- `_archive_wiki/wiki_software_engineering.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_soft_skills.md` (reason: replaced by full article (active file: `data/career/wiki_full/soft_skills.md`))
+- `_archive_wiki/wiki_software_engineering.md` (reason: replaced by full article (active file: `data/career/wiki_full/software_engineering.md`))
 - `_archive_wiki/wiki_sovereign_gold_bond.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_systematic_investment_plan.md` (reason: replaced by full article (active file: `data/finance/wiki_systematic_investment_plan.md`))
-- `_archive_wiki/wiki_work%e2%80%93life_balance.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_work%e2%80%93life_balance.md` (reason: replaced by full article (active file: `data/career/wiki_full/work_life_balance.md`))
 - `_archive_wiki/wiki_workforce_management.md` (reason: archived earlier: reason not recorded)

@@ -120,7 +120,8 @@ def retrieve_context(
                     "id": f"Source-{len(sources)+1}",
                     "title": title,
                     "domain": doc_domain,
-                    "similarity_score": round(score, 4)
+                    "similarity_score": round(score, 4),
+                    "source_type": meta.get("source_type", "ai_curated")
                 }
                 # Rule B4: Include url ONLY if non-empty; never generate a URL
                 if url:
@@ -150,7 +151,8 @@ def retrieve_context(
                         "title": w_title,
                         "source": "Tavily Live Web Search",
                         "domain": domain or "general",
-                        "similarity_score": 0.0
+                        "similarity_score": 0.0,
+                        "source_type": "official_gov"
                     }
                     if w_url:
                         src_item["url"] = w_url

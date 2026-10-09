@@ -135,6 +135,7 @@ export default function ChatPage() {
         title: s.title || s.id,
         url: s.url || "#",
         domain: s.domain || "career",
+        source_type: s.source_type || "ai_curated",
       })),
     };
 
@@ -424,9 +425,14 @@ export default function ChatPage() {
                                     >
                                        <div className="flex items-center justify-between gap-2 mb-1">
                                           <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400 group-hover:translate-x-0.5 transition-transform truncate">{resource.title}</span>
-                                          <ChevronRight size={14} className="text-[var(--text-soft)] group-hover:text-blue-500 transition-colors" />
+                                          <ChevronRight size={14} className="text-[var(--text-soft)] group-hover:text-blue-500 transition-colors shrink-0" />
                                        </div>
-                                       <p className="text-[9px] font-medium text-[var(--text-muted)] line-clamp-1 opacity-60">Source: External Repository</p>
+                                       <div className="flex items-center justify-between gap-2">
+                                          <p className="text-[9px] font-medium text-[var(--text-muted)] line-clamp-1 opacity-60">Source: External Repository</p>
+                                          <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-500 shrink-0">
+                                            {resource.source_type === "official_gov" ? "Official" : resource.source_type === "wikipedia" ? "Wikipedia" : "AI-generated, unverified"}
+                                          </span>
+                                       </div>
                                     </a>
                                  ))}
                               </div>
