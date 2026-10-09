@@ -133,7 +133,7 @@ Total Vector Chunks: 2225
 - `legal/wiki_information_technology_act_2000.md`
 - `legal/wiki_labour_laws_in_india.md`
 - `legal/wiki_non_disclosure_agreement.md`
-- `legal/wiki_payment_of_gratuity_act_1972.md` (MODIFIED: removed one unsupported sentence (reason: contradicts nothing in the Act text and is not a legal statement; flagged by reviewer))
+- `legal/wiki_payment_of_gratuity_act_1972.md` (MODIFIED: removed one sentence that is present in live Wikipedia but not supported by any other source in this KB (looks like vandalism). Rest of the text is unchanged Wikipedia text (CC BY-SA).)
 - `legal/wiki_right_to_information_act_2005.md`
 - `legal/wills_inheritance_property.md`
 
