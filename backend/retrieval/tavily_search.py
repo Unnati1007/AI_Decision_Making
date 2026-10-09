@@ -57,7 +57,7 @@ def search_tavily(query: str, max_results: int = 4) -> List[Dict[str, Any]]:
         "api_key": TAVILY_API_KEY,
         "query": query,
         "search_depth": "basic",
-        "include_answer": True,
+        "include_answer": False,
         "max_results": max_results
     }
     if TAVILY_ALLOWED_DOMAINS:
@@ -68,19 +68,10 @@ def search_tavily(query: str, max_results: int = 4) -> List[Dict[str, Any]]:
         if response.status_code == 200:
             data = response.json()
             results = data.get("results", [])
-            answer = data.get("answer", "")
             logger.info(f"✅ Tavily Live Search retrieved {len(results)} web results for: '{query}'")
             
-            # Format results
+            # Format results (only real URLs)
             formatted_results = []
-            if answer:
-                formatted_results.append({
-                    "title": "Tavily AI Direct Summary",
-                    "url": "https://tavily.com",
-                    "content": sanitize_tavily_text(answer, max_chars=1000),
-                    "source": "Tavily AI Live Web Search"
-                })
-                
             for res in results:
                 raw_content = res.get("content", "")
                 formatted_results.append({
