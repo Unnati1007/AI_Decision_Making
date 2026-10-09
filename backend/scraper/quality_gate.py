@@ -115,59 +115,52 @@ def count_raw_html_tags(text: str) -> int:
 
 def find_duplicate_active_url(url: str, current_filepath: str = None, data_dir: str = "data") -> Tuple[bool, str]:
     """
-    Checks if URL exists in active data/ files (excluding _staging and current_filepath).
+    Checks if URL exists in ACTIVE dirs (data/career, data/finance, data/legal, data/wellbeing).
+    Ignores data/_archive_* and data/_staging.
     Returns (is_duplicate, matching_filepath).
     """
     if not url:
         return False, ""
     target_url = url.lower().strip().rstrip("/")
 
-    md_files = glob.glob(os.path.join(data_dir, "**", "*.md"), recursive=True)
-    for f in md_files:
-        if "_staging" in f:
+    active_subdirs = ["career", "finance", "legal", "wellbeing"]
+    
+    for domain in active_subdirs:
+        domain_dir = os.path.join(data_dir, domain)
+        if not os.path.isdir(domain_dir):
             continue
-        if current_filepath and os.path.abspath(f) == os.path.abspath(current_filepath):
-            continue
-        try:
-            with open(f, "r", encoding="utf-8", errors="ignore") as file:
-                content = file.read()
-                match = re.search(r"^url:\s*[\"']?(.*?)[\"']?\s*$", content, re.MULTILINE)
-                if match and match.group(1).strip():
-                    f_url = match.group(1).strip().lower().rstrip("/")
-                    if f_url == target_url:
-                        return True, os.path.normpath(f)
-        except Exception:
-            pass
+        md_files = glob.glob(os.path.join(domain_dir, "**", "*.md"), recursive=True)
+        for f in md_files:
+            if "_staging" in f or "_archive" in f:
+                continue
+            if current_filepath and os.path.abspath(f) == os.path.abspath(current_filepath):
+                continue
+            try:
+                with open(f, "r", encoding="utf-8", errors="ignore") as file:
+                    content = file.read()
+                    match = re.search(r"^url:\s*[\"']?(.*?)[\"']?\s*$", content, re.MULTILINE)
+                    if match and match.group(1).strip():
+                        f_url = match.group(1).strip().lower().rstrip("/")
+                        if f_url == target_url:
+                            return True, os.path.normpath(f)
+            except Exception:
+                pass
     return False, ""
-
-
-def is_title_matching(page_title: str, expected_topic: str) -> bool:
-    """Checks if page title matches expected topic using keyword & synonym matching."""
-    expected_words = [w.lower() for w in re.findall(r'\w+', expected_topic)]
-    title_tokens = set(re.findall(r'\w+', page_title.lower()))
-
-    matched_tokens = 0
-    for word in expected_words:
-        if word in title_tokens:
-            matched_tokens += 1
-        elif word in TOPIC_KEYWORD_SYNONYMS:
-            if TOPIC_KEYWORD_SYNONYMS[word].intersection(title_tokens):
-                matched_tokens += 1
-
-    return matched_tokens >= 1 or expected_topic.lower() in page_title.lower()
 
 
 def evaluate_quality_gate(
     text: str,
-    expected_topic: str,
-    url: str,
+    expected_topic: str = None,
+    url: str = "",
     status_code: int = 200,
     license_text: str = "CC BY-SA (per Wikipedia terms)",
     current_filepath: str = None,
-    data_dir: str = "data"
+    data_dir: str = "data",
+    source_type: str = "wikipedia",
+    expected_title: str = None
 ) -> Dict[str, Any]:
     """
-    Evaluates quality gate criteria on a fetched article text and metadata.
+    Evaluates quality gate criteria on article text and metadata (T1 Fixed).
     Returns status dictionary.
     """
     page_title = extract_page_title(text)
@@ -177,14 +170,18 @@ def evaluate_quality_gate(
     sha256_hash = hashlib.sha256(text.encode("utf-8")).hexdigest()
     raw_html_count = count_raw_html_tags(text)
 
-    # Check error markers
+    # Detect source_type from frontmatter if available
+    st_match = re.search(r"^source_type:\s*[\"']?(.*?)[\"']?\s*$", text, re.MULTILINE)
+    if st_match and st_match.group(1).strip():
+        source_type = st_match.group(1).strip()
+
+    # Detect error markers
     detected_error_marker = None
     for err in ERROR_MARKERS:
         if err.lower() in text.lower():
             detected_error_marker = err
             break
 
-    title_matched = is_title_matching(page_title, expected_topic)
     is_duplicate_url, active_dup_filepath = find_duplicate_active_url(url, current_filepath, data_dir)
 
     fail_reasons = []
@@ -194,14 +191,26 @@ def evaluate_quality_gate(
         fail_reasons.append(f"Contains error marker '{detected_error_marker}'")
     if raw_html_count > MAX_RAW_HTML_TAGS:
         fail_reasons.append(f"Raw HTML/SVG tags count {raw_html_count} > {MAX_RAW_HTML_TAGS}")
-    if not title_matched:
-        fail_reasons.append(f"Page title '{page_title}' does not match expected topic '{expected_topic}'")
+    
+    # Title Rule (T1 b)
+    if not page_title or not page_title.strip():
+        fail_reasons.append("Page title is empty")
+    elif any(err.lower() in page_title.lower() for err in ERROR_MARKERS):
+        fail_reasons.append(f"Page title '{page_title}' contains error marker")
+    elif expected_title and expected_title.lower() not in page_title.lower():
+        fail_reasons.append(f"Page title '{page_title}' does not contain expected title substring '{expected_title}'")
+
     if words < MIN_WORD_COUNT:
         fail_reasons.append(f"Word count {words} < {MIN_WORD_COUNT}")
     if lang not in ALLOWED_LANGUAGES:
         fail_reasons.append(f"Language '{lang}' not in {ALLOWED_LANGUAGES}")
-    if nav_ratio > MAX_NAV_RATIO:
-        fail_reasons.append(f"Nav ratio {nav_ratio} > {MAX_NAV_RATIO}")
+    
+    # Nav Ratio Rule (T1 c)
+    if source_type.lower() != "wikipedia":
+        if nav_ratio > MAX_NAV_RATIO:
+            fail_reasons.append(f"Nav ratio {nav_ratio} > {MAX_NAV_RATIO}")
+
+    # Duplicate URL Rule (T1 a)
     if is_duplicate_url:
         fail_reasons.append(f"Duplicate URL in active file: {active_dup_filepath}")
 
@@ -211,8 +220,7 @@ def evaluate_quality_gate(
         "status": status_code,
         "url": url,
         "page_title": page_title,
-        "expected_topic": expected_topic,
-        "title_match": "MATCH" if title_matched else "MISMATCH",
+        "source_type": source_type,
         "words": words,
         "nav_ratio": nav_ratio,
         "raw_html_count": raw_html_count,
@@ -227,17 +235,18 @@ def evaluate_quality_gate(
 
 
 def print_gate_rules():
-    print("=== Quality Gate Rules Used (S1 Fixed) ===")
-    print("  TITLE RULE         : Extracted strictly from page <title> / # H1 heading (never filename/caller).")
+    print("=== Quality Gate Rules Used (T1 Fixed) ===")
+    print("  DUPLICATE_URL_RULE : Compares only against ACTIVE dirs (data/career, data/finance, data/legal, data/wellbeing); ignores data/_archive_* and data/_staging.")
+    print("  TITLE_RULE         : Page title must be non-empty and not an error marker; if expected_title provided, must be a case-insensitive substring.")
+    print("  NAV_RATIO_RULE     : Skipped for source_type='wikipedia' (MediaWiki API text); enforced for HTML-scraped pages (max nav ratio 0.50).")
     print(f"  EXPECTED_STATUS    : {EXPECTED_STATUS}")
     print(f"  ERROR_MARKERS      : {ERROR_MARKERS}")
-    print(f"  MAX_RAW_HTML_TAGS  : {MAX_RAW_HTML_TAGS} (fails if > {MAX_RAW_HTML_TAGS})")
+    print(f"  MAX_RAW_HTML_TAGS  : {MAX_RAW_HTML_TAGS}")
     print(f"  MIN_WORD_COUNT     : {MIN_WORD_COUNT}")
     print(f"  ALLOWED_LANGUAGES  : {ALLOWED_LANGUAGES}")
-    print(f"  MAX_NAV_RATIO      : {MAX_NAV_RATIO} (excludes headings, math formulas, and table rows)")
-    print("  DUPLICATE_URL_RULE : Ignores staging and self; checks active files in data/.")
     print("===========================================")
 
 
 if __name__ == "__main__":
     print_gate_rules()
+
