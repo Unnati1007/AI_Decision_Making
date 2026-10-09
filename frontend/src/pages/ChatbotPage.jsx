@@ -61,100 +61,174 @@ export default function ChatPage() {
       await new Promise((r) => setTimeout(r, 600));
     }
 
-    // Match Query
     const response = matchQueryToDomain(query, domain);
     setIsThinking(false);
 
-    if (response) {
-      if (response.followUps && response.followUps.length > 0) {
-        // Start MCQ Flow
+    try {
+      const res = await fetch("/api/query/turn1", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query, domain: domain ? domain.toLowerCase() : null }),
+      });
+      if (!res.ok) throw new Error("Turn 1 API call failed");
+      const data = await res.json();
+
+      if (data.mcqs && data.mcqs.length > 0) {
         const flowId = Date.now();
         setMcqFlow({
-          response,
           originalQuery: query,
-          questions: response.followUps,
+          domain: data.domain || domain || "career",
+          questions: data.mcqs,
           currentIndex: 0,
-          flowId
+          answers: [],
+          sources: data.sources || [],
+          flowId,
         });
-        
-        const firstQ = response.followUps[0];
-        setMessages(prev => [...prev, {
+
+        const firstQ = data.mcqs[0];
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 2,
+            role: "assistant",
+            type: "mcq",
+            question: firstQ.question || firstQ.q,
+            options: firstQ.options,
+            flowId,
+          },
+        ]);
+        return;
+      }
+    } catch (err) {
+      console.error("Backend Turn 1 connection error:", err);
+      setMessages((prev) => [
+        ...prev,
+        {
           id: Date.now() + 2,
           role: "assistant",
-          type: "mcq",
-          question: firstQ.q,
-          options: firstQ.options,
-          flowId
-        }]);
-      } else {
-        showRecommendation(response, query);
-      }
+          type: "error",
+          text: "Backend se connect nahi ho paya, dobara try karo",
+        },
+      ]);
     }
   };
 
-  const showRecommendation = (response, query) => {
+  const showRecommendationFromTurn2 = (data, query) => {
+    const decision = data.decision || {};
+    const formattedResponse = {
+      recommendation: decision.executive_summary || "Recommended Decision Path",
+      reasoning: decision.tradeoffs || ["Structured trade-offs evaluated against indexed corpus."],
+      risks: decision.scenario_simulation?.worst_case ? [decision.scenario_simulation.worst_case] : ["Standard risk buffer active."],
+      simulation: {
+        best_case: decision.scenario_simulation?.best_case || "Optimistic target achievement.",
+        timeline: decision.scenario_simulation?.baseline_case || "30-60 day review cycle.",
+      },
+      actionPlan: decision.action_plan || [],
+      resources: (data.sources || []).map((s) => ({
+        title: s.title || s.id,
+        url: s.url || "#",
+        domain: s.domain || "career",
+      })),
+    };
+
     const assistantMsg = {
       id: Date.now() + 2,
       role: "assistant",
       type: "response",
-      ...response,
+      ...formattedResponse,
     };
     setMessages((prev) => [...prev, assistantMsg]);
-    setPendingResponse(response);
-    
-    // Save to archive
+    setPendingResponse(formattedResponse);
+
     addArchiveEntry({
       query,
-      domain,
-      response,
+      domain: data.domain || domain,
+      response: formattedResponse,
     });
   };
 
-  const handleMCQAnswer = (msgId, optionText) => {
+  const handleMCQAnswer = async (msgId, optionText) => {
     // Mark as answered
-    setMessages(prev => prev.map(m => 
-      m.id === msgId ? { ...m, answered: true, selectedOption: optionText } : m
-    ));
+    setMessages((prev) =>
+      prev.map((m) => (m.id === msgId ? { ...m, answered: true, selectedOption: optionText } : m))
+    );
 
     // Add user's answer
-    setMessages(prev => [...prev, {
-      id: Date.now(),
-      role: "user",
-      type: "text",
-      text: optionText,
-    }]);
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        role: "user",
+        type: "text",
+        text: optionText,
+      },
+    ]);
 
     if (!mcqFlow) return;
+
+    const currentQ = mcqFlow.questions[mcqFlow.currentIndex];
+    const newAnswers = [
+      ...(mcqFlow.answers || []),
+      { question: currentQ.question || currentQ.q, selected_option: optionText },
+    ];
 
     const nextIndex = mcqFlow.currentIndex + 1;
 
     if (nextIndex < mcqFlow.questions.length) {
       // Show next question
-      setMcqFlow(prev => ({ ...prev, currentIndex: nextIndex }));
+      setMcqFlow((prev) => ({ ...prev, currentIndex: nextIndex, answers: newAnswers }));
       const nextQ = mcqFlow.questions[nextIndex];
-      
+
       setTimeout(() => {
-        setMessages(prev => [...prev, {
-          id: Date.now(),
-          role: "assistant",
-          type: "mcq",
-          question: nextQ.q,
-          options: nextQ.options,
-          flowId: mcqFlow.flowId
-        }]);
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now(),
+            role: "assistant",
+            type: "mcq",
+            question: nextQ.question || nextQ.q,
+            options: nextQ.options,
+            flowId: mcqFlow.flowId,
+          },
+        ]);
       }, 500);
     } else {
-      // Finished all questions, show conclusion
+      // Finished all questions, call Turn 2 API
+      const activeFlow = { ...mcqFlow, answers: newAnswers };
       setMcqFlow(null);
-      setTimeout(() => {
-        setIsThinking(true);
-        setThinkingStep(4); // "Generating recommendation..."
-        
-        setTimeout(() => {
-            setIsThinking(false);
-            showRecommendation(mcqFlow.response, mcqFlow.originalQuery);
-        }, 1500);
-      }, 500);
+      setIsThinking(true);
+      setThinkingStep(4);
+
+      try {
+        const res = await fetch("/api/query/turn2", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            query: activeFlow.originalQuery,
+            domain: activeFlow.domain || (domain ? domain.toLowerCase() : "career"),
+            mcq_answers: newAnswers,
+          }),
+        });
+        if (!res.ok) throw new Error("Turn 2 API call failed");
+        const data = await res.json();
+        setIsThinking(false);
+        if (data.decision) {
+          showRecommendationFromTurn2(data, activeFlow.originalQuery);
+          return;
+        }
+      } catch (err) {
+        console.error("Backend Turn 2 connection error:", err);
+        setIsThinking(false);
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 2,
+            role: "assistant",
+            type: "error",
+            text: "Backend se connect nahi ho paya, dobara try karo",
+          },
+        ]);
+      }
     }
   };
 
