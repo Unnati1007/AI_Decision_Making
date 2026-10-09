@@ -30,7 +30,7 @@ STACKEXCHANGE_KEY = os.getenv("STACKEXCHANGE_KEY", "").strip()
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", os.getenv("EMBED_MODEL_NAME", "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"))
 EMBED_MODEL_NAME = EMBEDDING_MODEL
 EMBEDDING_DIM = int(os.getenv("EMBEDDING_DIM", "384"))
-LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", "gemini-2.5-flash" if GEMINI_API_KEY else "gpt-4o-mini")
+LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", "gemini-3.5-flash-lite" if GEMINI_API_KEY else "gpt-4o-mini")
 
 MIN_QUERY_LENGTH = int(os.getenv("MIN_QUERY_LENGTH", "8"))
 MAX_QUERY_CHARS = int(os.getenv("MAX_QUERY_CHARS", "1000"))

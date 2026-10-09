@@ -422,6 +422,12 @@ export default function ChatPage() {
                               </div>
                            </div>
                         )}
+
+                        <div className="pt-4 border-t border-[var(--border)] mt-4">
+                           <p className="text-[11px] font-semibold text-[var(--text-muted)] italic">
+                             Yeh AI-generated jawab hai, legal/financial advice nahi. Law, tax aur salary ke numbers official source se khud check karo.
+                           </p>
+                        </div>
                      </div>
                   </div>
                 )}
