@@ -1,29 +1,225 @@
-# IntelliChoice Knowledge Base Data Sources
+# IntelliChoice Knowledge Base Sources
 
-### Active Data Sources
+Total Active Files: 126
+Total Vector Chunks: 1997
 
-| Source Type | Category / Description | License / Terms | Active File Count | Acquisition Method |
-| --- | --- | --- | --- | --- |
-| **`wikipedia`** | Full Wikipedia Articles & Open Corpus | CC BY-SA 4.0 / CC BY-SA 3.0 | 43 | MediaWiki API extracts (`prop=extracts&explaintext=1`) & curated summaries |
-| **`ai_curated`** | Career & System Decision Frameworks | AI Synthetic Content | 69 | Model-generated decision playbooks (`source_type: ai_curated`) |
-| **`official_gov`** | Official Government Portals & Labour Codes | Government of India Public Info | 0 | Archived (0 active files; see Archived section below) |
-| **`roadmap_derived`** | Developer Role Roadmaps | Custom Copyright License | 0 | Archived (0 active files; see Archived section below) |
+## Active Files by Domain
 
----
+### Domain: career (76 files)
+- `career/career_switch.md`
+- `career/certification_roi_decision.md`
+- `career/counter_offer_handling.md`
+- `career/dsa_vs_projects_vs_system_design.md`
+- `career/first_job_fresher_choice.md`
+- `career/freelancing_vs_fulltime.md`
+- `career/freelancing_vs_job_decision.md`
+- `career/fresher_campus_placement_internship.md`
+- `career/gate_exam_decision.md`
+- `career/govt_job_vs_private_job.md`
+- `career/higher_education_vs_work_exp.md`
+- `career/hiring_trends_and_skill_demand.md`
+- `career/ic_track_vs_management_track.md`
+- `career/interview_preparation_and_evaluation_rubrics.md`
+- `career/job_hopping_and_short_tenure.md`
+- `career/labor_laws_and_statutory_benefits_india.md`
+- `career/layoff_first_30_days_plan.md`
+- `career/layoffs_career_gaps.md`
+- `career/mba_vs_job.md`
+- `career/ms_abroad_vs_mtech.md`
+- `career/non_tech_to_tech_transition.md`
+- `career/notice_period_resignation.md`
+- `career/offer_comparison_framework.md`
+- `career/pip_and_performance_recovery_playbook.md`
+- `career/product_vs_service_company.md`
+- `career/promotion_managerial_ic.md`
+- `career/promotion_stuck_and_growth.md`
+- `career/relocation_and_global_offers.md`
+- `career/remote_vs_onsite_vs_hybrid_decision.md`
+- `career/remote_vs_onsite_work.md`
+- `career/resignation_and_notice_period_playbook.md`
+- `career/resume_and_linkedin_for_tech_roles.md`
+- `career/salary_negotiation.md`
+- `career/startup_vs_corporate.md`
+- `career/tech_leveling_and_compensation_bands.md`
+- `career/tech_stack_migration_guide.md`
+- `career/tier3_college_placement_strategy.md`
+- `career/toxic_workplace_and_resignation.md`
+- `career/upskilling_certifications.md`
+- `career/wiki_curriculum_vitae.md`
+- `career/wiki_full/apprenticeship.md`
+- `career/wiki_full/career_counseling.md`
+- `career/wiki_full/career_development.md`
+- `career/wiki_full/collective_bargaining.md`
+- `career/wiki_full/continuing_education.md`
+- `career/wiki_full/employee_benefits.md`
+- `career/wiki_full/employee_retention.md`
+- `career/wiki_full/employee_stock_option.md`
+- `career/wiki_full/employment_contract.md`
+- `career/wiki_full/exit_interview.md`
+- `career/wiki_full/freelancer.md`
+- `career/wiki_full/gig_economy.md`
+- `career/wiki_full/graduate_aptitude_test_in_engineering.md`
+- `career/wiki_full/human_resource_management.md`
+- `career/wiki_full/internship.md`
+- `career/wiki_full/job_hunting.md`
+- `career/wiki_full/job_interview.md`
+- `career/wiki_full/job_satisfaction.md`
+- `career/wiki_full/layoff.md`
+- `career/wiki_full/master_of_business_administration.md`
+- `career/wiki_full/mentorship.md`
+- `career/wiki_full/negotiation.md`
+- `career/wiki_full/non-compete_clause.md`
+- `career/wiki_full/occupational_burnout.md`
+- `career/wiki_full/onboarding.md`
+- `career/wiki_full/organizational_culture.md`
+- `career/wiki_full/performance_appraisal.md`
+- `career/wiki_full/product_management.md`
+- `career/wiki_full/professional_certification.md`
+- `career/wiki_full/remote_work.md`
+- `career/wiki_full/résumé.md`
+- `career/wiki_full/severance_package.md`
+- `career/wiki_full/soft_skills.md`
+- `career/wiki_full/software_engineering.md`
+- `career/wiki_full/termination_of_employment.md`
+- `career/wiki_full/work_life_balance.md`
 
-### Archived Data Sources
+### Domain: finance (25 files)
+- `finance/asset_allocation_investments.md`
+- `finance/credit_score_loans.md`
+- `finance/crypto_alternative_assets.md`
+- `finance/debt_payoff_vs_investing.md`
+- `finance/emergency_fund_insurance.md`
+- `finance/mutual_funds_sip.md`
+- `finance/real_estate_rent_vs_buy.md`
+- `finance/retirement_nps_ppf.md`
+- `finance/stock_market_basics.md`
+- `finance/tax_saving_strategies.md`
+- `finance/wiki_compound_interest.md`
+- `finance/wiki_credit_score.md`
+- `finance/wiki_debt.md`
+- `finance/wiki_employees_provident_fund_organisation.md`
+- `finance/wiki_endowment_policy.md`
+- `finance/wiki_equated_monthly_installment.md`
+- `finance/wiki_income_tax_in_india.md`
+- `finance/wiki_inflation.md`
+- `finance/wiki_mutual_funds_in_india.md`
+- `finance/wiki_national_pension_system.md`
+- `finance/wiki_personal_budget.md`
+- `finance/wiki_public_provident_fund_india.md`
+- `finance/wiki_systematic_investment_plan.md`
+- `finance/wiki_taxation_in_india.md`
+- `finance/wiki_term_life_insurance.md`
 
-| Archive Category | Directory | Archived File Count | Reason for Archival |
-| --- | --- | --- | --- |
-| **Wikipedia Replaced Stubs** | `data/_archive_wiki/` | 10 | Replaced by full MediaWiki API articles in `data/career/wiki_full/` |
-| **Wikipedia Archived Stubs** | `data/_archive_wiki/` | 48 | Archived earlier: stub/irrelevant/wrong article |
-| **Government Pages** | `data/_archive_gov/` | 5 | Archived due to nav/menu text dominance, HTML header clutter, or non-English regional content |
-| **Developer Roadmaps** | `data/_archive_roadmaps/` | 6 | Archived due to source repository copyright license forbidding redistribution of project content |
+### Domain: legal (15 files)
+- `legal/consumer_rights_court.md`
+- `legal/contract_review_guide.md`
+- `legal/cyber_crime_data_privacy.md`
+- `legal/dispute_resolution_mediation.md`
+- `legal/employment_labor_laws.md`
+- `legal/freelancer_vendor_contracts.md`
+- `legal/ip_trademark_copyright.md`
+- `legal/startup_legal_checklist.md`
+- `legal/tenant_landlord_rights.md`
+- `legal/wiki_contract.md`
+- `legal/wiki_cybercrime.md`
+- `legal/wiki_labour_law_in_india.md`
+- `legal/wiki_non-disclosure_agreement.md`
+- `legal/wiki_right_to_information_act,_2005.md`
+- `legal/wills_inheritance_property.md`
 
----
+### Domain: wellbeing (10 files)
+- `wellbeing/anxiety_mental_wellness.md`
+- `wellbeing/burnout_stress_management.md`
+- `wellbeing/cardio_strength_training.md`
+- `wellbeing/desk_ergonomics_posture.md`
+- `wellbeing/diet_intermittent_fasting.md`
+- `wellbeing/emotional_resilience.md`
+- `wellbeing/habit_building_consistency.md`
+- `wellbeing/nutrition_macronutrients.md`
+- `wellbeing/sleep_hygiene_circadian.md`
+- `wellbeing/work_life_balance.md`
 
-### Critical Transparency & Attribution Disclosures
+## Archived Files
 
-1. **Wikipedia CC BY-SA Attribution**: Content derived from Wikipedia is licensed under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) / CC BY-SA 3.0. Original titles and page URLs are preserved in article frontmatter.
-2. **Roadmap-Derived Content**: Original developer roadmap content from `kamranahmedse/developer-roadmap` is protected by copyright. Role roadmaps are archived and not redistributed.
-3. **AI-Curated Content Disclosure**: All files marked with `source_type: ai_curated` are **AI-generated synthetic documents** created for decision framework modeling. They are **unverified and uncalibrated**, and do not constitute empirical or legally binding professional career, legal, or financial advice.
+Total Archived Files: 80
+
+- `_archive_finance/wiki_income_tax_in_india.md` (reason: replaced by full article (active file: `data/finance/wiki_income_tax_in_india.md`))
+- `_archive_gov/epf_india_official_portal.md` (reason: nav/menu text or non-English content (earlier audit))
+- `_archive_gov/ncs_national_career_service.md` (reason: nav/menu text or non-English content (earlier audit))
+- `_archive_gov/ncs_national_career_service_portal.md` (reason: nav/menu text or non-English content (earlier audit))
+- `_archive_gov/pib_industrial_relations_code_2020.md` (reason: nav/menu text or non-English content (earlier audit))
+- `_archive_gov/pib_labour_codes_2020_overview.md` (reason: nav/menu text or non-English content (earlier audit))
+- `_archive_onet/onet_11-3021_00_computer_and_information_systems_managers.md` (reason: reason not recorded)
+- `_archive_onet/onet_15-1211_00_computer_systems_analysts.md` (reason: reason not recorded)
+- `_archive_onet/onet_15-1212_00_information_security_analysts.md` (reason: reason not recorded)
+- `_archive_onet/onet_15-1221_00_computer_and_information_research_scientists.md` (reason: reason not recorded)
+- `_archive_onet/onet_15-1242_00_database_administrators.md` (reason: reason not recorded)
+- `_archive_onet/onet_15-1243_00_database_architects.md` (reason: reason not recorded)
+- `_archive_onet/onet_15-1244_00_network_and_computer_systems_administrators.md` (reason: reason not recorded)
+- `_archive_onet/onet_15-1252_00_software_developers.md` (reason: reason not recorded)
+- `_archive_onet/onet_15-1253_00_software_quality_assurance_analysts_and_testers.md` (reason: reason not recorded)
+- `_archive_onet/onet_15-2051_00_data_scientists.md` (reason: reason not recorded)
+- `_archive_roadmaps/roadmap_ai_and_data_scientist.md` (reason: excluded: repo license forbids redistribution)
+- `_archive_roadmaps/roadmap_backend_developer.md` (reason: excluded: repo license forbids redistribution)
+- `_archive_roadmaps/roadmap_data_analyst.md` (reason: excluded: repo license forbids redistribution)
+- `_archive_roadmaps/roadmap_devops_and_cloud.md` (reason: excluded: repo license forbids redistribution)
+- `_archive_roadmaps/roadmap_frontend_developer.md` (reason: excluded: repo license forbids redistribution)
+- `_archive_roadmaps/roadmap_fullstack_developer.md` (reason: excluded: repo license forbids redistribution)
+- `_archive_wiki/wiki_aerobic_exercise.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_applicant_tracking_system.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_apprenticeship.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_asset_allocation.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_career_counseling.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_career_development.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_career_management.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_circadian_rhythm.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_cognitive_behavioral_therapy.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_collective_bargaining.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_continuing_education.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_credit_score.md` (reason: replaced by full article (active file: `data/finance/wiki_credit_score.md`))
+- `_archive_wiki/wiki_employee_benefits.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_employee_engagement.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_employee_retention.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_equal_opportunity_employment.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_ergonomics.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_executive_education.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_exit_interview.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_freelancer.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_gig_economy.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_human_resource_management.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_index_fund.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_intellectual_property.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_intermittent_fasting.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_job_interview.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_job_satisfaction.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_job_security.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_layoff.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_macronutrient.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_master_of_business_administration.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_mentorship.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_mindfulness.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_mutual_fund.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_national_pension_system.md` (reason: replaced by full article (active file: `data/finance/wiki_national_pension_system.md`))
+- `_archive_wiki/wiki_occupational_burnout.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_occupational_stress.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_onboarding.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_organizational_culture.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_performance_appraisal.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_performance_improvement_plan.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_product_management.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_professional_certification.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_professional_network.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_psychological_resilience.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_public_provident_fund_(india).md` (reason: replaced by full article (active file: `data/finance/wiki_public_provident_fund_india.md`))
+- `_archive_wiki/wiki_real_estate_investment_trust.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_remote_work.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_salary_negotiation.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_severance_package.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_skills_management.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_sleep_hygiene.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_soft_skills.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_software_engineering.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_sovereign_gold_bond.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_systematic_investment_plan.md` (reason: replaced by full article (active file: `data/finance/wiki_systematic_investment_plan.md`))
+- `_archive_wiki/wiki_work%e2%80%93life_balance.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_workforce_management.md` (reason: archived earlier: reason not recorded)

@@ -85,3 +85,4 @@ build/
 scratch/
 scratch_*.py
 data/career/roadmaps/
+data/_staging/
