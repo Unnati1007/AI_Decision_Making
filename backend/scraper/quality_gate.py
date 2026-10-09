@@ -94,7 +94,7 @@ def evaluate_quality_gate(
     expected_topic: str,
     url: str,
     status_code: int = 200,
-    license_text: str = "Wikipedia Open Corpus (CC BY-SA 3.0)",
+    license_text: str = "CC BY-SA (per Wikipedia terms)",
     data_dir: str = "data"
 ) -> Dict[str, Any]:
     """

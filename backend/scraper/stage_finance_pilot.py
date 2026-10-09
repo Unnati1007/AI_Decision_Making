@@ -24,7 +24,7 @@ FINANCE_TOPICS = [
         "wiki_slug": "Mutual_funds_in_India",
         "filename": "wiki_mutual_funds_in_india.md",
         "owner": "Wikipedia Foundation",
-        "license": "Wikipedia Open Corpus (CC BY-SA 3.0)",
+        "license": "CC BY-SA (per Wikipedia terms)",
         "source_type": "wikipedia"
     },
     {
@@ -33,7 +33,7 @@ FINANCE_TOPICS = [
         "wiki_slug": "Taxation_in_India",
         "filename": "wiki_taxation_in_india.md",
         "owner": "Wikipedia Foundation",
-        "license": "Wikipedia Open Corpus (CC BY-SA 3.0)",
+        "license": "CC BY-SA (per Wikipedia terms)",
         "source_type": "wikipedia"
     },
     {
@@ -42,7 +42,7 @@ FINANCE_TOPICS = [
         "wiki_slug": "Personal_budget",
         "filename": "wiki_personal_budget.md",
         "owner": "Wikipedia Foundation",
-        "license": "Wikipedia Open Corpus (CC BY-SA 3.0)",
+        "license": "CC BY-SA (per Wikipedia terms)",
         "source_type": "wikipedia"
     },
     {
@@ -51,7 +51,7 @@ FINANCE_TOPICS = [
         "wiki_slug": "Employees'_Provident_Fund_Organisation",
         "filename": "wiki_employees_provident_fund_organisation.md",
         "owner": "Wikipedia Foundation",
-        "license": "Wikipedia Open Corpus (CC BY-SA 3.0)",
+        "license": "CC BY-SA (per Wikipedia terms)",
         "source_type": "wikipedia"
     },
     {
@@ -60,7 +60,7 @@ FINANCE_TOPICS = [
         "wiki_slug": "Term_life_insurance",
         "filename": "wiki_term_life_insurance.md",
         "owner": "Wikipedia Foundation",
-        "license": "Wikipedia Open Corpus (CC BY-SA 3.0)",
+        "license": "CC BY-SA (per Wikipedia terms)",
         "source_type": "wikipedia"
     },
     {
@@ -69,7 +69,7 @@ FINANCE_TOPICS = [
         "wiki_slug": "Debt",
         "filename": "wiki_debt.md",
         "owner": "Wikipedia Foundation",
-        "license": "Wikipedia Open Corpus (CC BY-SA 3.0)",
+        "license": "CC BY-SA (per Wikipedia terms)",
         "source_type": "wikipedia"
     },
     {
@@ -78,7 +78,7 @@ FINANCE_TOPICS = [
         "wiki_slug": "Inflation",
         "filename": "wiki_inflation.md",
         "owner": "Wikipedia Foundation",
-        "license": "Wikipedia Open Corpus (CC BY-SA 3.0)",
+        "license": "CC BY-SA (per Wikipedia terms)",
         "source_type": "wikipedia"
     }
 ]
@@ -124,6 +124,7 @@ title: "{title}"
 url: "{url}"
 fetched_at: "{timestamp}"
 license: "{license_str}"
+license_source: "script_constant"
 sha256: "{sha256_val}"
 source_type: "{src_type}"
 domain: "finance"
