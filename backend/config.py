@@ -8,14 +8,17 @@ import logging
 from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv(override=True)
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
-logger = logging.getLogger("intellichoice.config")
-
 # ── Base Directory Paths ───────────────────────────────────
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
 CONFIG_DIR = DATA_DIR / "config"
+
+env_path = BASE_DIR / ".env"
+load_dotenv(dotenv_path=env_path, override=True)
+load_dotenv(override=True)
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
+logger = logging.getLogger("intellichoice.config")
 
 # ── Environment & Model Configurations ────────────────────
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "").strip()

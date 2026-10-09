@@ -9,7 +9,11 @@ import logging
 import httpx
 from enum import Enum
 from typing import Optional
+from pathlib import Path
 from dotenv import load_dotenv
+
+env_path = Path(__file__).resolve().parent.parent / ".env"
+load_dotenv(dotenv_path=env_path, override=True)
 load_dotenv(override=True)
 
 from openai import OpenAI
@@ -20,23 +24,25 @@ from sentence_transformers import SentenceTransformer, util
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("intellichoice.guard")
 
-# ── OpenAI / Gemini LLM Client ──────────────────────────────────────────
-openai_api_key = os.getenv("OPENAI_API_KEY", "").strip()
-gemini_api_key = os.getenv("GEMINI_API_KEY", "").strip()
-
-if gemini_api_key:
-    client = OpenAI(
-        api_key=gemini_api_key,
-        base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
-        http_client=httpx.Client()
-    )
-elif openai_api_key:
-    client = OpenAI(api_key=openai_api_key, http_client=httpx.Client())
-else:
-    client = None
-
-if not (gemini_api_key or openai_api_key):
-    logger.warning("⚠️ Neither GEMINI_API_KEY nor OPENAI_API_KEY set → LLM layer will pass with fallback")
+def get_llm_client():
+    env_path = Path(__file__).resolve().parent.parent / ".env"
+    load_dotenv(dotenv_path=env_path, override=True)
+    load_dotenv(override=True)
+    gemini_key = os.getenv("GEMINI_API_KEY", "").strip()
+    openai_key = os.getenv("OPENAI_API_KEY", "").strip()
+    model_env = os.getenv("LLM_MODEL_NAME", "").strip()
+    
+    if gemini_key:
+        model = model_env if (model_env and "gpt" not in model_env) else "gemini-2.5-flash"
+        return OpenAI(
+            api_key=gemini_key,
+            base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+            http_client=httpx.Client()
+        ), model
+    elif openai_key:
+        model = model_env if model_env else "gpt-4o-mini"
+        return OpenAI(api_key=openai_key, http_client=httpx.Client()), model
+    return None, "gpt-4o-mini"
 
 from backend.config import (
     MIN_QUERY_LENGTH,
@@ -207,18 +213,19 @@ def check_relevance(query: str, selected_domain: Optional[str] = None) -> GuardR
 # LAYER 4 — LLM Classification (FAIL SAFE)
 # ============================================================
 def check_llm_safety(query: str) -> GuardResult:
+    client, active_model = get_llm_client()
     if not client:
-        logger.info("Layer 4 skipped: OPENAI_API_KEY not configured. Passing with fallback.")
+        logger.info("Layer 4 skipped: LLM API Key not configured. Passing with fallback.")
         return GuardResult(
             passed=True,
             message="Passed with warning: Layer 4 LLM Safety Check skipped (API key missing).",
             layer="Layer 4: LLM Classifier",
-            warning="Layer 4 skipped: OPENAI_API_KEY not configured."
+            warning="Layer 4 skipped: API key missing."
         )
 
     try:
         response = client.chat.completions.create(
-            model=LLM_MODEL_NAME,
+            model=active_model,
             messages=[{
                 "role": "system",
                 "content": "You are a safety filter for a decision-support system. Reply ONLY 'SAFE' or 'UNSAFE'."

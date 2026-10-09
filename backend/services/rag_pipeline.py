@@ -21,24 +21,34 @@ from backend.services.guard import guard_pipeline, GuardResult
 from backend.services.domain_router import detect_domain
 from backend.retrieval.retriever import retrieve_context
 
+from pathlib import Path
 from dotenv import load_dotenv
+
+env_path = Path(__file__).resolve().parent.parent / ".env"
+load_dotenv(dotenv_path=env_path, override=True)
 load_dotenv(override=True)
 
 logger = logging.getLogger("intellichoice.rag_pipeline")
 
-openai_api_key = os.getenv("OPENAI_API_KEY", "").strip()
-gemini_api_key = os.getenv("GEMINI_API_KEY", "").strip()
-
-if gemini_api_key:
-    llm_client = OpenAI(
-        api_key=gemini_api_key,
-        base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
-        http_client=httpx.Client()
-    )
-elif openai_api_key:
-    llm_client = OpenAI(api_key=openai_api_key, http_client=httpx.Client())
-else:
-    llm_client = None
+def get_llm_client() -> Tuple[Optional[OpenAI], str]:
+    env_path = Path(__file__).resolve().parent.parent / ".env"
+    load_dotenv(dotenv_path=env_path, override=True)
+    load_dotenv(override=True)
+    gemini_key = os.getenv("GEMINI_API_KEY", "").strip()
+    openai_key = os.getenv("OPENAI_API_KEY", "").strip()
+    model_env = os.getenv("LLM_MODEL_NAME", "").strip()
+    
+    if gemini_key:
+        model = model_env if (model_env and "gpt" not in model_env) else "gemini-2.5-flash"
+        return OpenAI(
+            api_key=gemini_key,
+            base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+            http_client=httpx.Client()
+        ), model
+    elif openai_key:
+        model = model_env if model_env else "gpt-4o-mini"
+        return OpenAI(api_key=openai_key, http_client=httpx.Client()), model
+    return None, "gpt-4o-mini"
 
 
 # ── Domain Fallback MCQs for Turn 1 ─────────────────────────
@@ -159,6 +169,7 @@ def execute_turn_1(query: str, domain_override: Optional[str] = None) -> Dict[st
     mcqs = None
     warning = guard_res.warning
 
+    llm_client, active_model = get_llm_client()
     if llm_client:
         prompt = f"""You are an AI Decision Advisor for the '{domain.title()}' domain.
 Analyze the user's query and the retrieved reference context below.
@@ -183,7 +194,7 @@ Do NOT output markdown formatting or backticks, return ONLY valid raw JSON."""
 
         try:
             response = llm_client.chat.completions.create(
-                model=LLM_MODEL_NAME,
+                model=active_model,
                 messages=[
                     {"role": "system", "content": "You are a precise decision intelligence generator that responds strictly in valid JSON."},
                     {"role": "user", "content": prompt}
@@ -334,6 +345,7 @@ def execute_turn_2(
     warning = None
     llm_called = False
 
+    llm_client, active_model = get_llm_client()
     if llm_client:
         llm_called = True
         prompt = f"""You are IntelliChoice, a world-class Decision Support AI.
@@ -369,7 +381,7 @@ Return ONLY valid JSON without markdown formatting."""
 
         try:
             response = llm_client.chat.completions.create(
-                model=LLM_MODEL_NAME,
+                model=active_model,
                 messages=[
                     {"role": "system", "content": "You are an expert decision engine responding in JSON."},
                     {"role": "user", "content": prompt}
