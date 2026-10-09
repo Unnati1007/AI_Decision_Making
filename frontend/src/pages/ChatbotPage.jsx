@@ -430,7 +430,7 @@ export default function ChatPage() {
                                        <div className="flex items-center justify-between gap-2">
                                           <p className="text-[9px] font-medium text-[var(--text-muted)] line-clamp-1 opacity-60">Source: External Repository</p>
                                           <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-500 shrink-0">
-                                            {resource.source_type === "official_gov" ? "Official" : resource.source_type === "wikipedia" ? "Wikipedia" : "AI-generated, unverified"}
+                                            {resource.source_type === "official_gov" ? "Official" : resource.source_type === "wikipedia" ? "Wikipedia" : resource.source_type === "web_live" ? "Live web, unverified" : "AI-generated, unverified"}
                                           </span>
                                        </div>
                                     </a>

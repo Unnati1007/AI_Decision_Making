@@ -141,7 +141,7 @@ def retrieve_context(
                 w_url = w_res.get("url", "")
                 
                 header = f"[Live Web Source {w_idx}: {w_title}]"
-                formatted_chunk = f"{header}\n{w_content}\n"
+                formatted_chunk = f"{header}\n<web_result>\n{w_content}\n</web_result>\n"
                 
                 if current_char_count + len(formatted_chunk) <= max_char_limit:
                     context_chunks.append(formatted_chunk)
@@ -152,7 +152,7 @@ def retrieve_context(
                         "source": "Tavily Live Web Search",
                         "domain": domain or "general",
                         "similarity_score": 0.0,
-                        "source_type": "official_gov"
+                        "source_type": "web_live"
                     }
                     if w_url:
                         src_item["url"] = w_url
