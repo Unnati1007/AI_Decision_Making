@@ -20,12 +20,23 @@ from sentence_transformers import SentenceTransformer, util
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("intellichoice.guard")
 
-# ── OpenAI Client ──────────────────────────────────────────
-openai_api_key = os.getenv("OPENAI_API_KEY")
-client = OpenAI(api_key=openai_api_key, http_client=httpx.Client()) if openai_api_key else None
+# ── OpenAI / Gemini LLM Client ──────────────────────────────────────────
+openai_api_key = os.getenv("OPENAI_API_KEY", "").strip()
+gemini_api_key = os.getenv("GEMINI_API_KEY", "").strip()
 
-if not openai_api_key:
-    logger.warning("⚠️ OPENAI_API_KEY not set → LLM layer will pass with fallback")
+if gemini_api_key:
+    client = OpenAI(
+        api_key=gemini_api_key,
+        base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+        http_client=httpx.Client()
+    )
+elif openai_api_key:
+    client = OpenAI(api_key=openai_api_key, http_client=httpx.Client())
+else:
+    client = None
+
+if not (gemini_api_key or openai_api_key):
+    logger.warning("⚠️ Neither GEMINI_API_KEY nor OPENAI_API_KEY set → LLM layer will pass with fallback")
 
 from backend.config import (
     MIN_QUERY_LENGTH,

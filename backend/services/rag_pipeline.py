@@ -26,8 +26,19 @@ load_dotenv(override=True)
 
 logger = logging.getLogger("intellichoice.rag_pipeline")
 
-openai_api_key = os.getenv("OPENAI_API_KEY")
-llm_client = OpenAI(api_key=openai_api_key, http_client=httpx.Client()) if openai_api_key else None
+openai_api_key = os.getenv("OPENAI_API_KEY", "").strip()
+gemini_api_key = os.getenv("GEMINI_API_KEY", "").strip()
+
+if gemini_api_key:
+    llm_client = OpenAI(
+        api_key=gemini_api_key,
+        base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+        http_client=httpx.Client()
+    )
+elif openai_api_key:
+    llm_client = OpenAI(api_key=openai_api_key, http_client=httpx.Client())
+else:
+    llm_client = None
 
 
 # ── Domain Fallback MCQs for Turn 1 ─────────────────────────
