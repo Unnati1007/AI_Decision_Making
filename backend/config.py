@@ -8,25 +8,29 @@ import logging
 from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
-logger = logging.getLogger("intellichoice.config")
-
 # ── Base Directory Paths ───────────────────────────────────
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
 CONFIG_DIR = DATA_DIR / "config"
 
+env_path = BASE_DIR / ".env"
+load_dotenv(dotenv_path=env_path, override=True)
+load_dotenv(override=True)
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
+logger = logging.getLogger("intellichoice.config")
+
 # ── Environment & Model Configurations ────────────────────
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
-TAVILY_API_KEY = os.getenv("TAVILY_API_KEY", "")
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "")
-NEWS_API_KEY = os.getenv("NEWS_API_KEY", "")
-STACKEXCHANGE_KEY = os.getenv("STACKEXCHANGE_KEY", "")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "").strip()
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
+TAVILY_API_KEY = os.getenv("TAVILY_API_KEY", "").strip()
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "").strip()
+NEWS_API_KEY = os.getenv("NEWS_API_KEY", "").strip()
+STACKEXCHANGE_KEY = os.getenv("STACKEXCHANGE_KEY", "").strip()
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", os.getenv("EMBED_MODEL_NAME", "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"))
 EMBED_MODEL_NAME = EMBEDDING_MODEL
 EMBEDDING_DIM = int(os.getenv("EMBEDDING_DIM", "384"))
-LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", "gpt-4o-mini")
+LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", "gemini-2.5-flash" if GEMINI_API_KEY else "gpt-4o-mini")
 
 MIN_QUERY_LENGTH = int(os.getenv("MIN_QUERY_LENGTH", "8"))
 MAX_QUERY_CHARS = int(os.getenv("MAX_QUERY_CHARS", "1000"))
