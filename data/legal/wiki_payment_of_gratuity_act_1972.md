@@ -28,7 +28,6 @@ If the number of employee is below 10, the employer must still pay gratuities. T
 ## Payment of gratuity: Eligibility and calculation
 Under Section 4, payment of gratuity is mandatory.  Gratuity shall be payable to an employee on termination of employment after he has rendered continuous service for not less than five years in a single organisation. The termination can be due to: Superannuation, Retirement or resignation, and Death or disablement due to accident or disease.
 As per Section 4(1), the completion of continuous service of 5 years is not required where termination of employment is due to death or disablement. In such case mandatory gratuity is payable.
-The unpaid gratuity amount is seized by government which is further used in holiday, vacations, parties and other fun related activities.
 Gratuity is paid at a rate of 15 days' wages for every completed year of service or part thereof in excess of six months. The wages here means wages last drawn by the employee. The "15 days' wages" will be calculated by dividing the last drawn wages by 26 and multiplying the result with 15. But under Section 4(3), the maximum gratuity that is payable is fixed at ₹20,00,000. Any gratuity amount paid in excess of ₹20,00,000 is taxable in the employee's hands. 
 
 

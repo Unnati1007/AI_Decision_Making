@@ -1,7 +1,7 @@
 # IntelliChoice Knowledge Base Sources
 
 Total Active Files: 136
-Total Vector Chunks: 2203
+Total Vector Chunks: 2225
 
 ## Active Files by Domain
 
@@ -133,8 +133,8 @@ Total Vector Chunks: 2203
 - `legal/wiki_information_technology_act_2000.md`
 - `legal/wiki_labour_laws_in_india.md`
 - `legal/wiki_non_disclosure_agreement.md`
-- `legal/wiki_payment_of_gratuity_act_1972.md`
-- `legal/wiki_right_to_information_act,_2005.md`
+- `legal/wiki_payment_of_gratuity_act_1972.md` (MODIFIED: removed one unsupported sentence (reason: contradicts nothing in the Act text and is not a legal statement; flagged by reviewer))
+- `legal/wiki_right_to_information_act_2005.md`
 - `legal/wills_inheritance_property.md`
 
 ### Domain: wellbeing (10 files)
@@ -151,7 +151,7 @@ Total Vector Chunks: 2203
 
 ## Archived Files
 
-Total Archived Files: 82
+Total Archived Files: 83
 
 - `_archive_finance/wiki_income_tax_in_india.md` (reason: replaced by full article (active file: `data/finance/wiki_income_tax_in_india.md`))
 - `_archive_gov/epf_india_official_portal.md` (reason: nav/menu text or non-English content (earlier audit))
@@ -161,6 +161,7 @@ Total Archived Files: 82
 - `_archive_gov/pib_labour_codes_2020_overview.md` (reason: nav/menu text or non-English content (earlier audit))
 - `_archive_legal/wiki_labour_law_in_india.md` (reason: replaced by full article (active file: `data/legal/wiki_labour_laws_in_india.md`))
 - `_archive_legal/wiki_non-disclosure_agreement.md` (reason: replaced by full article (active file: `data/legal/wiki_non_disclosure_agreement.md`))
+- `_archive_legal/wiki_right_to_information_act,_2005.md` (reason: replaced by full article (active file: `data/legal/wiki_right_to_information_act_2005.md`))
 - `_archive_onet/onet_11-3021_00_computer_and_information_systems_managers.md` (reason: reason not recorded)
 - `_archive_onet/onet_15-1211_00_computer_systems_analysts.md` (reason: reason not recorded)
 - `_archive_onet/onet_15-1212_00_information_security_analysts.md` (reason: reason not recorded)
