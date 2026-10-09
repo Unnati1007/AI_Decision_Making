@@ -6,7 +6,27 @@ router = APIRouter(prefix="/admin", tags=["admin"])
 
 import sqlite3
 import json
+import bcrypt
 from pathlib import Path
+
+# Password Security Helpers
+def hash_password(password: str) -> str:
+    if not password:
+        return ""
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    if not plain_password or not hashed_password:
+        return False
+    try:
+        return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
+    except Exception:
+        return False
+
+def is_hashed(pw: str) -> bool:
+    if not pw:
+        return False
+    return pw.startswith("$2b$") or pw.startswith("$2a$") or pw.startswith("$2y$")
 
 # Database Setup
 DB_PATH = Path("admin_system.db")
@@ -37,15 +57,22 @@ def init_db():
         severity TEXT
     )''')
     
-    # Check if users exist, if not add seed
+    # Check if users exist, if not add seed with hashed passwords
     res_users = conn.execute("SELECT COUNT(*) FROM users").fetchone()
     if res_users[0] == 0:
         conn.execute("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-                    ("admin-1", "System Admin", "admin@intellichoice.ai", "admin123", "admin", "System", 0, "2026-04-20", "Active"))
+                    ("admin-1", "System Admin", "admin@intellichoice.ai", hash_password("admin123"), "admin", "System", 0, "2026-04-20", "Active"))
         conn.execute("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-                    ("user-1", "Demo User", "user@intellichoice.ai", "user123", "user", "Career", 14, "2026-04-22", "Active"))
+                    ("user-1", "Demo User", "user@intellichoice.ai", hash_password("user123"), "user", "Career", 14, "2026-04-22", "Active"))
         conn.execute("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-                    ("user-2", "Finance Pro", "finance@demo.ai", "demo123", "user", "Finance", 8, "2026-04-23", "Active"))
+                    ("user-2", "Finance Pro", "finance@demo.ai", hash_password("demo123"), "user", "Finance", 8, "2026-04-23", "Active"))
+
+    # Migrate existing plaintext passwords to hashed
+    existing_users = conn.execute("SELECT id, password FROM users").fetchall()
+    for u in existing_users:
+        uid, pw = u["id"], u["password"]
+        if pw and not is_hashed(pw):
+            conn.execute("UPDATE users SET password = ? WHERE id = ?", (hash_password(pw), uid))
 
     # Force seed logs if few exist
     res_logs = conn.execute("SELECT COUNT(*) FROM audit_logs").fetchone()
@@ -79,32 +106,58 @@ class UserCreate(BaseModel):
     joined: str
     status: str
 
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
 class UserUpdate(BaseModel):
     name: Optional[str] = None
     email: Optional[str] = None
     status: Optional[str] = None
     domain: Optional[str] = None
     queryCount: Optional[int] = None
+    password: Optional[str] = None
 
 @router.get("/users")
 def get_users():
     conn = get_db_connection()
     users = [dict(row) for row in conn.execute("SELECT * FROM users").fetchall()]
     conn.close()
+    for u in users:
+        u.pop("password", None)
     return users
+
+@router.post("/users/login")
+def login_user(creds: UserLogin):
+    conn = get_db_connection()
+    user = conn.execute("SELECT * FROM users WHERE LOWER(email) = ?", (creds.email.lower(),)).fetchone()
+    conn.close()
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid email or password. Please try again.")
+    user_dict = dict(user)
+    if not verify_password(creds.password, user_dict.get("password", "")):
+        raise HTTPException(status_code=401, detail="Invalid email or password. Please try again.")
+    if user_dict.get("status") == "Blocked":
+        raise HTTPException(status_code=403, detail="Your account has been blocked by the administrator.")
+    
+    user_dict.pop("password", None)
+    return user_dict
 
 @router.post("/users/register")
 def register_user(user: UserCreate):
     conn = get_db_connection()
+    hashed_pw = hash_password(user.password) if user.password else ""
     try:
         conn.execute("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-                    (user.id, user.name, user.email, user.password, user.role, user.domain, user.queryCount, user.joined, user.status))
+                    (user.id, user.name, user.email, hashed_pw, user.role, user.domain, user.queryCount, user.joined, user.status))
         conn.commit()
     except sqlite3.IntegrityError:
         raise HTTPException(status_code=400, detail="User already exists")
     finally:
         conn.close()
-    return user
+    res = user.dict()
+    res.pop("password", None)
+    return res
 
 @router.post("/users/{user_id}/update")
 def update_user(user_id: str, data: UserUpdate):
@@ -115,6 +168,9 @@ def update_user(user_id: str, data: UserUpdate):
         raise HTTPException(status_code=404, detail="User not found")
     
     update_data = data.dict(exclude_unset=True)
+    if "password" in update_data and update_data["password"]:
+        update_data["password"] = hash_password(update_data["password"])
+        
     if update_data:
         fields = ", ".join([f"{k} = ?" for k in update_data.keys()])
         values = list(update_data.values()) + [user_id]
@@ -123,6 +179,7 @@ def update_user(user_id: str, data: UserUpdate):
     
     updated = dict(conn.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone())
     conn.close()
+    updated.pop("password", None)
     return updated
 
 @router.get("/stats")

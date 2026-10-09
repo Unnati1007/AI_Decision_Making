@@ -33,7 +33,7 @@ def get_llm_client():
     model_env = os.getenv("LLM_MODEL_NAME", "").strip()
     
     if gemini_key:
-        model = model_env if (model_env and "gpt" not in model_env) else "gemini-2.5-flash"
+        model = model_env if (model_env and "gpt" not in model_env) else "gemini-3.5-flash-lite"
         return OpenAI(
             api_key=gemini_key,
             base_url="https://generativelanguage.googleapis.com/v1beta/openai/",

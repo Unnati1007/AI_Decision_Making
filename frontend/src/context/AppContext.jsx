@@ -5,8 +5,8 @@ const AppContext = createContext(null);
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/admin";
 
 const DEFAULT_USERS = [
-  { id: "admin-1", name: "System Admin", email: "admin@intellichoice.ai", password: "admin123", role: "admin", queryCount: 0, joined: "2026-04-20", status: "Active" },
-  { id: "user-1",  name: "Demo User",   email: "user@intellichoice.ai",  password: "user123",  role: "user", domain: "Career", queryCount: 2, joined: "2026-04-22", status: "Active" },
+  { id: "admin-1", name: "System Admin", email: "admin@intellichoice.ai", role: "admin", queryCount: 0, joined: "2026-04-20", status: "Active" },
+  { id: "user-1",  name: "Demo User",   email: "user@intellichoice.ai",  role: "user", domain: "Career", queryCount: 2, joined: "2026-04-22", status: "Active" },
 ];
 
 export function AppProvider({ children }) {
@@ -77,28 +77,31 @@ export function AppProvider({ children }) {
   }, [users, updateUserData]);
 
   // ── Auth ─────────────────────────────────────────────────
-  const login = useCallback(({ email, password }) => {
-    const found = users.find(
-      (u) => u.email.toLowerCase() === email.toLowerCase() && u.password === password
-    );
-    
-    if (!found) {
-      setAuthError("Invalid email or password. Please try again.");
-      addAuditLog("Failed login attempt", "Medium", email);
+  const login = useCallback(async ({ email, password }) => {
+    try {
+      const res = await fetch(`${API_BASE}/users/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({ detail: "Invalid email or password. Please try again." }));
+        const errorMsg = errData.detail || "Invalid email or password. Please try again.";
+        setAuthError(errorMsg);
+        const isBlocked = errorMsg.toLowerCase().includes("blocked");
+        addAuditLog(isBlocked ? "Blocked user attempted login" : "Failed login attempt", isBlocked ? "High" : "Medium", email);
+        return false;
+      }
+      const userData = await res.json();
+      setAuthError("");
+      setCurrentUser(userData);
+      addAuditLog("Session started", "Low", email);
+      return true;
+    } catch (err) {
+      setAuthError("Network error during login");
       return false;
     }
-    
-    if (found.status === "Blocked") {
-      setAuthError("Your account has been blocked by the administrator.");
-      addAuditLog("Blocked user attempted login", "High", email);
-      return false;
-    }
-    
-    setAuthError("");
-    setCurrentUser({ ...found });
-    addAuditLog("Session started", "Low", email);
-    return true;
-  }, [users, addAuditLog]);
+  }, [addAuditLog]);
 
   const register = useCallback(async ({ name, email, password }) => {
     const newUser = {

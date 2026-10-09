@@ -59,6 +59,8 @@ Thumbs.db
 vector_db/
 cache_db/
 *.sqlite3
+*.db
+admin_system.db
 
 # -------------------------------
 # 🔹 Jupyter Notebook
