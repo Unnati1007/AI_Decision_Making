@@ -55,6 +55,7 @@ def fetch_wikipedia_full(topic_title: str) -> Tuple[Optional[str], Optional[str]
         "action": "query",
         "prop": "extracts",
         "explaintext": "1",
+        "redirects": "1",
         "titles": topic_title,
         "format": "json"
     }
@@ -71,7 +72,7 @@ def fetch_wikipedia_full(topic_title: str) -> Tuple[Optional[str], Optional[str]
                     title = page_data.get("title", topic_title)
                     raw_text = page_data.get("extract", "")
                     clean_text = clean_mediawiki_headings(raw_text)
-                    clean_slug = topic_title.replace(" ", "_")
+                    clean_slug = title.replace(" ", "_")
                     page_url = f"https://en.wikipedia.org/wiki/{clean_slug}"
                     return title, page_url, clean_text
     except Exception as e:

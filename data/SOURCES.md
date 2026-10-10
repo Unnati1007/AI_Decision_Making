@@ -1,7 +1,7 @@
 # IntelliChoice Knowledge Base Sources
 
-Total Active Files: 136
-Total Vector Chunks: 2225
+Total Active Files: 152
+Total Vector Chunks: 2834
 
 ## Active Files by Domain
 
@@ -83,7 +83,7 @@ Total Vector Chunks: 2225
 - `career/wiki_full/termination_of_employment.md`
 - `career/wiki_full/work_life_balance.md`
 
-### Domain: finance (25 files)
+### Domain: finance (41 files)
 - `finance/asset_allocation_investments.md`
 - `finance/credit_score_loans.md`
 - `finance/crypto_alternative_assets.md`
@@ -94,21 +94,37 @@ Total Vector Chunks: 2225
 - `finance/retirement_nps_ppf.md`
 - `finance/stock_market_basics.md`
 - `finance/tax_saving_strategies.md`
+- `finance/wiki_asset_allocation.md`
+- `finance/wiki_bond_finance.md`
 - `finance/wiki_compound_interest.md`
+- `finance/wiki_credit_card.md`
 - `finance/wiki_credit_score.md`
 - `finance/wiki_debt.md`
 - `finance/wiki_employees_provident_fund_organisation.md`
 - `finance/wiki_endowment_policy.md`
 - `finance/wiki_equated_monthly_installment.md`
+- `finance/wiki_exchange_traded_fund.md`
+- `finance/wiki_fixed_deposit.md`
+- `finance/wiki_goods_and_services_tax_india.md`
+- `finance/wiki_health_insurance_in_india.md`
 - `finance/wiki_income_tax_in_india.md`
+- `finance/wiki_index_fund.md`
 - `finance/wiki_inflation.md`
+- `finance/wiki_mortgage.md`
 - `finance/wiki_mutual_funds_in_india.md`
 - `finance/wiki_national_pension_system.md`
 - `finance/wiki_personal_budget.md`
 - `finance/wiki_public_provident_fund_india.md`
+- `finance/wiki_reserve_bank_of_india.md`
+- `finance/wiki_retirement_planning.md`
+- `finance/wiki_securities_and_exchange_board_of_india.md`
+- `finance/wiki_sovereign_gold_bond.md`
+- `finance/wiki_sukanya_samriddhi_account.md`
 - `finance/wiki_systematic_investment_plan.md`
+- `finance/wiki_tax_deduction_at_source.md`
 - `finance/wiki_taxation_in_india.md`
 - `finance/wiki_term_life_insurance.md`
+- `finance/wiki_unified_payments_interface.md`
 
 ### Domain: legal (25 files)
 - `legal/consumer_rights_court.md`
@@ -181,7 +197,7 @@ Total Archived Files: 83
 - `_archive_wiki/wiki_aerobic_exercise.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_applicant_tracking_system.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_apprenticeship.md` (reason: replaced by full article (active file: `data/career/wiki_full/apprenticeship.md`))
-- `_archive_wiki/wiki_asset_allocation.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_asset_allocation.md` (reason: replaced by full article (active file: `data/finance/wiki_asset_allocation.md`))
 - `_archive_wiki/wiki_career_counseling.md` (reason: replaced by full article (active file: `data/career/wiki_full/career_counseling.md`))
 - `_archive_wiki/wiki_career_development.md` (reason: replaced by full article (active file: `data/career/wiki_full/career_development.md`))
 - `_archive_wiki/wiki_career_management.md` (reason: archived earlier: reason not recorded)
@@ -200,7 +216,7 @@ Total Archived Files: 83
 - `_archive_wiki/wiki_freelancer.md` (reason: replaced by full article (active file: `data/career/wiki_full/freelancer.md`))
 - `_archive_wiki/wiki_gig_economy.md` (reason: replaced by full article (active file: `data/career/wiki_full/gig_economy.md`))
 - `_archive_wiki/wiki_human_resource_management.md` (reason: replaced by full article (active file: `data/career/wiki_full/human_resource_management.md`))
-- `_archive_wiki/wiki_index_fund.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_index_fund.md` (reason: replaced by full article (active file: `data/finance/wiki_index_fund.md`))
 - `_archive_wiki/wiki_intellectual_property.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_intermittent_fasting.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_job_interview.md` (reason: replaced by full article (active file: `data/career/wiki_full/job_interview.md`))
@@ -232,7 +248,7 @@ Total Archived Files: 83
 - `_archive_wiki/wiki_sleep_hygiene.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_soft_skills.md` (reason: replaced by full article (active file: `data/career/wiki_full/soft_skills.md`))
 - `_archive_wiki/wiki_software_engineering.md` (reason: replaced by full article (active file: `data/career/wiki_full/software_engineering.md`))
-- `_archive_wiki/wiki_sovereign_gold_bond.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_sovereign_gold_bond.md` (reason: replaced by full article (active file: `data/finance/wiki_sovereign_gold_bond.md`))
 - `_archive_wiki/wiki_systematic_investment_plan.md` (reason: replaced by full article (active file: `data/finance/wiki_systematic_investment_plan.md`))
 - `_archive_wiki/wiki_work%e2%80%93life_balance.md` (reason: replaced by full article (active file: `data/career/wiki_full/work_life_balance.md`))
 - `_archive_wiki/wiki_workforce_management.md` (reason: archived earlier: reason not recorded)
