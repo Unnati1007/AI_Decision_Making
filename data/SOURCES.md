@@ -1,7 +1,7 @@
 # IntelliChoice Knowledge Base Sources
 
-Total Active Files: 152
-Total Vector Chunks: 2834
+Total Active Files: 169
+Total Vector Chunks: 3352
 
 ## Active Files by Domain
 
@@ -83,7 +83,7 @@ Total Vector Chunks: 2834
 - `career/wiki_full/termination_of_employment.md`
 - `career/wiki_full/work_life_balance.md`
 
-### Domain: finance (41 files)
+### Domain: finance (58 files)
 - `finance/asset_allocation_investments.md`
 - `finance/credit_score_loans.md`
 - `finance/crypto_alternative_assets.md`
@@ -95,26 +95,42 @@ Total Vector Chunks: 2834
 - `finance/stock_market_basics.md`
 - `finance/tax_saving_strategies.md`
 - `finance/wiki_asset_allocation.md`
+- `finance/wiki_atal_pension_yojana.md`
+- `finance/wiki_banking_in_india.md`
+- `finance/wiki_bombay_stock_exchange.md`
 - `finance/wiki_bond_finance.md`
 - `finance/wiki_compound_interest.md`
 - `finance/wiki_credit_card.md`
 - `finance/wiki_credit_score.md`
 - `finance/wiki_debt.md`
 - `finance/wiki_employees_provident_fund_organisation.md`
+- `finance/wiki_employees_state_insurance.md`
 - `finance/wiki_endowment_policy.md`
 - `finance/wiki_equated_monthly_installment.md`
 - `finance/wiki_exchange_traded_fund.md`
+- `finance/wiki_financial_literacy.md`
 - `finance/wiki_fixed_deposit.md`
+- `finance/wiki_fixed_income.md`
+- `finance/wiki_gold_as_an_investment.md`
 - `finance/wiki_goods_and_services_tax_india.md`
 - `finance/wiki_health_insurance_in_india.md`
 - `finance/wiki_income_tax_in_india.md`
 - `finance/wiki_index_fund.md`
 - `finance/wiki_inflation.md`
+- `finance/wiki_insurance_in_india.md`
+- `finance/wiki_life_insurance.md`
+- `finance/wiki_microfinance.md`
 - `finance/wiki_mortgage.md`
 - `finance/wiki_mutual_funds_in_india.md`
 - `finance/wiki_national_pension_system.md`
+- `finance/wiki_national_stock_exchange_of_india.md`
+- `finance/wiki_net_worth.md`
+- `finance/wiki_peer_to_peer_lending.md`
 - `finance/wiki_personal_budget.md`
+- `finance/wiki_pradhan_mantri_jan_dhan_yojana.md`
 - `finance/wiki_public_provident_fund_india.md`
+- `finance/wiki_public_sector_banks_in_india.md`
+- `finance/wiki_real_estate_investment_trust.md`
 - `finance/wiki_reserve_bank_of_india.md`
 - `finance/wiki_retirement_planning.md`
 - `finance/wiki_securities_and_exchange_board_of_india.md`
@@ -125,6 +141,7 @@ Total Vector Chunks: 2834
 - `finance/wiki_taxation_in_india.md`
 - `finance/wiki_term_life_insurance.md`
 - `finance/wiki_unified_payments_interface.md`
+- `finance/wiki_value_added_tax.md`
 
 ### Domain: legal (25 files)
 - `legal/consumer_rights_court.md`
@@ -240,7 +257,7 @@ Total Archived Files: 83
 - `_archive_wiki/wiki_professional_network.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_psychological_resilience.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_public_provident_fund_(india).md` (reason: replaced by full article (active file: `data/finance/wiki_public_provident_fund_india.md`))
-- `_archive_wiki/wiki_real_estate_investment_trust.md` (reason: archived earlier: reason not recorded)
+- `_archive_wiki/wiki_real_estate_investment_trust.md` (reason: replaced by full article (active file: `data/finance/wiki_real_estate_investment_trust.md`))
 - `_archive_wiki/wiki_remote_work.md` (reason: replaced by full article (active file: `data/career/wiki_full/remote_work.md`))
 - `_archive_wiki/wiki_salary_negotiation.md` (reason: archived earlier: reason not recorded)
 - `_archive_wiki/wiki_severance_package.md` (reason: replaced by full article (active file: `data/career/wiki_full/severance_package.md`))
