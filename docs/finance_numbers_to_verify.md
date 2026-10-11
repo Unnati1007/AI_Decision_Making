@@ -1797,3 +1797,161 @@ Script-extracted from the 16 NEW finance Wikipedia files in `data/finance/` matc
 | `wiki_annuity.md:2862` | , with monthly payments for 3 years at a nominal annual interest rate of | wikipedia, unverified |
 | `wiki_recurring_deposit.md:21` | One can avail of loans against the collateral of a recurring deposit up to 80 to 90% of the deposit value. | wikipedia, unverified |
 | `wiki_recurring_deposit.md:234` | Tax deduction at source (TDS) applies to recurring deposits in India.  If the interest earned on recurring deposits exceeds Rs. 40,000 a year, TDS would be deducted by the bank at the rate of 10%. Income tax is to be paid on interest earned from a Recurring Deposit at the rate of tax slab of the Recurring Deposit holder. Investors without taxable income must submit a Form 15G to avoid TDS on recurring and fixed deposits. Investors who are senior citizens (above the age of 60) will have to file Form 15H to avoid TDS on recurring and fixed deposits. | wikipedia, unverified |
+
+## Official Gov RBI Manual Source Numbers (`manual_rbi_i_can_do_financial_planning.md`)
+
+| `manual_rbi_i_can_do_financial_planning.md` | 162 | hope you do not make me wait another 20 years for your third wish.” Both laughed. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 313 | all amount to a huge unnecessary expense.  A Rs.50 cappuccino by the sea with friends every evening | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 314 | will amount to Rs.1500 in a month. A first-day-first-show Rs.200 movie ticket every Friday and Rs.20 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 315 | corn effectively means an outflow of Rs.880 from your wallet. Saving this ‘additional’ amount every | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 316 | month can allow you Rs.28,560 for something bigger over a year. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 390 | period of 3 years are counted amongst tax saving investment option. All other types of mutual funds do | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 578 | My husband and I have been practising prudent money management for close to 15 years and so diligently | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 584 | matter how much or less money they began with. ’ I am teaching my kids (aged 12 and 8 years) this valuable | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 621 | Asif, 23—earns a monthly salary of Rs.10,000 from his call centre job. His average monthly spending on | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 622 | livelihood and looking good is about Rs.9200. He currently has no investments and has an amount of Rs.3200 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 624 | Babu, 30—earns Rs.4,000 per month as a bank clerk. He spends a maximum of Rs.2000 in a month. He has | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 625 | Rs.4800 in his savings account but has not made any significant investments yet. He has to pay an EMI of | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 626 | Rs.800 towards home loan. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 628 | Chanda, 26—is a housewife who gets Rs.4500 from her husband every month towards household expenses. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 629 | She makes it a point to put Rs.500 in her savings account as soon as she gets her ‘allowance’ . She has managed | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 630 | to build a reserve of Rs.3000 so far. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 631 | David, 19—a third year commerce student has built an investment portfolio of Rs.5000 in mutual funds. He | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 741 | 3. A minimum deposit amount ranging from Rs.10 to | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 742 | Rs.2500 may be required in your account while opening and | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 916 | 1. Month’s total income  Rs. Amount 1 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 917 | 2. Month’s total expenses  Rs. Amount 2 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 918 | 3. Balance left this month  Rs. Amount 1—Amount 2 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1051 | (i)  Spending  50% of income | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1052 | (ii)  Savings towards goals 20% of income | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1054 | (iii)  Stabilizing finances 20% of income | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1055 | (iv)  Investing (long-term saving) 10% of income | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1117 | Rs.30,000 and Rs.24,000 in our individual salary accounts. Though this seems to be a good amount | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1141 | less and in comparison my salary is much more. I am 25 years old, the only son of my parents who | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1206 | Rs.50 in a month (in a Post Office savings account), you can see wealth | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1209 | Saving per year Rs.600 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1211 | Annual Interest @ 5% Rs.30 (in the first year, this amount | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1215 | In 5 years you will have Rs.4500 (approximate) | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1305 | So we, my husband and I, set a simple savings goal.  We decided to put aside 10% of our salaries in a savings | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1306 | account—as soon as we got our paycheck—and then forget about it. This was a total of Rs.10,000 between the | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1310 | We decided that we would save Rs. 1 lakh in a fixed deposit account. And any amount we can save beyond | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1311 | this Rs. 1 lakh, we would start investing in other investment channels. So almost a year after we started | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1315 | personal finance in general and investment in particular. Our simple investment goal* was to invest 70% of | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1316 | our invest-able amount in shares—high risk but high gains, 10% in bonds/fixed deposits, 10% in gold/silver | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1317 | and 10% in real estate (this was basically the home loan installment that we owed to our bank). | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1323 | My husband once jokingly said that he would like to retire from work at 40 years of age with a property worth | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1324 | Rs. 1crore of our own and a Rs. 1 crore net worth (all savings and investments put together). This became our | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1326 | Today, almost 20 years and two kids later, we are happy that we set those goals as we could work towards | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1362 | E.g. I want to set aside Rs.1000 every month in my savings account, instead of | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1372 | E.g. if your net earning is around Rs.10,000 a month then saving Rs.1000 is an | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1373 | achievable and energizing goal than a Rs.100 or a Rs. 8000 saving every month. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1376 | E.g. I want to save Rs.15000 by the end of this year. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1438 | You are currently saving Rs.5000 a month from your income | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1439 | Case A. If you wish to buy a PC worth Rs.20,000 in a year’s time, then your financial plan would be to | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1442 | income or reducing expenses to save more or investing for returns to make up for the Rs. 5000 shortfall or | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1448 | wished to retire from their jobs when they had a sum of Rs.10,00,000 in their retirement accounts. The only | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1451 | started his job. He started by putting his Diwali bonus of Rs.10,000 in a fixed deposit. He then kept on adding | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1452 | Rs. 10,000 a year (i.e. less than Rs.1000 a month). | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1454 | On his 31st birthday, Sham finally followed Ram’s advice and plan, and put Rs.30,000 in a fixed deposit. By | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1455 | then, even Ram could contribute Rs.20,000 a year to his ‘retirement account’ . Thereafter, Ram and Sham kept | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1456 | contributing Rs.20,000 and Rs. 30,000 a year respectively. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1469 | 20 years Rs. 10,000  Nil | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1470 | 30 years  Rs 1,67,507.51  Nil | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1471 | 31 years  Rs.2,09,933.03  Rs.30,000 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1472 | 40 years  Rs.6,42,282 Rs.4,39,647.22 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1473 | 45 years  Rs.10,23,899.92 Rs.8,01,226.68 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1474 | 48years  Rs.13,23,120.29  Rs.10,84,735.43 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1475 | Total amount put in  Rs.4,50,000  Rs. 5,10,000 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1477 | No. of years  28 years  17 years | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1480 | Total amount put in Rs.4,50,000 Rs. 5,10,000 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1481 | Total Interest Rs.8,73,120.29 Rs.5,74,735.43 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1485 | Though the two friends decided to retire at the same age (48 years), Ram, thanks to his extra 11 years of small | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1486 | savings, by putting Rs.60,000 less than Sham, could retire with Rs.2,38,384.86 more than him. Discover the | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1488 | Considering that their Fixed Deposit accounts earned the same rate of interest throughout, say 7% per year, the | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1494 | (E.g. I want to buy a Bajaj Pulsar bike that costs Rs.40,000 now within a year.) | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1549 | Hi! 1 am 21 years old. I have joined work in the IT sector six months back and earn Rs.25,000 per | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1550 | month salary (i.e., about Rs.12,000 take-home after deductions).  Last six months that I received my | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1575 | call center for the last one year. I make good money (Rs. 2.41 lakh p.a.), and I wish to use it wisely. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1577 | 1. Save for further education (2-4 years timeline). | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1579 | 3. Buy a house—my company gives home loans when I complete 5 years in the job. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1581 | 5. Repay credit card debt of Rs. 25000. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1603 | and not worry about future.) I am sure that in a couple of years (or at worst 5 years), you | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1605 | years i.e., 60 months of income—and as many months of a missed opportunity to build your | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1606 | wealth. Imagine if you save Rs.2,000 a month  (i.e. Rs. 24000 a year) in a fixed deposit, you | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1607 | can expect to have a balance of about Rs. 1.5 lakh by then(@6% interest*) | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1610 | may just have 10 more years of responsibilities. Whether we cruised through effortlessly or | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1663 | But with Rs.25000 debt on your credit card, you should not be thinking about any other goal just yet. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1698 | day. I would have been 10-11 years old. I complained to my parents about this behavior of my so-called | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1721 | Back in those days (almost 20 years back) information was not so readily available. Media was not much | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1730 | just 20 years of age. They had a humble household income, almost half of ours. But they lived our equivalent | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1754 | age. Raj said that the equity component in my portfolio should not exceed (100 minus my age)% of my total | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1755 | investments. So for me (at 28 years), the rule guides that if my portfolio has equity in excess of 72%, then it | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1844 | amount as low as Rs. 50 per month. Hence, the words like ‘healthy’ ‘good’ ‘satisfactory’ are subjective | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1845 | and completely to your discretion. The quiz intends to answer the significant question—is that Rs.50 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1914 | 2. I would need Rs. (Amt* 1____________ ) to reach the goal | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1915 | 3. The investable money I have at the moment is Rs. (Amt* 2 ____________ ) | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1916 | 4. The time I have to meet the goal _T ____________ days/months/years | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1917 | 5. The time in years I have to meet the goal _N ____________ years | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1919 | Formula to calculate the time in years N,  If your original timeline T is in days then N = T/365, | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1920 | if it is in months then N = T/12, if in years then T = N | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1921 | 6. More investable money I can save during this time Rs. (Amt* 3____________ ) | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1922 | 7. Balance money I would need to raise Rs. (Amt* 4 ____________ ) | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1924 | 8. To meet the goal, I should get _R ____________ % per year rate of return | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1928 | a.  High: I can handle a decline in my investments of up to 20% while I am willing to invest for high returns. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1939 | gain about Rs.(Amt.4)_________ in (N)_____ years taking high/  moderate/low risk. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 1944 | a low risk investment channel to get a 20% return annually is far from reality. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2021 | From 5% up to 10% | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2062 | Around 10-20% | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2105 | 2.  Expected Returns: Mark Low in the table if you expect an annual return of up to 5%, Moderate if you | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2106 | expect an annual return between 5% to 8%, High if the expected annual return is above 8%. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2110 | is between 1 to 2 years, and long-term if the investment term is more than 2 years. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2161 | % of each asset class = Amount for that asset class  X 100 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2185 | Total Capital*See box Rs. Capital 100% | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2263 | Total 100% | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2277 | 10% | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2279 | 20% | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2281 | 10% | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2283 | 60% | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2421 | 40 shares @ Rs. 12 on April 1, and | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2422 | 60 shares @ Rs. 11 on April 10 and | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2423 | sold 50 shares @ Rs. 15 on October 31, | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2430 | 4. Note that the % returns are for that period of time during which you are holding those shares. In the | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2431 | above example it is 27.11% for the 7 months between purchase and sale. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2436 | Sale rate Rs.15 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2437 | Amount recovered Rs.750 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2439 | Purchase cost/s 40@ Rs.12; 10@ Rs.11 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2440 | Amount Invested Rs.590 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2441 | Profit/Loss Rs. 160 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2442 | % Returns 27.11% | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2458 | Total 100% Rs. 100% | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2491 | get a pocket money of Rs.1000 a month from my parents for my needs. Most of this money is used | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2501 | savings account over Rs.5000. It guarantees that my savings would double in 8 years. I am weary | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2512 | months. I earn Rs.20,000 every month and I think I am managing my money well. I have almost | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2513 | Rs.4500 investable money every month. My friend, who and I joined this company together is | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2514 | making huge profits on stock markets since he was a student. Just last week he invested Rs.10,000 | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2516 | Rs.5,000 on the same day. WOW! But now that stock is not doing very well. Can you please advise | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2517 | me another profitable stock that I can invest my Rs.9,000 in and make huge profits? | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2523 | thinking lady! If you indeed start investing today, you have up to 40 years | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2525 | wealth you would build by investing for 40 years.  Time is on your side. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2527 | Firstly, you are above 18 years of age, so you can independently | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2528 | manage all your investments. Consider this, you get Rs.1,000 allowance for | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2530 | say Rs.500 (to start with) from that money—in a month or two or three, you | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2534 | starting sum of Rs.500 are listed below: | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2542 | savings account) that allows you to invest amount as low as Rs.50 every | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2545 | not yours and investable. Now the question remains how to find that Rs.500. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2598 | Rs.9000 as investable money within just 2 months of your employment. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2711 | 1. Most seniors (45 years and beyond), who have been used to the ‘loans on ration and regulation’ are  careful | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2714 | 2. Majority of the youth (25 –35 years of age)  have home loans, vehicle loans, multiple credit cards, durables | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2717 | 3. Some younger people (below 25 years of age) have access to credit cards and many have an education loan | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2924 | around 2-3%. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2976 | Hi, I am 29 years old, practising lawyer. I have been working with a law firm for last 7 years. I am | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2978 | secretary) and I had both taken housing loans from our companies 3 years back. With my wife on | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2983 | I am a 25-year-old HR professional. I take home a net salary of Rs.35,000 every month. I have been | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2985 | Rs.75,000. I also am yet to repay a part of educational loan, which comes to Rs.6,000 per month. | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2986 | My home loan installment gets deducted from my salary before I get it. I had borrowed Rs. 3 lakhs | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 2987 | from my father to fund the initial payment. I have also borrowed Rs.25000 from a friend to pay my | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 3043 | Next, repay the Rs.75,000 due on the credit cards. That is the first debt you | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 3109 | The answer is simple, as I look at it now—25 years and a million experiences later; I was not prepared for | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 3642 | expenses, allocating your income (e.g. Spending 50% of the net income, saving (20%), stabilizing finances | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 3643 | through emergency fund and insurance (20%), investing for growth (10%)), implementation and review | official_gov, 2010 publication, may be outdated |
+| `manual_rbi_i_can_do_financial_planning.md` | 3691 | good saving for down payment (generally 8% of the cost of house). | official_gov, 2010 publication, may be outdated |
