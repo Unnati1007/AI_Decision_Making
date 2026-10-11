@@ -1,0 +1,7 @@
+SOURCE_URL: https://www.who.int/publications/i/item/9789240014886
+URL: https://www.who.int/publications/i/item/9789240014886
+OWNER: World Health Organization
+TITLE: WHO GUIDELINES ON PHYSICAL ACTIVITY AND SEDENTARY BEHAVIOUR AT A GLANCE
+DOWNLOADED_ON: 11 Oct 2026
+REUSE_SENTENCE: Some rights reserved. This work is available under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 IGO licence (CC BY-NC-SA 3.0 IGO; https://creativecommons.org/licenses/by-nc-sa/3.0/igo).
+REUSE_PAGE_URL: https://www.who.int/publications/i/item/9789240014886
