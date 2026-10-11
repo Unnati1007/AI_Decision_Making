@@ -68,6 +68,9 @@ def retrieve_context(
     raw_results = store.similarity_search_with_score(query_vec, k=overfetch_k, domain_filter=domain)
 
     if not raw_results and domain:
+        if domain == "wellbeing":
+            logger.info("No results for domain 'wellbeing'. Not falling back to domain-agnostic search.")
+            return "", [], []
         logger.info(f"No results for domain '{domain}'. Retrying domain-agnostic search.")
         raw_results = store.similarity_search_with_score(query_vec, k=overfetch_k, domain_filter=None)
 

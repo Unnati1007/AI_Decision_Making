@@ -99,3 +99,12 @@ class TestCrisisSafety(unittest.TestCase):
         """Verifies that normal queries do NOT return is_crisis=True."""
         for nq in self.normal_queries:
             self.assertFalse(detect_crisis_intent(nq))
+
+    def test_wellbeing_query_low_score_returns_no_finance_sources(self):
+        """Verifies that a wellbeing query does NOT fall back to finance sources."""
+        from backend.retrieval.retriever import retrieve_context
+        # Query that previously matched finance schemes (like Atal Pension Yojana) when domain-agnostic fallback occurred
+        ctx, sources, raw = retrieve_context("feeling completely overwhelmed and lost", domain="wellbeing", top_k=4)
+        for s in sources:
+            self.assertNotEqual(s.get("domain"), "finance", f"Returned finance source in wellbeing: {s.get('title')}")
+
