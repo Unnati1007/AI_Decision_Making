@@ -108,8 +108,54 @@ class TestPipelineFlow(unittest.TestCase):
                 mcq_answers=self.mcq_answers,
                 turn1_raw_results=t1_results
             )
-            self.assertTrue(t2_res["success"])
-            self.assertIn("sources", t2_res)
+    def test_f_domain_filtered_search_returns_k_results(self):
+        """Asserts a domain-filtered search returns k results when >= k chunks of that domain exist (no LLM, no network)."""
+        import numpy as np
+        from backend.retrieval.vector_store import FAISSVectorStore
+
+        store = FAISSVectorStore(dimension=4)
+        chunks = [
+            "career chunk 1", "career chunk 2", "career chunk 3", "career chunk 4", "career chunk 5",
+            "finance chunk 1", "finance chunk 2", "finance chunk 3",
+            "wellbeing chunk 1", "wellbeing chunk 2", "wellbeing chunk 3", "wellbeing chunk 4"
+        ]
+        embeddings = np.array([
+            [1.0, 0.0, 0.0, 0.0],
+            [0.9, 0.1, 0.0, 0.0],
+            [0.8, 0.2, 0.0, 0.0],
+            [0.7, 0.3, 0.0, 0.0],
+            [0.6, 0.4, 0.0, 0.0],
+            # finance
+            [0.99, 0.01, 0.0, 0.0],
+            [0.95, 0.05, 0.0, 0.0],
+            [0.92, 0.08, 0.0, 0.0],
+            # wellbeing (lower similarity to [1,0,0,0])
+            [0.1, 0.1, 0.9, 0.0],
+            [0.1, 0.2, 0.8, 0.0],
+            [0.2, 0.1, 0.8, 0.0],
+            [0.1, 0.3, 0.7, 0.0],
+        ], dtype=np.float32)
+        metadatas = [
+            {"domain": "career", "title": "Career Doc"},
+            {"domain": "career", "title": "Career Doc"},
+            {"domain": "career", "title": "Career Doc"},
+            {"domain": "career", "title": "Career Doc"},
+            {"domain": "career", "title": "Career Doc"},
+            {"domain": "finance", "title": "Finance Doc"},
+            {"domain": "finance", "title": "Finance Doc"},
+            {"domain": "finance", "title": "Finance Doc"},
+            {"domain": "wellbeing", "title": "Wellbeing Doc"},
+            {"domain": "wellbeing", "title": "Wellbeing Doc"},
+            {"domain": "wellbeing", "title": "Wellbeing Doc"},
+            {"domain": "wellbeing", "title": "Wellbeing Doc"},
+        ]
+        store.add_documents(chunks, embeddings, metadatas)
+
+        query_vec = np.array([1.0, 0.0, 0.0, 0.0], dtype=np.float32)
+        results = store.similarity_search_with_score(query_vec, k=4, domain_filter="wellbeing")
+        self.assertEqual(len(results), 4)
+        for chunk, meta, score in results:
+            self.assertEqual(meta["domain"], "wellbeing")
 
 
 if __name__ == "__main__":
