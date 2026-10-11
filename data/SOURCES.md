@@ -1,7 +1,7 @@
 # Knowledge Base Sources Inventory
 
-**Total Active Files**: 214  
-**Total Embedded Chunks (Vectors)**: 4,957  
+**Total Active Files**: 221  
+**Total Embedded Chunks (Vectors)**: 5,176  
 
 ## Domain x Source Type Summary
 
@@ -14,6 +14,7 @@
 | legal | ai_curated | 10 | 10 |
 | legal | wikipedia | 15 | 233 |
 | wellbeing | ai_curated | 10 | 10 |
+| wellbeing | wikipedia | 7 | 219 |
 
 ## Domain Totals
 
@@ -22,7 +23,7 @@
 | career | 76 | 1,576 |
 | finance | 103 | 3,128 |
 | legal | 25 | 243 |
-| wellbeing | 10 | 10 |
+| wellbeing | 17 | 229 |
 
 ## Active File Details
 
@@ -241,4 +242,11 @@
 | `wellbeing/habit_building_consistency.md` | wellbeing | ai_curated | Habit Building Consistency | 1 | N/A |
 | `wellbeing/nutrition_macronutrients.md` | wellbeing | ai_curated | Nutrition Macronutrients | 1 | N/A |
 | `wellbeing/sleep_hygiene_circadian.md` | wellbeing | ai_curated | Sleep Hygiene Circadian | 1 | N/A |
+| `wellbeing/wiki_emotional_intelligence.md` | wellbeing | wikipedia | Emotional intelligence | 47 | https://en.wikipedia.org/wiki/Emotional_intelligence |
+| `wellbeing/wiki_habit.md` | wellbeing | wikipedia | Habit | 17 | https://en.wikipedia.org/wiki/Habit |
+| `wellbeing/wiki_healthy_diet.md` | wellbeing | wikipedia | Healthy diet | 40 | https://en.wikipedia.org/wiki/Healthy_diet |
+| `wellbeing/wiki_psychological_stress.md` | wellbeing | wikipedia | Psychological stress | 57 | https://en.wikipedia.org/wiki/Psychological_stress |
+| `wellbeing/wiki_sleep_hygiene.md` | wellbeing | wikipedia | Sleep hygiene | 22 | https://en.wikipedia.org/wiki/Sleep_hygiene |
+| `wellbeing/wiki_time_management.md` | wellbeing | wikipedia | Time management | 11 | https://en.wikipedia.org/wiki/Time_management |
+| `wellbeing/wiki_worklife_balance.md` | wellbeing | wikipedia | Work–life balance | 25 | https://en.wikipedia.org/wiki/Work–life_balance |
 | `wellbeing/work_life_balance.md` | wellbeing | ai_curated | Work Life Balance | 1 | N/A |
