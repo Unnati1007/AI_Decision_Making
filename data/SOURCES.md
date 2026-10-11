@@ -1,19 +1,19 @@
 # Knowledge Base Sources Inventory
 
-**Total Active Files**: 229  
-**Total Embedded Chunks (Vectors)**: 6,101  
+**Total Active Files**: 265  
+**Total Embedded Chunks (Vectors)**: 7,270  
 
 ## Domain x Source Type Summary
 
 | Domain | Source Type | Files | Chunks |
 | :--- | :--- | :--- | :--- |
 | career | ai_curated | 39 | 226 |
-| career | wikipedia | 37 | 1,350 |
+| career | wikipedia | 38 | 1,392 |
 | finance | ai_curated | 10 | 13 |
 | finance | official_gov | 1 | 269 |
 | finance | wikipedia | 93 | 3,115 |
 | legal | ai_curated | 10 | 10 |
-| legal | wikipedia | 15 | 233 |
+| legal | wikipedia | 50 | 1,360 |
 | wellbeing | ai_curated | 10 | 10 |
 | wellbeing | official_gov | 1 | 59 |
 | wellbeing | open_textbook | 1 | 279 |
@@ -23,9 +23,9 @@
 
 | Domain | Files | Chunks |
 | :--- | :--- | :--- |
-| career | 76 | 1,576 |
+| career | 77 | 1,618 |
 | finance | 104 | 3,397 |
-| legal | 25 | 243 |
+| legal | 60 | 1,370 |
 | wellbeing | 24 | 885 |
 
 ## Acknowledgements & Source Attributions
@@ -103,6 +103,7 @@ Source: OpenStax, Psychology 2e (selected sections), Rice University, CC BY-NC-S
 | `career/wiki_full/non-compete_clause.md` | career | wikipedia | Non-compete clause | 26 | https://en.wikipedia.org/wiki/Non-compete_clause |
 | `career/wiki_full/occupational_burnout.md` | career | wikipedia | Occupational burnout | 70 | https://en.wikipedia.org/wiki/Occupational_burnout |
 | `career/wiki_full/onboarding.md` | career | wikipedia | Onboarding | 40 | https://en.wikipedia.org/wiki/Onboarding |
+| `career/wiki_full/organizational_behavior.md` | career | wikipedia | Organizational behavior | 42 | https://en.wikipedia.org/wiki/Organizational_behavior |
 | `career/wiki_full/organizational_culture.md` | career | wikipedia | Organizational culture | 42 | https://en.wikipedia.org/wiki/Organizational_culture |
 | `career/wiki_full/performance_appraisal.md` | career | wikipedia | Performance appraisal | 39 | https://en.wikipedia.org/wiki/Performance_appraisal |
 | `career/wiki_full/product_management.md` | career | wikipedia | Product management | 6 | https://en.wikipedia.org/wiki/Product_management |
@@ -227,21 +228,56 @@ Source: OpenStax, Psychology 2e (selected sections), Rice University, CC BY-NC-S
 | `legal/ip_trademark_copyright.md` | legal | ai_curated | Ip Trademark Copyright | 1 | N/A |
 | `legal/startup_legal_checklist.md` | legal | ai_curated | Startup Legal Checklist | 1 | N/A |
 | `legal/tenant_landlord_rights.md` | legal | ai_curated | Tenant Landlord Rights | 1 | N/A |
+| `legal/wiki_alimony.md` | legal | wikipedia | Alimony | 35 | https://en.wikipedia.org/wiki/Alimony |
 | `legal/wiki_arbitration_and_conciliation_act_1996.md` | legal | wikipedia | Arbitration and Conciliation Act, 1996 | 7 | https://en.wikipedia.org/wiki/Arbitration_and_Conciliation_Act,_1996 |
+| `legal/wiki_bar_council_of_india.md` | legal | wikipedia | Bar Council of India | 12 | https://en.wikipedia.org/wiki/Bar_Council_of_India |
+| `legal/wiki_bharatiya_nagarik_suraksha_sanhita.md` | legal | wikipedia | Bharatiya Nagarik Suraksha Sanhita | 9 | https://en.wikipedia.org/wiki/Bharatiya_Nagarik_Suraksha_Sanhita |
+| `legal/wiki_bharatiya_nyaya_sanhita_2023.md` | legal | wikipedia | Bharatiya Nyaya Sanhita, 2023 | 6 | https://en.wikipedia.org/wiki/Bharatiya_Nyaya_Sanhita,_2023 |
+| `legal/wiki_child_custody.md` | legal | wikipedia | Child custody | 33 | https://en.wikipedia.org/wiki/Child_custody |
+| `legal/wiki_code_of_criminal_procedure_1973.md` | legal | wikipedia | Code of Criminal Procedure, 1973 | 22 | https://en.wikipedia.org/wiki/Code_of_Criminal_Procedure,_1973 |
 | `legal/wiki_code_on_wages_2019.md` | legal | wikipedia | Code on Wages, 2019 | 6 | https://en.wikipedia.org/wiki/Code_on_Wages,_2019 |
+| `legal/wiki_constitution_of_india.md` | legal | wikipedia | Constitution of India | 67 | https://en.wikipedia.org/wiki/Constitution_of_India |
+| `legal/wiki_consumer_court.md` | legal | wikipedia | Consumer court | 6 | https://en.wikipedia.org/wiki/Consumer_court |
+| `legal/wiki_consumer_protection.md` | legal | wikipedia | Consumer protection | 28 | https://en.wikipedia.org/wiki/Consumer_protection |
 | `legal/wiki_consumer_protection_act_2019.md` | legal | wikipedia | Consumer Protection Act, 2019 | 6 | https://en.wikipedia.org/wiki/Consumer_Protection_Act,_2019 |
 | `legal/wiki_contract.md` | legal | wikipedia | Contract | 1 | https://en.wikipedia.org/wiki/Contract |
 | `legal/wiki_copyright_law_of_india.md` | legal | wikipedia | Copyright law of India | 19 | https://en.wikipedia.org/wiki/Copyright_law_of_India |
+| `legal/wiki_crime_in_india.md` | legal | wikipedia | Crime in India | 41 | https://en.wikipedia.org/wiki/Crime_in_India |
 | `legal/wiki_cybercrime.md` | legal | wikipedia | Cybercrime | 1 | https://en.wikipedia.org/wiki/Cybercrime |
 | `legal/wiki_digital_personal_data_protection_act_2023.md` | legal | wikipedia | Digital Personal Data Protection Act, 2023 | 18 | https://en.wikipedia.org/wiki/Digital_Personal_Data_Protection_Act,_2023 |
+| `legal/wiki_dishonoured_cheque.md` | legal | wikipedia | Dishonoured cheque | 16 | https://en.wikipedia.org/wiki/Dishonoured_cheque |
+| `legal/wiki_divorce.md` | legal | wikipedia | Divorce | 108 | https://en.wikipedia.org/wiki/Divorce |
+| `legal/wiki_domestic_violence_in_india.md` | legal | wikipedia | Domestic violence in India | 36 | https://en.wikipedia.org/wiki/Domestic_violence_in_India |
+| `legal/wiki_fundamental_rights_in_india.md` | legal | wikipedia | Fundamental rights in India | 69 | https://en.wikipedia.org/wiki/Fundamental_rights_in_India |
+| `legal/wiki_hindu_adoptions_and_maintenance_act_1956.md` | legal | wikipedia | Hindu Adoptions and Maintenance Act, 1956 | 10 | https://en.wikipedia.org/wiki/Hindu_Adoptions_and_Maintenance_Act,_1956 |
+| `legal/wiki_hindu_marriage_act_1955.md` | legal | wikipedia | Hindu Marriage Act, 1955 | 28 | https://en.wikipedia.org/wiki/Hindu_Marriage_Act,_1955 |
 | `legal/wiki_hindu_succession_act_1956.md` | legal | wikipedia | Hindu Succession Act, 1956 | 9 | https://en.wikipedia.org/wiki/Hindu_Succession_Act,_1956 |
+| `legal/wiki_impressed_duty_stamp.md` | legal | wikipedia | Impressed duty stamp | 9 | https://en.wikipedia.org/wiki/Impressed_duty_stamp |
 | `legal/wiki_indian_contract_act_1872.md` | legal | wikipedia | Indian Contract Act, 1872 | 30 | https://en.wikipedia.org/wiki/Indian_Contract_Act,_1872 |
+| `legal/wiki_indian_evidence_act_1872.md` | legal | wikipedia | Indian Evidence Act, 1872 | 10 | https://en.wikipedia.org/wiki/Indian_Evidence_Act,_1872 |
+| `legal/wiki_indian_penal_code.md` | legal | wikipedia | Indian Penal Code | 18 | https://en.wikipedia.org/wiki/Indian_Penal_Code |
 | `legal/wiki_industrial_disputes_act_1947.md` | legal | wikipedia | Industrial Disputes Act, 1947 | 9 | https://en.wikipedia.org/wiki/Industrial_Disputes_Act,_1947 |
 | `legal/wiki_information_technology_act_2000.md` | legal | wikipedia | Information Technology Act, 2000 | 26 | https://en.wikipedia.org/wiki/Information_Technology_Act,_2000 |
+| `legal/wiki_information_technology_rules_2021.md` | legal | wikipedia | Information Technology Rules, 2021 | 14 | https://en.wikipedia.org/wiki/Information_Technology_Rules,_2021 |
+| `legal/wiki_inheritance_tax.md` | legal | wikipedia | Inheritance tax | 43 | https://en.wikipedia.org/wiki/Inheritance_tax |
 | `legal/wiki_labour_laws_in_india.md` | legal | wikipedia | Labour laws in India | 44 | https://en.wikipedia.org/wiki/Labour_laws_in_India |
+| `legal/wiki_law_of_india.md` | legal | wikipedia | Law of India | 44 | https://en.wikipedia.org/wiki/Law_of_India |
+| `legal/wiki_legal_aid.md` | legal | wikipedia | Legal aid | 64 | https://en.wikipedia.org/wiki/Legal_aid |
+| `legal/wiki_legal_services_authorities_act_1987.md` | legal | wikipedia | Legal Services Authorities Act, 1987 | 6 | https://en.wikipedia.org/wiki/Legal_Services_Authorities_Act,_1987 |
+| `legal/wiki_mohd_ahmed_khan_v_shah_bano_begum.md` | legal | wikipedia | Mohd. Ahmed Khan v. Shah Bano Begum | 27 | https://en.wikipedia.org/wiki/Mohd._Ahmed_Khan_v._Shah_Bano_Begum |
+| `legal/wiki_muslim_personal_law.md` | legal | wikipedia | Muslim personal law | 15 | https://en.wikipedia.org/wiki/Muslim_personal_law |
+| `legal/wiki_negotiable_instruments_act_1881.md` | legal | wikipedia | Negotiable Instruments Act, 1881 | 9 | https://en.wikipedia.org/wiki/Negotiable_Instruments_Act,_1881 |
 | `legal/wiki_non_disclosure_agreement.md` | legal | wikipedia | Non-disclosure agreement | 29 | https://en.wikipedia.org/wiki/Non-disclosure_agreement |
 | `legal/wiki_payment_of_gratuity_act_1972.md` | legal | wikipedia | Payment of Gratuity Act, 1972 | 4 | https://en.wikipedia.org/wiki/Payment_of_Gratuity_Act,_1972 |
+| `legal/wiki_protection_of_women_from_domestic_violence_act_2005.md` | legal | wikipedia | Protection of Women from Domestic Violence Act, 2005 | 16 | https://en.wikipedia.org/wiki/Protection_of_Women_from_Domestic_Violence_Act,_2005 |
+| `legal/wiki_real_estate_regulation_and_development_act_2016.md` | legal | wikipedia | Real Estate (Regulation and Development) Act, 2016 | 12 | https://en.wikipedia.org/wiki/Real_Estate_(Regulation_and_Development)_Act,_2016 |
 | `legal/wiki_right_to_information_act_2005.md` | legal | wikipedia | Right to Information Act, 2005 | 24 | https://en.wikipedia.org/wiki/Right_to_Information_Act,_2005 |
+| `legal/wiki_sexual_harassment.md` | legal | wikipedia | Sexual harassment | 194 | https://en.wikipedia.org/wiki/Sexual_harassment |
+| `legal/wiki_sexual_harassment_of_women_at_workplace_prevention_prohibition_and_redressal_act_2013.md` | legal | wikipedia | Sexual Harassment of Women at Workplace (Prevention, Prohibition and Redressal) Act, 2013 | 22 | https://en.wikipedia.org/wiki/Sexual_Harassment_of_Women_at_Workplace_(Prevention,_Prohibition_and_Redressal)_Act,_2013 |
+| `legal/wiki_stamp_duty.md` | legal | wikipedia | Stamp duty | 21 | https://en.wikipedia.org/wiki/Stamp_duty |
+| `legal/wiki_transfer_of_property_act_1882.md` | legal | wikipedia | Transfer of Property Act, 1882 | 7 | https://en.wikipedia.org/wiki/Transfer_of_Property_Act,_1882 |
+| `legal/wiki_uniform_civil_code.md` | legal | wikipedia | Uniform Civil Code | 42 | https://en.wikipedia.org/wiki/Uniform_Civil_Code |
+| `legal/wiki_violence_against_women_in_india.md` | legal | wikipedia | Violence against women in India | 28 | https://en.wikipedia.org/wiki/Violence_against_women_in_India |
 | `legal/wills_inheritance_property.md` | legal | ai_curated | Wills Inheritance Property | 1 | N/A |
 | `wellbeing/anxiety_mental_wellness.md` | wellbeing | ai_curated | Anxiety Mental Wellness | 1 | N/A |
 | `wellbeing/burnout_stress_management.md` | wellbeing | ai_curated | Burnout Stress Management | 1 | N/A |
