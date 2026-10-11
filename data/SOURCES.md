@@ -1,7 +1,7 @@
 # Knowledge Base Sources Inventory
 
-**Total Active Files**: 223  
-**Total Embedded Chunks (Vectors)**: 5,504  
+**Total Active Files**: 229  
+**Total Embedded Chunks (Vectors)**: 6,101  
 
 ## Domain x Source Type Summary
 
@@ -16,7 +16,8 @@
 | legal | wikipedia | 15 | 233 |
 | wellbeing | ai_curated | 10 | 10 |
 | wellbeing | official_gov | 1 | 59 |
-| wellbeing | wikipedia | 7 | 219 |
+| wellbeing | open_textbook | 1 | 279 |
+| wellbeing | wikipedia | 12 | 537 |
 
 ## Domain Totals
 
@@ -25,12 +26,13 @@
 | career | 76 | 1,576 |
 | finance | 104 | 3,397 |
 | legal | 25 | 243 |
-| wellbeing | 18 | 288 |
+| wellbeing | 24 | 885 |
 
 ## Acknowledgements & Source Attributions
 
 Source: Reserve Bank of India, I Can Do, 2010 (official_gov, 2010 publication, may be outdated)
 Source: WHO, 2020, CC BY-NC-SA 3.0 IGO (official_gov)
+Source: OpenStax, Psychology 2e (selected sections), Rice University, CC BY-NC-SA 4.0 (open_textbook). Access for free at openstax.org.
 
 ## Active File Details
 
@@ -248,14 +250,20 @@ Source: WHO, 2020, CC BY-NC-SA 3.0 IGO (official_gov)
 | `wellbeing/diet_intermittent_fasting.md` | wellbeing | ai_curated | Diet Intermittent Fasting | 1 | N/A |
 | `wellbeing/emotional_resilience.md` | wellbeing | ai_curated | Emotional Resilience | 1 | N/A |
 | `wellbeing/habit_building_consistency.md` | wellbeing | ai_curated | Habit Building Consistency | 1 | N/A |
+| `wellbeing/manual_openstax_psychology_2e_selected.md` | wellbeing | open_textbook | Openstax Psychology 2E Selected | 279 | https://openstax.org/details/books/psychology-2e |
 | `wellbeing/manual_who_physical_activity_at_a_glance.md` | wellbeing | official_gov | Who Physical Activity At A Glance | 59 | https://www.who.int/publications/i/item/9789240014886 |
 | `wellbeing/nutrition_macronutrients.md` | wellbeing | ai_curated | Nutrition Macronutrients | 1 | N/A |
 | `wellbeing/sleep_hygiene_circadian.md` | wellbeing | ai_curated | Sleep Hygiene Circadian | 1 | N/A |
+| `wellbeing/wiki_circadian_rhythm.md` | wellbeing | wikipedia | Circadian rhythm | 62 | https://en.wikipedia.org/wiki/Circadian_rhythm |
 | `wellbeing/wiki_emotional_intelligence.md` | wellbeing | wikipedia | Emotional intelligence | 47 | https://en.wikipedia.org/wiki/Emotional_intelligence |
+| `wellbeing/wiki_ergonomics.md` | wellbeing | wikipedia | Ergonomics | 57 | https://en.wikipedia.org/wiki/Ergonomics |
+| `wellbeing/wiki_exercise.md` | wellbeing | wikipedia | Exercise | 40 | https://en.wikipedia.org/wiki/Exercise |
 | `wellbeing/wiki_habit.md` | wellbeing | wikipedia | Habit | 17 | https://en.wikipedia.org/wiki/Habit |
 | `wellbeing/wiki_healthy_diet.md` | wellbeing | wikipedia | Healthy diet | 40 | https://en.wikipedia.org/wiki/Healthy_diet |
+| `wellbeing/wiki_mindfulness.md` | wellbeing | wikipedia | Mindfulness | 105 | https://en.wikipedia.org/wiki/Mindfulness |
 | `wellbeing/wiki_psychological_stress.md` | wellbeing | wikipedia | Psychological stress | 57 | https://en.wikipedia.org/wiki/Psychological_stress |
 | `wellbeing/wiki_sleep_hygiene.md` | wellbeing | wikipedia | Sleep hygiene | 22 | https://en.wikipedia.org/wiki/Sleep_hygiene |
+| `wellbeing/wiki_stress_management.md` | wellbeing | wikipedia | Stress management | 54 | https://en.wikipedia.org/wiki/Stress_management |
 | `wellbeing/wiki_time_management.md` | wellbeing | wikipedia | Time management | 11 | https://en.wikipedia.org/wiki/Time_management |
 | `wellbeing/wiki_worklife_balance.md` | wellbeing | wikipedia | Work–life balance | 25 | https://en.wikipedia.org/wiki/Work–life_balance |
 | `wellbeing/work_life_balance.md` | wellbeing | ai_curated | Work Life Balance | 1 | N/A |
