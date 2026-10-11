@@ -1,7 +1,7 @@
 # Knowledge Base Sources Inventory
 
-**Total Active Files**: 221  
-**Total Embedded Chunks (Vectors)**: 5,176  
+**Total Active Files**: 222  
+**Total Embedded Chunks (Vectors)**: 5,445  
 
 ## Domain x Source Type Summary
 
@@ -10,6 +10,7 @@
 | career | ai_curated | 39 | 226 |
 | career | wikipedia | 37 | 1,350 |
 | finance | ai_curated | 10 | 13 |
+| finance | official_gov | 1 | 269 |
 | finance | wikipedia | 93 | 3,115 |
 | legal | ai_curated | 10 | 10 |
 | legal | wikipedia | 15 | 233 |
@@ -21,9 +22,13 @@
 | Domain | Files | Chunks |
 | :--- | :--- | :--- |
 | career | 76 | 1,576 |
-| finance | 103 | 3,128 |
+| finance | 104 | 3,397 |
 | legal | 25 | 243 |
 | wellbeing | 17 | 229 |
+
+## Acknowledgements & Source Attributions
+
+Source: Reserve Bank of India, I Can Do, 2010 (official_gov, 2010 publication, may be outdated)
 
 ## Active File Details
 
@@ -110,6 +115,7 @@
 | `finance/crypto_alternative_assets.md` | finance | ai_curated | Crypto Alternative Assets | 1 | N/A |
 | `finance/debt_payoff_vs_investing.md` | finance | ai_curated | Debt Payoff Vs Investing | 1 | N/A |
 | `finance/emergency_fund_insurance.md` | finance | ai_curated | Emergency Fund Insurance | 1 | N/A |
+| `finance/manual_rbi_i_can_do_financial_planning.md` | finance | official_gov | Rbi I Can Do Financial Planning | 269 | https://www.rbi.org.in/FinancialEducation/content/I%20Can%20Do_RBI.pdf |
 | `finance/mutual_funds_sip.md` | finance | ai_curated | Mutual Funds Sip | 1 | N/A |
 | `finance/real_estate_rent_vs_buy.md` | finance | ai_curated | Real Estate Rent Vs Buy | 2 | N/A |
 | `finance/retirement_nps_ppf.md` | finance | ai_curated | Retirement Nps Ppf | 1 | N/A |
