@@ -1,0 +1,204 @@
+---
+title: "Know your customer"
+url: "https://en.wikipedia.org/wiki/Know_your_customer"
+domain: "finance"
+source_type: "wikipedia"
+last_updated: "2026-10-10"
+fetched_at: "2026-10-11T00:28:57Z"
+license: "CC BY-SA 4.0"
+license_source: "script_constant"
+sha256: "626cc95018a0316ed4e82d54bd1c706a27ddefbfe2425615f22be10d88bb8edb"
+---
+
+Know your customer or know your client (KYC) laws, regulations and guidelines in financial services require regulated businesses and professionals to verify the identity of a customer, and the suitability and risks involved with maintaining a business relationship with them. These procedures fit within the broader scope of anti-money laundering (AML) and counter terrorism financing (CTF) regulations. 
+KYC processes are also used by companies of all sizes to determine whether their proposed customers, agents, consultants, or distributors are anti-bribery compliant and are who they claim to be. Banks, insurers, export creditors, and other financial institutions are increasingly required to make sure that customers provide detailed due-diligence information. Initially, these regulations were imposed only on financial institutions, but regulations now apply in many countries to fintech, virtual assets dealers, non-financial industries, and non-profit organizations.
+
+
+## Requirements
+AML/CFT legislation strengthens the prevention of and the fight against money laundering, its predicate offences and terrorist financing. It places legally binding obligations on sectors exposed to the risk of money laundering or the financing of terrorism to monitor their customers and transactions, and to report suspicious activities to governments.
+In the European Union these sectors are described as obliged entities, whereas in the United States the term covered institutions is used.
+Obliged entities are required to identify and assess the risks of money laundering and terrorist financing to which they are exposed. This business-wide risk assessment must be kept up-to-date. To manage these risks and comply with relevant AML legislation, obliged entities must have internal policies, procedures and controls in place. This includes applying Customer Due Diligence (CDD) measures and may require Enhanced Due Diligence (EDD) checks for certain categories of customers or transactions.
+The US Financial Crimes Enforcement Network (FinCEN), a bureau of the US Department of Treasury, which is tasked with safeguarding the financial system from illicit activity, set out the core elements of CDD:
+
+Customer identification and verification,
+Beneficial ownership identification and verification,
+Understanding the nature and purpose of customer relationships to develop a customer risk profile, and
+Ongoing monitoring for reporting suspicious transactions and, on a risk-basis, maintaining and updating customer information.
+KYC encompasses a set of practices to verify business clients. These include verification of registration credentials, location, the UBOs (Ultimate Beneficial Owners) of that business client, etc. Also, the business client is screened against blacklists and grey lists to check if they are in involved in any sort of criminal activity, e.g. money laundering, terrorist financing or corruption. KYC is significant in identifying fake business entities and shell companies.
+The main categories of Know-Your-Customer requirements of CDD, along with the need for additional checks for high risk clients have been set out in the United States in the Financial Industry Regulatory Authority (FINRA) Rule 2090, which states that financial institutions must use reasonable diligence to identify and retain the identity of every customer and every person acting on behalf of those customers. In enforcing this rule, these organizations are expected to collect all information essential to knowing their customers. Information deemed necessary for enforcing know your customer requirements include the Customer Identification Program (CIP), Customer Due Diligence (CDD), and Enhanced Due Diligence (EDD). To fulfill the requirements set out by FinCEN in the 2016 CDD Rule, these checks should be supported by an on-going monitoring programme.
+
+
+### Customer Identification Program (CIP)
+An AML/CFT Customer Identification Program (CIP) is a legally mandated framework requiring financial institutions to verify the identity of any person or entity opening a new account. It is the foundation on which the broader KYC framework, to prevent money laundering and terrorist financing, is built. It ensures that regulated entities can identify and verify their customers before granting them access to the global financing system. 
+In the USA, section 326 of the USA Patriot Act requires banks and other financial institutions to have a CIP. This act requires financial institutions to, as a minimum, verify the identity of anyone looking to open an account, maintain records of this information, and verify if this person is on the list of known or suspected terrorists that financial institutions are provided by the U.S government. Financial institutions must collect four pieces of identifying information about its customers including:
+
+Name
+Date of birth
+Address
+Identification number
+The FinCEN 2004 CIP Rule provides interpretative guidance with respect to the CIP obligations set out in the USA Patriot Act. The rule mandates that financial institutions implement a written risk-based Customer Identification Program. The program must ensure that: financial institutions are able to form a reasonable belief that they know the true identity of every customer; collect minimum data as specified in the USA Patriot Act; verify the identity of the prospective customer within a reasonable time; check watchlists of suspected terrorists; and give customers adequate notice that the financial institution is confirming their identity. Financial institutions must also retain information for five years after an account is closed.
+Under its AML/CFT regulatory framework, the European Union imposes similar requirements on obligated entities. Specifically, they should obtain name, address, date of birth, nationality and ID documentation for individuals and corporate name, registered address, proof of incorporation and ultimate beneficial ownership information for legal entities.
+
+
+### Customer Due Diligence (CDD)
+Customer Due Diligence (CDD), a KYC process that is part of AML/CFT legislation, requires financial institutions to verify a clients' identity, understand the nature and purpose of a relationship, assess financial crime or terrorist financing risk, and report suspicious transactions. Financial institutions are obligated to monitor the risk level of clients throughout the lifecycle of the relationship.
+In the USA, the Bank Secrecy Act, the common name for the Currency and Foreign Transaction Reporting Act of 1970 and its amendments and other statutes, established the legal basis for the 2016 CDD rule issued by FinCEN as part of an effort to improve financial transparency and deter money laundering. The rule expanded existing CDD obligations to include beneficial ownership information and clarified the requirements to understand the nature and purpose of a business relationship, to develop a risk profile and to report suspicious transactions. It also emphasised the importance of risk-based procedures for on-going CDD monitoring of their clients by financial institutions, including up-dating customer risk profiles when significant changes occur, such as beneficial ownership or new patterns of activity. The CDD rule enhanced CDD requirements for "U.S. banks, mutual funds, brokers or dealers in securities, futures commission merchants, and introducing brokers in commodities." The CDD rule requires that financial institutions identify and verify the identity of customers associated with open accounts. The CDD rule has four core requirements:
+
+Identify and verify the identity of customers
+Identify and verify the identity of the beneficial owners of companies opening accounts
+Understand the nature and purpose of customer relationships to develop customer risk profiles
+Conduct ongoing monitoring to identify and report suspicious transactions, and on a risk basis, to maintain and update customer information
+Beneficial owner information is required for any individual who owns 25 percent or more of a legal entity and an individual who controls the legal entity.
+CDD obligations for financial institutions operating in the European Union are set out in the 2024 AML Regulation. This consolidated and expanded the requirements included in the five AML Directives, and created a single, centralised rule book.
+In the European Union, obligated entities must apply CDD measures when: establishing a business relationship; carrying out occasional transactions of at least €10,000; participating in a legal arrangement; there are suspicions money laundering; or when there are doubts about the accuracy of previously obtained information. The following CDD measures must be carried out in the European Union
+
+Identify and verify customers
+Identify and verify beneficial owners and ownership structures
+Assess and understand the purpose and intended nature of the business relationship or occasional transactions
+Verify whether the client is targeted for financial sanctions
+Assess the nature of the customers' business
+Conduct on-going monitoring of the relationship and transactions, and ensure that they are consistent with the knowledge of the customer and of the source of funds
+Determine whether the customer is a Politically Exposed Person
+If an obligated entity in the European Union is unable to apply CDD measures, then it must refrain from carrying out the transaction or establishing a business relationship. It should also terminate existing business relationships when CDD obligations cannot be met.
+
+
+### Enhanced Due Diligence (EDD)
+Enhanced Due Diligence is required when initial identity checks have been completed and high-risk factors have been identified for an individual or a business. These measures may be needed based upon factors such as the jurisdiction the customer is based in, the products they are using, or the nature of the customer. When these requirements have been met "enhanced" or additional due diligence above and beyond CDD is conducted which identifies the following information:
+
+Source of wealth and funds check
+Additional identity research
+Risk identification and assessment
+Nature of the client
+Details of company background and activities
+Director and shareholder information
+The formal concept of additional CDD obligations for certain categories of higher risk customers or transactions was established by the USA Patriot Act of 2001. This established mandatory Enhanced Due Diligence (EDD) obligations. It required US financial institutions to maintain additional rigorous screening for foreign banking accounts, offshore jurisdictions and correspondent banking relationships to combat terrorist financing. FinCEN set out the formal obligations needed to fully implement EDD in a 2007 rule. Requirements to undertake EDD checks and monitoring for higher risk business relationships, customers and transactions were included in the FATF's Forty Recommendations in 2003.
+The European Union's AML/CFT legislative framework provides an insight into the current scale of EDD obligations. These requirements were established fully by the 4th AML Directive and consolidated into a single central rulebook by the recent 2024 AML Regulation. This requires EDD to be applied in certain specific situations, such as business relationships with Politically Exposed Persons, cross-border correspondent relationships for crypto-asset service providers, or business relationships involving persons in third countries with significant strategic deficiencies in their national AML/CFT regimes. The EU regulation also identifies a series of factors (Risk Factors) that indicate to obliged entities that relationships or transactions may pose a higher risk of money laundering or terrorist financing and hence require the application of EDD obligations, processes and monitoring. Factors include the reputation, nature or behaviour of customers, complex ownership, customer domicile, presence of nominee shareholders, cash-intensive businesses, use of private banking, payments from unknown third parties, use of new technologies, or transactions linked to oil, tobacco, arms, precious metals or stones.
+
+
+### On-Going Monitoring
+One of the core elements of a CDD program, that all entities subject to AML/CFT laws must establish, is an on-going monitoring program. This is a mandatory obligation.
+Such programs enable regulated entities to monitor transactions undertaken by customers throughout the course of a business relationship, to ensure that those transactions are consistent with the regulated entity's knowledge of the customer, the customer's business activities as well as information about the origin and destination of funds, and to detect transactions that are deemed suspicious. A regulated entity is required to report transactions to appropriate regulators where it suspects or has reasonable grounds to suspect funds or activities are the proceeds of criminal activity or are related to terrorist financing or criminal activity. Business relationships subject to EDD should in addition be subject to further and more intensive on-going monitoring.
+
+
+## Scope
+Since the adoption of the US Bank Secrecy Act in 1970, the scope of AML laws has expanded significantly. Initially, it was limited: Legal obligations were imposed upon insured depository institutions to identify money laundering, recognising the value of information for tax evasion and criminal activities more generally.
+Over time, these obligations and the sectors which are required to comply with them have expanded. In the United States, covered institutions are now required to identify and report more than 200 Federal and State crimes. These include drug trafficking, financial crimes (e.g. fraud, embezzlement and market manipulation), crimes of violence (e.g. kidnapping and extortion), organised crime and racketeering (including bribery and illegal gambling), smuggling and trafficking. Since 2001 and the adoption of the USA Patriot Act, covered institutions have also been obliged to identify and report potential terrorist financing. This is described as Counter Terrorist Reporting (CTR).
+US AML/CTR laws now apply to a very wide range of financial institutions. These include traditional banking institutions, money service businesses, securities and commodities entities, casinos and card clubs, insurance companies, cryptocurrency exchanges, lenders, loan companies, telegraph companies, dealers in precious metals, stones or jewels, pawnbrokers, travel agents, real estate agents, vehicle sellers and credit card networks.
+In the European Union, similar legal obligations apply. The list of obligated entities, set out in the recent 2024 Regulation, includes:
+
+Accountants and auditors
+Credit institutions
+Crowdfunding services
+Estate agents
+Financial institutions
+Gambling services
+Investment firms
+Investment migration operators
+Notaries and lawyers
+Persons storing or trading in hig value goods
+Professional football clubs and agents
+Tax advisors
+Trusts
+
+
+## Problems
+
+
+### De-Banking
+The costs for financial institutions of complying with AML/CFT obligations are significant and have contributed to de-banking. Financial institutions close accounts or deny access to financial services to customers because of the costs and risks of complying with AML/CFT rules. Specifically, the significant costs of KYC compliance checks, the need to manage the potential money laundering or other criminal risks posed by customers, and the importance of avoiding financial and reputational penalties for failing to meet AML/CFT process obligations. For both existing and new customers, these costs of meeting AML/CFT obligations regularly outweigh the potential benefits for the financial institution.
+The intergovernmental Financial Action Task Force (FATF) identified a series of social problems which have emerged due to de-banking as a result of compliance by financial institutions with AML/CFT obligations. According to their report on the issue, there has been a growth in financial exclusion, particularly amongst the poor, deprived groups, minorities and the elderly and disabled. The FATF also found that financial institutions increasingly removed banking services from Not-for-profit Organisations (NPOs) due to concerns about the source and utilisation of funds, combined with AML/CFT obligations to manage the risk of crime and the cost of resources needed to manage these risks. The FATF pointed out that access to financial services is essential for full participation in modern societies.
+Insights into the scale of the problem of de-banking have been provided by research in the UK. It shows that in 2021-2022, more than 340,000 bank accounts were closed by financial institutions, primarily because of the costs of AML/CFT compliance compared to potential benefits. This rose to more than 450,000 accounts in 2024. Customers who face the highest risk of closure include the poor and minorities, the elderly, charities, and small businesses that make large cash deposits or engage in activities in developing economies. Data provided by the UK Parliament confirms some of the problems facing small businesses. In 2023, major banks in the UK removed banking services from more than 140,000 small and medium-sized enterprises (SMEs).
+
+
+### Political repression
+Other governments have also abused KYC requirements for political repression. For example, the governments of the United Arab Emirates, Turkey and Nicaragua took action to label political opponents as terrorists to make sure that their names were identified by compliance software. This led to the removal of banking services due to failed KYC checks.
+
+
+### Abuses of KYC
+Financial institutions remove banking services from clients who fail KYC requirements or pose other forms of AML/CFT risks, such as threats to reputation, to ensure compliance with AML/CFT legal requirements. For instance, recent EU legislation states that if a client fails KYC checks, the financial institution must cease the provision of services. This loss of financial services has a profound impact on individuals or businesses, making it difficult for them to manage their financial affairs and participate in modern society in general. The exploitation of KYC requirements to induce financial institutions to impose these consequences on disfavoured individuals or businesses has provided opportunities for abuse by e.g. politicians, criminals and activists.
+In the United States, the Obama and Biden administrations used the concept of "reputational risk" as a criterion for assessing bank stability and safety as a means to shut down politically disfavoured businesses, such as payday lenders, pawn shops, gun shops and tobacco shops. In this instance, "reputational risk" was taken to mean a view that an outside stakeholder might hold about the conduct of a financial institution in providing services to such industries. Recent regulation introduced by the Office of the Comptroller of the Currency of the US Treasury now prohibits the use of such as a test. However, as of today it remains part of the EU's AML/CFT regulatory model.
+Criminals, especially blackmailers and extortionists, are known to threaten individuals and businesses with releasing falsified information to trigger KYC failures. Disinformation websites posing as credible news platforms are used to publish such content, which has been made easier to create with the progress of AI technology.
+
+
+## Know your customer's customer
+Know your customer's customer (KYCC) is a process that identifies a customer's customer activities and nature. This includes the identification of the customer's customers and assessing the risk levels associated with their activities.
+KYCC is a derivative of the standard KYC process that arose because of the growing risk of fraud obscured by second-tier business relationships (e.g. a customer's supplier). Such relationships include correspondent banking services. The need to manage the risks posed by these relationships was highlighted by the Financial Actions Task Force (FATF) in 2016. The importance of taking appropriate steps to understand potential risks posed by second-tier business relationships was highlighted by the Danske Bank money laundering scandal. More than $200 billion in suspicious non-resident funds flowed through the Danske Bank's Estonian branch from 2007 to 2015.
+In the USA, FinCEN does not set out formal KYCC obligations, but these are mandated indirectly through the requirements of the CDD Final Rule. This obliges financial institutions to perform comprehensive due diligence, which requires, where appropriate, understanding of the source of funds and nature of customer's underlying business activities and is of particular relevance for e.g. money service businesses and payment processors. KYCC regulations are also required for correspondent banking through the application of the FinCEN 2007 EDD rule.
+KYCC is not just an issue of legal compliance, financial institutions need to know the beneficiaries of their client in order to protect their business from various risks, which can include the infiltration of illegal funds. By extending the steps of know your customer to all of your client's various connections, proper due diligence can be exercised and business reputation protected.
+
+
+## Electronic know your customer
+Electronic know your customer (eKYC) involves the use of internet or digital means of identity verification. This may involve checking information provided is valid by using systems to validate ID and proof of address documents or by checking information against government databases such as the official passport database of a country.
+In response to the digitalization of financial services, especially by neobanks and fintech platforms, the adoption of eKYC procedures has accelerated globally. eKYC systems often combine ID document verification, biometric authentication (e.g., facial recognition and liveness checks), and real-time risk monitoring to authenticate users. Some countries have implemented national guidelines or regulations around eKYC. For example, the Qatar Central Bank introduced a formal eKYC framework in 2023 aligned with its national fintech strategy, allowing digital onboarding of non-resident users with regulatory approval.
+eKYC is also being explored in conjunction with digital identity wallets and verifiable credentials as part of broader digital identity initiatives in jurisdictions like the European Union under the eIDAS framework.
+
+
+## Laws by country
+
+
+### Australia
+The Australian Transaction Reports and Analysis Centre (AUSTRAC), established in 1989, monitors financial transactions in Australia, and sets client identification requirements under the Anti-Money Laundering and Counter-Terrorism Financing Act 2006. Obligations and scope have been updated by the AML/CFT Amendment Act 2024 and new rules issued by AUSTRAC in 2025. Changes include more prescriptive CDD obligations, more emphasis on governance and oversight of AML programs, and an expansion of the scope to reach new sectors.
+
+
+### Canada
+The Financial Transactions and Reports Analysis Centre of Canada (FINTRAC), established in 2000, is Canada's financial intelligence unit. It updated its regulations in June 2016 regarding acceptable methods to determine the identity of individual clients to ensure compliance with AML and KYC regulations. A pending lawsuit is active in Canada challenging the constitutionality of the new legislation.
+
+
+### European Union
+The EU 4th AML directive came into effect in June 2016. Strengthening due-diligence, this legislation requires the beneficial owner of companies be held in a central register. The EU adopted a new regulatory model in 2024 which is based on a harmonised, single rule book that consolidates the obligations set out in previous AML Directives. A centralised Anti-Money Laundering Agency has also been established in the same year. The 6th AML Directive came into effect in 2024 as well and sets out, amongst other obligations, detailed requirements for national AML bodies that Member States must put in place.
+
+
+### India
+The Reserve Bank of India (RBI) first issued Know Your Customer (KYC) guidelines 2026 KYC social media for banks in 2002, establishing standardized procedures for customer identification and verification.
+As of March 2026, a parliamentary panel in India has recommended making Know Your Customer (KYC) verification mandatory for social media users to combat fake accounts, online fraud, and malicious content. This initiative aims to increase accountability for users on platforms like Instagram, Facebook, and YouTube
+
+
+### Italy
+The Banca d'Italia exercises regulation power for the financial industry, in 2007 set KYC requirements for financial institutions that operate on Italian territory.
+
+
+### Japan
+Enacted the Act on Identification of Customers by Financial Institutions 2003, requiring financial institutions to verify customer identity and maintain transaction records as part of the countries anti-money laundering framework.
+
+
+### Mexico
+The "Federal Law for Prevention and Identification of Operations with Resources from Illicit Origin", promulgated in 2012 with president Felipe Calderon's administration and came into force in 2013 with the president Enrique Peña Nieto administration.
+
+
+### Namibia
+Financial Intelligence Act, 2012 (Act No. 13 of 2012) published as Government Notice 299 in Gazette 5096 of 14 December 2012. It establishes customer identification, record keeping, and reporting obligations for financial institutions as part of the country's anti-money laundering and counter-terrorism financing regime. 
+
+
+### New Zealand
+Updated KYC laws were enacted in late 2009 and entered into force in 2010. KYC is mandatory for all registered banks and financial institutions (the latter has an extremely wide meaning). In 2017, the Anti-Money Laundering and Countering Financing of Terrorism Amendment Act was passed. This extended the coverage of the 2009 Act to cover more businesses and professions considered to be vulnerable to money laundering.
+
+
+### South Korea
+Act on Reporting and Use of Certain Financial Transaction Information establishes customer due-diligence, record keeping, and reporting requirements for financial institutions as part of South Korea's anti-money laundering framework.
+
+
+### United Arab Emirates
+The key guidelines overseeing KYC in the UAE are the Government Pronouncement Regulation No. (20) of 2018 On Anti Money Laundering and Battling the Supporting of Psychological warfare and Funding of Unlawful Bureau Choice No. (10) of 2019 Concerning the Carrying out Guideline of Pronouncement Regulation No.
+
+
+### United Kingdom
+The Money Laundering Regulations 2017 are the underlying rules that govern KYC in the UK. Many UK businesses use the guidance provided by the European Joint Money Laundering Steering Group along with the Financial Conduct Authority's 'Financial Crime: A guide for firms' as an aid to compliance.
+
+
+### United States
+The Executive order 14406 extends Know your customer practices to prevents financial risks due to immigration status changes.
+
+
+## See also
+Anti-money laundering
+Anti-money laundering software
+Bribery
+Certified copy
+De-banking
+Financial Action Task Force on Money Laundering
+International Business Registration Number
+Political corruption
+Politically exposed person
+
+
+## References

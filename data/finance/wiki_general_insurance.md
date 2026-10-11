@@ -1,0 +1,49 @@
+---
+title: "General insurance"
+url: "https://en.wikipedia.org/wiki/General_insurance"
+domain: "finance"
+source_type: "wikipedia"
+last_updated: "2026-10-10"
+fetched_at: "2026-10-11T00:28:59Z"
+license: "CC BY-SA 4.0"
+license_source: "script_constant"
+sha256: "2b3399142655c00e2c65383cdc8f4091e8eb525eed6bb0f24e1fb5d60dacee37"
+---
+
+General insurance or non-life insurance policy, including automobile and homeowners policies, provide payments depending on the loss from a particular financial event. General insurance is typically defined as any insurance that is not determined to be life insurance. Accident insurance is built on the principles of mixed life insurance - limiting the scope of the insurer's liability to the agreed consequences of an accident suffered by the insured. This ensures the affordability of insurance premiums and promotes the development of insurance. Enterprises face a similar risk with respect to third parties, but as a rule obtain it as general liability insurance.
+It is called property and casualty insurance in the United States and Canada and non-life insurance in Continental Europe.
+In the United Kingdom, insurance is broadly divided into three areas: personal lines, commercial lines and London market.
+The London market insures large commercial risks such as supermarkets, football players, corporation risks, and other very specific risks.  It consists of a number of insurers, reinsurers, P&I Clubs, brokers and other companies that are typically physically located in the City of London.  Lloyd's of London is a big participant in this market.  The London market also participates in personal lines and commercial lines, domestic and foreign, through reinsurance.
+Commercial lines products are usually designed for relatively small legal entities. These would include workers' compensation (employers liability), public liability, product liability, commercial fleet and other general insurance products sold in a relatively standard fashion to many organisations. There are many companies that supply comprehensive commercial insurance packages for a wide range of different industries, including shops, restaurants and hotels.
+Personal lines products are designed to be sold in large quantities. This would include autos (private car), homeowners (household), pet insurance, creditor insurance and others.
+ACORD, which is the insurance industry global standards organization, has standards for personal and commercial lines and has been working with the Australian General Insurers to develop those XML standards, standard applications for insurance, and certificates of currency.
+
+
+## Types of general insurance
+General insurance can be categorised into following:
+
+Motor Insurance: Motor Insurance can be divided into two groups, two and four wheeled vehicle insurance.
+Health insurance: Common types of health insurance includes: individual health insurance, family floater health insurance, comprehensive health insurance and critical illness insurance.
+Travel insurance: Travel insurance can be broadly grouped into: individual travel policy, family travel policy, student travel insurance, and senior citizen health insurance.
+Home insurance: Home insurance protects a house and its contents.
+Marine insurance: Marine insurance covers goods, freight, cargo, and other interests against loss or damage during transit by rail, road, sea and/or air.
+Commercial insurance: Commercial insurance encompasses solutions for all sectors of the industry arising out of business operations.
+Accident insurance: Accidents of different types are possible at any time, at any place and in case of any person or object. Persons and vehicles are more prone to accidents causing injuries and damages.
+Fire insurance : In order to get the asset, stock or machines insured against fire, a proposal form is to be filled in and submitted to the insurance company. The insurance company examines the proposal with due regards to various factors and the periodical amount of premium is fixed.
+Theft insurance
+Property insurance
+Aviation insurance
+Livestock insurance
+Crop insurance
+
+
+## Market trends
+The United States was the largest market for non-life insurance premiums written in 2005 followed by the European Union
+
+
+## See also
+Insurance
+Outstanding claims reserves
+
+
+## References
