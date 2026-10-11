@@ -14,7 +14,8 @@ from backend.config import (
     MAX_TOKEN_BUDGET,
     TOP_K_DEFAULT,
     MAX_CHUNKS_PER_FILE,
-    TAVILY_API_KEY
+    TAVILY_API_KEY,
+    WELLBEING_TAVILY_ENABLED
 )
 
 logger = logging.getLogger("intellichoice.retriever")
@@ -130,7 +131,8 @@ def retrieve_context(
                 sources.append(src_item)
 
     # Optional Live Web Search Fallback via Tavily API if score < TAVILY_TRIGGER_THRESHOLD or score < RELEVANCE_THRESHOLD
-    if (best_score < RELEVANCE_THRESHOLD or best_score < TAVILY_TRIGGER_THRESHOLD) and TAVILY_API_KEY:
+    skip_tavily = (domain == "wellbeing" and not WELLBEING_TAVILY_ENABLED)
+    if not skip_tavily and (best_score < RELEVANCE_THRESHOLD or best_score < TAVILY_TRIGGER_THRESHOLD) and TAVILY_API_KEY:
         try:
             from backend.retrieval.tavily_search import search_tavily
             logger.info(f"Local vector similarity low ({best_score:.4f}). Invoking Tavily Web Search.")

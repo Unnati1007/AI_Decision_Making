@@ -3,6 +3,7 @@
 # ============================================================
 
 import os
+import re
 import json
 import logging
 import httpx
@@ -15,9 +16,10 @@ from backend.config import (
     MAX_TOKEN_BUDGET,
     MAX_CHUNKS_PER_FILE,
     RELEVANCE_THRESHOLD,
-    TAVILY_API_KEY
+    TAVILY_API_KEY,
+    WELLBEING_HELPLINE_TEXT
 )
-from backend.services.guard import guard_pipeline, GuardResult
+from backend.services.guard import guard_pipeline, GuardResult, detect_crisis_intent
 from backend.services.domain_router import detect_domain
 from backend.retrieval.retriever import retrieve_context
 
@@ -125,6 +127,37 @@ DEFAULT_DOMAIN_MCQS = {
 
 
 # ============================================================
+# CRISIS SAFE MESSAGE GENERATOR
+# ============================================================
+def build_crisis_response(query: str, domain: str = "wellbeing") -> Dict[str, Any]:
+    """
+    Returns a kind, fixed safe message with no invented numbers/URLs or medical advice.
+    Appends WELLBEING_HELPLINE_TEXT from config only if user configured it from an official source.
+    """
+    base_msg = (
+        "It sounds like you are going through a very difficult time, but please know that you do not have to carry this alone. "
+        "Aap akele nahi hain. Agar aap pareshan hain ya khud ko nuksan pahunchane ke khayal aa rahe hain, "
+        "toh please kisi trusted family member, dost, ya doctor se turant baat karein. "
+        "Please reach out to your local emergency services or a trusted person immediately."
+    )
+    if WELLBEING_HELPLINE_TEXT:
+        full_msg = f"{base_msg}\n\nSupport resources:\n{WELLBEING_HELPLINE_TEXT}"
+    else:
+        full_msg = base_msg
+
+    return {
+        "success": True,
+        "is_crisis": True,
+        "query": query,
+        "domain": domain or "wellbeing",
+        "message": full_msg,
+        "mcqs": [],
+        "sources": [],
+        "decision": None
+    }
+
+
+# ============================================================
 # TURN 1 — MCQ Generation Pipeline
 # ============================================================
 def execute_turn_1(query: str, domain_override: Optional[str] = None) -> Dict[str, Any]:
@@ -132,6 +165,12 @@ def execute_turn_1(query: str, domain_override: Optional[str] = None) -> Dict[st
     Executes Guard Check, Domain Detection, RAG Context Retrieval,
     and Turn 1 LLM MCQ Generation.
     """
+    # Step 0: Immediate Crisis Safety Check (BEFORE Guard, Retrieval, Tavily, and LLM)
+    if detect_crisis_intent(query):
+        target_domain = domain_override or "wellbeing"
+        logger.warning(f"CRISIS CHECK TRIGGERED in Turn 1 for query: '{query}'. Intercepting flow.")
+        return build_crisis_response(query=query, domain=target_domain)
+
     # Step 1: Guard Pipeline Check
     guard_res: GuardResult = guard_pipeline(query)
     if not guard_res.passed:
@@ -241,6 +280,26 @@ def execute_turn_2(
     Reuses Turn 1 chunks/results + retrieves fresh context for combined query,
     merges, dedupes by chunk text, caps at TOP_K_DEFAULT * 2, and enforces MAX_CHUNKS_PER_FILE.
     """
+    # Step 0: Immediate Crisis Safety Check on query and any free-text MCQ answers
+    # (BEFORE Retrieval, Tavily, and LLM)
+    is_crisis = detect_crisis_intent(query)
+    if not is_crisis and mcq_answers:
+        for ans in mcq_answers:
+            if isinstance(ans, dict):
+                for val in ans.values():
+                    if isinstance(val, str) and detect_crisis_intent(val):
+                        is_crisis = True
+                        break
+            elif isinstance(ans, str) and detect_crisis_intent(ans):
+                is_crisis = True
+                break
+            if is_crisis:
+                break
+
+    if is_crisis:
+        logger.warning(f"CRISIS CHECK TRIGGERED in Turn 2 for query: '{query}'. Intercepting flow.")
+        return build_crisis_response(query=query, domain=domain)
+
     # Step 1: Build combined Turn 2 query
     ans_summary = " ".join([f"{a.get('question', a.get('id', ''))}: {a.get('selected_option', a.get('answer', ''))}" for a in mcq_answers])
     turn2_query = f"{query} {ans_summary}".strip()

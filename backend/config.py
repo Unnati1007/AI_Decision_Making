@@ -42,6 +42,8 @@ RELEVANCE_THRESHOLD = float(os.getenv("RELEVANCE_THRESHOLD", "0.20"))  # PLACEHO
 TAVILY_TRIGGER_THRESHOLD = float(os.getenv("TAVILY_TRIGGER_THRESHOLD", "0.35"))  # PLACEHOLDER, uncalibrated
 DOMAIN_ROUTER_THRESHOLD = float(os.getenv("DOMAIN_ROUTER_THRESHOLD", "0.25"))  # PLACEHOLDER, uncalibrated
 TAVILY_ALLOWED_DOMAINS: list = []  # Config list, empty by default
+WELLBEING_HELPLINE_TEXT = os.getenv("WELLBEING_HELPLINE_TEXT", "").strip()
+WELLBEING_TAVILY_ENABLED = os.getenv("WELLBEING_TAVILY_ENABLED", "false").lower() in ("true", "1", "yes")
 
 MAX_TOKEN_BUDGET = int(os.getenv("MAX_TOKEN_BUDGET", "1800"))
 TOP_K_DEFAULT = int(os.getenv("TOP_K_DEFAULT", "4"))
@@ -56,6 +58,7 @@ def log_startup_config():
     logger.info(f"  RELEVANCE_THRESHOLD      : {RELEVANCE_THRESHOLD} (PLACEHOLDER, uncalibrated, Phase 6)")
     logger.info(f"  TAVILY_TRIGGER_THRESHOLD : {TAVILY_TRIGGER_THRESHOLD} (PLACEHOLDER, uncalibrated, Phase 6)")
     logger.info(f"  TAVILY_ALLOWED_DOMAINS   : {TAVILY_ALLOWED_DOMAINS}")
+    logger.info(f"  WELLBEING_TAVILY_ENABLED : {WELLBEING_TAVILY_ENABLED}")
     logger.info(f"  DOMAIN_ROUTER_THRESHOLD  : {DOMAIN_ROUTER_THRESHOLD} (PLACEHOLDER, uncalibrated, Phase 6)")
     logger.info(f"  MAX_TOKEN_BUDGET         : {MAX_TOKEN_BUDGET}")
     logger.info(f"  TOP_K_DEFAULT            : {TOP_K_DEFAULT}")

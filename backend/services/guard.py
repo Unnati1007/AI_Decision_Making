@@ -84,6 +84,46 @@ class GuardFailReason(str, Enum):
     LLM_UNSAFE = "llm_flagged_unsafe"
     LLM_UNAVAILABLE = "llm_unavailable"
     NOT_RELEVANT = "not_relevant_to_decision_domain"
+    CRISIS_DETECTED = "crisis_self_harm_detected"
+
+# ============================================================
+# CRISIS & SELF-HARM KEYWORD PATTERNS (LAYER 0 PRE-FILTER)
+# ============================================================
+# NOTE: This keyword check is a deterministic first safety layer to protect users in acute crisis,
+# but it is not comprehensive or complete. Medical or clinical triage must not be performed with AI.
+CRISIS_KEYWORD_PATTERNS = [
+    # English self-harm / suicide patterns
+    r"\b(?:suicide|suicidal)\b",
+    r"\b(?:kill\s+myself|killing\s+myself)\b",
+    r"\b(?:hurt\s+myself|hurting\s+myself|harm\s+myself|harming\s+myself)\b",
+    r"\b(?:end\s+my\s+life|ending\s+my\s+life)\b",
+    r"\b(?:want\s+to\s+die|wanna\s+die)\b",
+    r"\b(?:don'?t\s+want\s+to\s+live|do\s+not\s+want\s+to\s+live)\b",
+    r"\b(?:end\s+it\s+all|ending\s+it\s+all)\b",
+    r"\b(?:take\s+my\s+own\s+life|taking\s+my\s+own\s+life)\b",
+    r"\b(?:hang\s+myself|overdose\s+myself|slit\s+my\s+wrists?)\b",
+
+    # Hinglish self-harm / crisis patterns with spelling variants
+    # (man/mann, jeene/jine/jeena/jina, chahta/chahti, nahi/nhi)
+    r"\b(?:jeene|jine|jeena|jina)\s+ka\s+(?:man|mann)\s+(?:nahi|nhi)\b",
+    r"\b(?:jeene|jine|jeena|jina)\s+ki\s+chahat\s+(?:nahi|nhi)\b",
+    r"\b(?:marne|mar|marr)\s+ka\s+(?:man|mann)\b",
+    r"\b(?:mar\s+jana|mar\s+jaana)\s+(?:chahta|chahti)\b",
+    r"\b(?:jaan|jan)\s+(?:dena|deni)\s+(?:chahta|chahti|hai)\b",
+    r"\b(?:khud\s+ko|khudko)\s+(?:khatam|nuksan|chot|marna)\b",
+    r"\b(?:aatmhatya|aatmahatya|atmapratya|khudkushi|khudkhusi)\b",
+    r"\b(?:ab\s+(?:nahi|nhi)\s+(?:jeena|jina)|zindagi\s+se\s+thak\s+(?:gaya|gayi))\b",
+]
+
+def detect_crisis_intent(text: str) -> bool:
+    """
+    Scans text for acute crisis / self-harm / suicide keywords.
+    Case-insensitive matching across English and Hinglish variants.
+    """
+    if not text or not isinstance(text, str):
+        return False
+    q = text.lower().strip()
+    return any(bool(re.search(pat, q, re.IGNORECASE)) for pat in CRISIS_KEYWORD_PATTERNS)
 
 # ── Response Model ─────────────────────────────────────────
 class GuardResult(BaseModel):
@@ -283,6 +323,16 @@ def guard_pipeline(query: str, selected_domain: Optional[str] = None) -> GuardRe
     # Step 2 in Data Flow: Preprocessing
     processed: ProcessedQuery = preprocess_query(query)
     clean_q = processed.normalized_query
+
+    # Step 2.5: Acute Crisis Check (Pre-filter)
+    if detect_crisis_intent(query) or detect_crisis_intent(clean_q):
+        return GuardResult(
+            passed=False,
+            reason=GuardFailReason.CRISIS_DETECTED,
+            message="Query flagged for acute crisis or self-harm keywords. Normal decision flow intercepted.",
+            layer="Layer 0: Crisis Interceptor",
+            latency_ms=int((time.time() - start) * 1000)
+        )
 
     # Step 3: Quality Check
     res_quality = check_query_quality(clean_q)
