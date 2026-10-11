@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Brain, AlertCircle, Loader2, Sparkles, ChevronRight, User, Bot, CheckCircle2, ListFilter } from "lucide-react";
+import { Send, Brain, AlertCircle, Loader2, Sparkles, ChevronRight, User, Bot, CheckCircle2, ListFilter, HeartHandshake } from "lucide-react";
 import { useApp } from "../context/AppContext";
 import { validateQuery, matchQueryToDomain, thinkingSteps, isGibberish } from "../utils/aiUtils";
 import { DOMAINS } from "../data/dummyData";
@@ -73,6 +73,19 @@ export default function ChatPage() {
       if (!res.ok) throw new Error("Turn 1 API call failed");
       const data = await res.json();
 
+      if (data.is_crisis) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 2,
+            role: "assistant",
+            type: "crisis",
+            text: data.message,
+          },
+        ]);
+        return;
+      }
+
       if (data.mcqs && data.mcqs.length > 0) {
         const flowId = Date.now();
         const responseMode = data.mode || (data.llm_called ? "llm_generated" : "template_fallback");
@@ -135,6 +148,7 @@ export default function ChatPage() {
         title: s.title || s.id,
         url: s.url || "#",
         domain: s.domain || "career",
+        source_type: s.source_type || "ai_curated",
       })),
     };
 
@@ -221,6 +235,20 @@ export default function ChatPage() {
         if (!res.ok) throw new Error("Turn 2 API call failed");
         const data = await res.json();
         setIsThinking(false);
+
+        if (data.is_crisis) {
+          setMessages((prev) => [
+            ...prev,
+            {
+              id: Date.now() + 2,
+              role: "assistant",
+              type: "crisis",
+              text: data.message,
+            },
+          ]);
+          return;
+        }
+
         if (data.decision) {
           showRecommendationFromTurn2(data, activeFlow.originalQuery);
           return;
@@ -332,6 +360,21 @@ export default function ChatPage() {
                   </div>
                 )}
 
+                {msg.type === "crisis" && (
+                  <div className="rounded-2xl p-6 bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-4 shadow-sm max-w-xl">
+                    <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+                      <HeartHandshake size={20} className="shrink-0" />
+                      <span className="text-xs font-bold uppercase tracking-wider">Support & Compassion</span>
+                    </div>
+                    <p className="text-sm font-medium leading-relaxed whitespace-pre-line text-[var(--text)]">
+                      {msg.text}
+                    </p>
+                    <div className="pt-3 border-t border-[var(--border)] text-[10px] font-medium text-[var(--text-muted)]">
+                      Disclaimer: This platform provides informational decision support only and cannot provide medical care or emergency crisis response.
+                    </div>
+                  </div>
+                )}
+
                 {msg.type === "response" && (
                   <div className="space-y-4">
                      {msg.mode === "template_fallback" && (
@@ -424,9 +467,14 @@ export default function ChatPage() {
                                     >
                                        <div className="flex items-center justify-between gap-2 mb-1">
                                           <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400 group-hover:translate-x-0.5 transition-transform truncate">{resource.title}</span>
-                                          <ChevronRight size={14} className="text-[var(--text-soft)] group-hover:text-blue-500 transition-colors" />
+                                          <ChevronRight size={14} className="text-[var(--text-soft)] group-hover:text-blue-500 transition-colors shrink-0" />
                                        </div>
-                                       <p className="text-[9px] font-medium text-[var(--text-muted)] line-clamp-1 opacity-60">Source: External Repository</p>
+                                       <div className="flex items-center justify-between gap-2">
+                                          <p className="text-[9px] font-medium text-[var(--text-muted)] line-clamp-1 opacity-60">Source: External Repository</p>
+                                          <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-500 shrink-0">
+                                            {resource.source_type === "official_gov" ? "Official" : resource.source_type === "wikipedia" ? "Wikipedia" : resource.source_type === "web_live" ? "Live web, unverified" : "AI-generated, unverified"}
+                                          </span>
+                                       </div>
                                     </a>
                                  ))}
                               </div>
@@ -533,6 +581,11 @@ export default function ChatPage() {
         <p className="mt-2 text-center text-[9px] font-bold text-[var(--text-soft)] uppercase tracking-widest opacity-60">
            AI responses can vary. Always verify high-stakes decisions.
         </p>
+        {domain?.toLowerCase() === "wellbeing" && (
+          <p className="mt-1.5 text-center text-[10px] font-medium text-emerald-700 dark:text-emerald-400">
+            Disclaimer: This platform provides informational decision support only and is not a substitute for professional medical, psychological, or crisis healthcare services.
+          </p>
+        )}
       </div>
     </div>
   );

@@ -86,3 +86,4 @@ scratch/
 scratch_*.py
 data/career/roadmaps/
 data/_staging/
+data/_manual_sources/**/*.pdf

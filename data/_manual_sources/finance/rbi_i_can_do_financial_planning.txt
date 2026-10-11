@@ -1,0 +1,7 @@
+SOURCE_URL: https://www.rbi.org.in/FinancialEducation/content/I%20Can%20Do_RBI.pdf
+URL: https://www.rbi.org.in/FinancialEducation/content/I%20Can%20Do_RBI.pdf
+OWNER: Reserve Bank of India
+TITLE: I Can Do Financial Planning
+DOWNLOADED_ON: 11 Oct 2026
+REUSE_SENTENCE: Reproduction is permitted provided an acknowledgement of the source is made.
+REUSE_PAGE_URL: https://www.rbi.org.in/FinancialEducation/content/I%20Can%20Do_RBI.pdf

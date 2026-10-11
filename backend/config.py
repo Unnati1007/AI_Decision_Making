@@ -14,7 +14,11 @@ DATA_DIR = BASE_DIR / "data"
 CONFIG_DIR = DATA_DIR / "config"
 
 env_path = BASE_DIR / ".env"
-load_dotenv(dotenv_path=env_path, override=True)
+backend_env = Path(__file__).resolve().parent / ".env"
+if backend_env.exists():
+    load_dotenv(dotenv_path=backend_env, override=True)
+if env_path.exists():
+    load_dotenv(dotenv_path=env_path, override=True)
 load_dotenv(override=True)
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
@@ -41,6 +45,9 @@ MIN_VALID_WORD_RATIO = float(os.getenv("MIN_VALID_WORD_RATIO", "0.50"))  # PLACE
 RELEVANCE_THRESHOLD = float(os.getenv("RELEVANCE_THRESHOLD", "0.20"))  # PLACEHOLDER, uncalibrated
 TAVILY_TRIGGER_THRESHOLD = float(os.getenv("TAVILY_TRIGGER_THRESHOLD", "0.35"))  # PLACEHOLDER, uncalibrated
 DOMAIN_ROUTER_THRESHOLD = float(os.getenv("DOMAIN_ROUTER_THRESHOLD", "0.25"))  # PLACEHOLDER, uncalibrated
+TAVILY_ALLOWED_DOMAINS: list = []  # Config list, empty by default
+WELLBEING_HELPLINE_TEXT = os.getenv("WELLBEING_HELPLINE_TEXT", "").strip()
+WELLBEING_TAVILY_ENABLED = os.getenv("WELLBEING_TAVILY_ENABLED", "false").lower() in ("true", "1", "yes")
 
 MAX_TOKEN_BUDGET = int(os.getenv("MAX_TOKEN_BUDGET", "1800"))
 TOP_K_DEFAULT = int(os.getenv("TOP_K_DEFAULT", "4"))
@@ -54,6 +61,8 @@ def log_startup_config():
     logger.info(f"  MIN_VALID_WORD_RATIO     : {MIN_VALID_WORD_RATIO} (PLACEHOLDER, uncalibrated, Phase 6)")
     logger.info(f"  RELEVANCE_THRESHOLD      : {RELEVANCE_THRESHOLD} (PLACEHOLDER, uncalibrated, Phase 6)")
     logger.info(f"  TAVILY_TRIGGER_THRESHOLD : {TAVILY_TRIGGER_THRESHOLD} (PLACEHOLDER, uncalibrated, Phase 6)")
+    logger.info(f"  TAVILY_ALLOWED_DOMAINS   : {TAVILY_ALLOWED_DOMAINS}")
+    logger.info(f"  WELLBEING_TAVILY_ENABLED : {WELLBEING_TAVILY_ENABLED}")
     logger.info(f"  DOMAIN_ROUTER_THRESHOLD  : {DOMAIN_ROUTER_THRESHOLD} (PLACEHOLDER, uncalibrated, Phase 6)")
     logger.info(f"  MAX_TOKEN_BUDGET         : {MAX_TOKEN_BUDGET}")
     logger.info(f"  TOP_K_DEFAULT            : {TOP_K_DEFAULT}")

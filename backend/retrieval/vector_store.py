@@ -114,8 +114,8 @@ class FAISSVectorStore:
         # L2 Normalize Query Vector for Cosine Similarity
         faiss.normalize_L2(query_vector)
 
-        # Over-fetch to allow post-filtering if domain is specified
-        fetch_k = min(self.index.ntotal, k * 5 if domain_filter else k)
+        # When a domain filter is set, search the whole index (k=ntotal) then filter by domain, then take top-k
+        fetch_k = self.index.ntotal if domain_filter else min(self.index.ntotal, k)
         similarities, indices = self.index.search(query_vector, fetch_k)
 
         results = []

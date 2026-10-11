@@ -14,7 +14,8 @@ from backend.config import (
     MAX_TOKEN_BUDGET,
     TOP_K_DEFAULT,
     MAX_CHUNKS_PER_FILE,
-    TAVILY_API_KEY
+    TAVILY_API_KEY,
+    WELLBEING_TAVILY_ENABLED
 )
 
 logger = logging.getLogger("intellichoice.retriever")
@@ -67,6 +68,9 @@ def retrieve_context(
     raw_results = store.similarity_search_with_score(query_vec, k=overfetch_k, domain_filter=domain)
 
     if not raw_results and domain:
+        if domain == "wellbeing":
+            logger.info("No results for domain 'wellbeing'. Not falling back to domain-agnostic search.")
+            return "", [], []
         logger.info(f"No results for domain '{domain}'. Retrying domain-agnostic search.")
         raw_results = store.similarity_search_with_score(query_vec, k=overfetch_k, domain_filter=None)
 
@@ -120,7 +124,8 @@ def retrieve_context(
                     "id": f"Source-{len(sources)+1}",
                     "title": title,
                     "domain": doc_domain,
-                    "similarity_score": round(score, 4)
+                    "similarity_score": round(score, 4),
+                    "source_type": meta.get("source_type", "ai_curated")
                 }
                 # Rule B4: Include url ONLY if non-empty; never generate a URL
                 if url:
@@ -129,7 +134,8 @@ def retrieve_context(
                 sources.append(src_item)
 
     # Optional Live Web Search Fallback via Tavily API if score < TAVILY_TRIGGER_THRESHOLD or score < RELEVANCE_THRESHOLD
-    if (best_score < RELEVANCE_THRESHOLD or best_score < TAVILY_TRIGGER_THRESHOLD) and TAVILY_API_KEY:
+    skip_tavily = (domain == "wellbeing" and not WELLBEING_TAVILY_ENABLED)
+    if not skip_tavily and (best_score < RELEVANCE_THRESHOLD or best_score < TAVILY_TRIGGER_THRESHOLD) and TAVILY_API_KEY:
         try:
             from backend.retrieval.tavily_search import search_tavily
             logger.info(f"Local vector similarity low ({best_score:.4f}). Invoking Tavily Web Search.")
@@ -140,7 +146,7 @@ def retrieve_context(
                 w_url = w_res.get("url", "")
                 
                 header = f"[Live Web Source {w_idx}: {w_title}]"
-                formatted_chunk = f"{header}\n{w_content}\n"
+                formatted_chunk = f"{header}\n<web_result>\n{w_content}\n</web_result>\n"
                 
                 if current_char_count + len(formatted_chunk) <= max_char_limit:
                     context_chunks.append(formatted_chunk)
@@ -150,7 +156,8 @@ def retrieve_context(
                         "title": w_title,
                         "source": "Tavily Live Web Search",
                         "domain": domain or "general",
-                        "similarity_score": 0.0
+                        "similarity_score": 0.0,
+                        "source_type": "web_live"
                     }
                     if w_url:
                         src_item["url"] = w_url
