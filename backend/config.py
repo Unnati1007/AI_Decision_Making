@@ -14,7 +14,11 @@ DATA_DIR = BASE_DIR / "data"
 CONFIG_DIR = DATA_DIR / "config"
 
 env_path = BASE_DIR / ".env"
-load_dotenv(dotenv_path=env_path, override=True)
+backend_env = Path(__file__).resolve().parent / ".env"
+if backend_env.exists():
+    load_dotenv(dotenv_path=backend_env, override=True)
+if env_path.exists():
+    load_dotenv(dotenv_path=env_path, override=True)
 load_dotenv(override=True)
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")

@@ -140,8 +140,9 @@ def build_crisis_response(query: str, domain: str = "wellbeing") -> Dict[str, An
         "toh please kisi trusted family member, dost, ya doctor se turant baat karein. "
         "Please reach out to your local emergency services or a trusted person immediately."
     )
-    if WELLBEING_HELPLINE_TEXT:
-        full_msg = f"{base_msg}\n\nSupport resources:\n{WELLBEING_HELPLINE_TEXT}"
+    helpline = WELLBEING_HELPLINE_TEXT or os.getenv("WELLBEING_HELPLINE_TEXT", "").strip()
+    if helpline:
+        full_msg = f"{base_msg}\n\nSupport resources:\n{helpline}"
     else:
         full_msg = base_msg
 
