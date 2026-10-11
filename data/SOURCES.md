@@ -1,7 +1,7 @@
 # Knowledge Base Sources Inventory
 
-**Total Active Files**: 222  
-**Total Embedded Chunks (Vectors)**: 5,445  
+**Total Active Files**: 223  
+**Total Embedded Chunks (Vectors)**: 5,504  
 
 ## Domain x Source Type Summary
 
@@ -15,6 +15,7 @@
 | legal | ai_curated | 10 | 10 |
 | legal | wikipedia | 15 | 233 |
 | wellbeing | ai_curated | 10 | 10 |
+| wellbeing | official_gov | 1 | 59 |
 | wellbeing | wikipedia | 7 | 219 |
 
 ## Domain Totals
@@ -24,11 +25,12 @@
 | career | 76 | 1,576 |
 | finance | 104 | 3,397 |
 | legal | 25 | 243 |
-| wellbeing | 17 | 229 |
+| wellbeing | 18 | 288 |
 
 ## Acknowledgements & Source Attributions
 
 Source: Reserve Bank of India, I Can Do, 2010 (official_gov, 2010 publication, may be outdated)
+Source: WHO, 2020, CC BY-NC-SA 3.0 IGO (official_gov)
 
 ## Active File Details
 
@@ -246,6 +248,7 @@ Source: Reserve Bank of India, I Can Do, 2010 (official_gov, 2010 publication, m
 | `wellbeing/diet_intermittent_fasting.md` | wellbeing | ai_curated | Diet Intermittent Fasting | 1 | N/A |
 | `wellbeing/emotional_resilience.md` | wellbeing | ai_curated | Emotional Resilience | 1 | N/A |
 | `wellbeing/habit_building_consistency.md` | wellbeing | ai_curated | Habit Building Consistency | 1 | N/A |
+| `wellbeing/manual_who_physical_activity_at_a_glance.md` | wellbeing | official_gov | Who Physical Activity At A Glance | 59 | https://www.who.int/publications/i/item/9789240014886 |
 | `wellbeing/nutrition_macronutrients.md` | wellbeing | ai_curated | Nutrition Macronutrients | 1 | N/A |
 | `wellbeing/sleep_hygiene_circadian.md` | wellbeing | ai_curated | Sleep Hygiene Circadian | 1 | N/A |
 | `wellbeing/wiki_emotional_intelligence.md` | wellbeing | wikipedia | Emotional intelligence | 47 | https://en.wikipedia.org/wiki/Emotional_intelligence |
