@@ -1,0 +1,7 @@
+SOURCE_URL: https://openstax.org/details/books/principles-finance-2e
+URL: https://openstax.org/details/books/principles-finance-2e
+OWNER: OpenStax, Rice University
+TITLE: Principles of Finance 2e (Selected Chapters: 3, 7, 8, 10, 11, 15)
+DOWNLOADED_ON: 2026-10-12
+REUSE_SENTENCE: ©2026 Rice University. Textbook content produced by OpenStax is licensed under a Creative Commons Attribution Non-Commercial ShareAlike 4.0 International License (CC BY-NC-SA 4.0).
+REUSE_PAGE_URL: https://openstax.org/details/books/principles-finance-2e
