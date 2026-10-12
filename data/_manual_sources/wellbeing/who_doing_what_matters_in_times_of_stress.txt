@@ -1,0 +1,7 @@
+SOURCE_URL: https://www.who.int/publications/i/item/9789240003927
+URL: https://iris.who.int/server/api/core/bitstreams/65bb7c04-5180-4773-a0d8-0d5be2cc35a0/content
+OWNER: World Health Organization
+TITLE: Doing What Matters in Times of Stress
+DOWNLOADED_ON: 2026-10-11
+REUSE_SENTENCE: Some rights reserved. This work is available under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 IGO licence (CC BY-NC-SA 3.0 IGO; https://creativecommons.org/licenses/by-nc-sa/3.0/igo).
+REUSE_PAGE_URL: https://www.who.int/publications/i/item/9789240003927
