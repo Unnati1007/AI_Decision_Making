@@ -1,11 +1,11 @@
 # IntelliChoice Knowledge Base Sources
 
-Total Active Files: 280
-Total Vector Chunks: 7931
+Total Active Files: 314
+Total Vector Chunks: 9899
 
 ## Active Files by Domain
 
-### Domain: career (86 files)
+### Domain: career (92 files)
 - `career/career_switch.md`
 - `career/certification_roi_decision.md`
 - `career/counter_offer_handling.md`
@@ -24,6 +24,7 @@ Total Vector Chunks: 7931
 - `career/labor_laws_and_statutory_benefits_india.md`
 - `career/layoff_first_30_days_plan.md`
 - `career/layoffs_career_gaps.md`
+- `career/manual_openstax_principles_of_management_selected.md`
 - `career/mba_vs_job.md`
 - `career/ms_abroad_vs_mtech.md`
 - `career/non_tech_to_tech_transition.md`
@@ -88,12 +89,17 @@ Total Vector Chunks: 7931
 - `career/wiki_full/wiki_cover_letter.md`
 - `career/wiki_full/wiki_entrepreneurship.md`
 - `career/wiki_full/wiki_leadership.md`
+- `career/wiki_full/wiki_lifelong_learning.md`
+- `career/wiki_full/wiki_ministry_of_skill_development_and_entrepreneurship.md`
+- `career/wiki_full/wiki_national_skill_development_corporation.md`
 - `career/wiki_full/wiki_professional_development.md`
+- `career/wiki_full/wiki_skill_india.md`
 - `career/wiki_full/wiki_teamwork.md`
+- `career/wiki_full/wiki_union_public_service_commission.md`
 - `career/wiki_full/wiki_work_ethic.md`
 - `career/wiki_full/work_life_balance.md`
 
-### Domain: finance (104 files)
+### Domain: finance (123 files)
 - `finance/asset_allocation_investments.md`
 - `finance/credit_score_loans.md`
 - `finance/crypto_alternative_assets.md`
@@ -105,37 +111,52 @@ Total Vector Chunks: 7931
 - `finance/retirement_nps_ppf.md`
 - `finance/stock_market_basics.md`
 - `finance/tax_saving_strategies.md`
+- `finance/wiki_amortizing_loan.md`
 - `finance/wiki_annuity.md`
 - `finance/wiki_asset_allocation.md`
 - `finance/wiki_atal_pension_yojana.md`
 - `finance/wiki_ayushman_bharat_yojana.md`
+- `finance/wiki_bank_account.md`
 - `finance/wiki_banking_in_india.md`
 - `finance/wiki_behavioral_economics.md`
 - `finance/wiki_bombay_stock_exchange.md`
 - `finance/wiki_bond_finance.md`
 - `finance/wiki_bse_sensex.md`
+- `finance/wiki_budget.md`
 - `finance/wiki_capital_gains_tax.md`
 - `finance/wiki_certificate_of_deposit.md`
 - `finance/wiki_commercial_paper.md`
 - `finance/wiki_compound_interest.md`
+- `finance/wiki_consumer_debt.md`
+- `finance/wiki_credit.md`
 - `finance/wiki_credit_card.md`
+- `finance/wiki_credit_counseling.md`
+- `finance/wiki_credit_history.md`
 - `finance/wiki_credit_score.md`
 - `finance/wiki_cryptocurrency.md`
 - `finance/wiki_dearness_allowance.md`
 - `finance/wiki_debt.md`
+- `finance/wiki_debt_consolidation.md`
+- `finance/wiki_deposit_account.md`
 - `finance/wiki_derivative_finance.md`
+- `finance/wiki_disposable_income.md`
 - `finance/wiki_diversification_finance.md`
 - `finance/wiki_dividend.md`
+- `finance/wiki_dollarcost_averaging.md`
+- `finance/wiki_down_payment.md`
 - `finance/wiki_employees_provident_fund_organisation.md`
 - `finance/wiki_employees_state_insurance.md`
 - `finance/wiki_endowment_policy.md`
 - `finance/wiki_equated_monthly_installment.md`
+- `finance/wiki_estate_planning.md`
 - `finance/wiki_exchange_traded_fund.md`
 - `finance/wiki_financial_literacy.md`
 - `finance/wiki_financial_plan.md`
+- `finance/wiki_financial_technology_in_india.md`
 - `finance/wiki_fixed_deposit.md`
 - `finance/wiki_fixed_income.md`
 - `finance/wiki_foreign_exchange_reserves_of_india.md`
+- `finance/wiki_fraud.md`
 - `finance/wiki_futures_contract.md`
 - `finance/wiki_general_insurance.md`
 - `finance/wiki_gold_as_an_investment.md`
@@ -154,6 +175,7 @@ Total Vector Chunks: 7931
 - `finance/wiki_interest_economics.md`
 - `finance/wiki_know_your_customer.md`
 - `finance/wiki_life_insurance.md`
+- `finance/wiki_loan.md`
 - `finance/wiki_market_capitalization.md`
 - `finance/wiki_microfinance.md`
 - `finance/wiki_mortgage.md`
@@ -168,12 +190,14 @@ Total Vector Chunks: 7931
 - `finance/wiki_permanent_account_number.md`
 - `finance/wiki_personal_budget.md`
 - `finance/wiki_personal_finance.md`
+- `finance/wiki_phishing.md`
 - `finance/wiki_pradhan_mantri_jan_dhan_yojana.md`
 - `finance/wiki_pradhan_mantri_jeevan_jyoti_bima_yojana.md`
 - `finance/wiki_pradhan_mantri_suraksha_bima_yojana.md`
 - `finance/wiki_present_value.md`
 - `finance/wiki_public_provident_fund_india.md`
 - `finance/wiki_public_sector_banks_in_india.md`
+- `finance/wiki_rashtriya_swasthya_bima_yojana.md`
 - `finance/wiki_real_estate_investment_trust.md`
 - `finance/wiki_recurring_deposit.md`
 - `finance/wiki_repurchase_agreement.md`
@@ -198,8 +222,9 @@ Total Vector Chunks: 7931
 - `finance/wiki_unsecured_debt.md`
 - `finance/wiki_value_added_tax.md`
 - `finance/wiki_vehicle_insurance.md`
+- `finance/wiki_voice_phishing.md`
 
-### Domain: legal (60 files)
+### Domain: legal (63 files)
 - `legal/consumer_rights_court.md`
 - `legal/contract_review_guide.md`
 - `legal/cyber_crime_data_privacy.md`
@@ -211,6 +236,7 @@ Total Vector Chunks: 7931
 - `legal/tenant_landlord_rights.md`
 - `legal/wiki_alimony.md`
 - `legal/wiki_arbitration_and_conciliation_act_1996.md`
+- `legal/wiki_bail.md`
 - `legal/wiki_bar_council_of_india.md`
 - `legal/wiki_bharatiya_nagarik_suraksha_sanhita.md`
 - `legal/wiki_bharatiya_nyaya_sanhita_2023.md`
@@ -247,11 +273,13 @@ Total Vector Chunks: 7931
 - `legal/wiki_legal_services_authorities_act_1987.md`
 - `legal/wiki_mohd_ahmed_khan_v_shah_bano_begum.md`
 - `legal/wiki_muslim_personal_law.md`
+- `legal/wiki_muslim_women_protection_of_rights_on_divorce_act_1986.md`
 - `legal/wiki_negotiable_instruments_act_1881.md`
 - `legal/wiki_non_disclosure_agreement.md`
 - `legal/wiki_payment_of_gratuity_act_1972.md`
 - `legal/wiki_protection_of_women_from_domestic_violence_act_2005.md`
 - `legal/wiki_real_estate_regulation_and_development_act_2016.md`
+- `legal/wiki_renting.md`
 - `legal/wiki_right_to_information_act_2005.md`
 - `legal/wiki_sexual_harassment.md`
 - `legal/wiki_sexual_harassment_of_women_at_workplace_prevention_prohibition_and_redressal_act_2013.md`
@@ -261,7 +289,7 @@ Total Vector Chunks: 7931
 - `legal/wiki_violence_against_women_in_india.md`
 - `legal/wills_inheritance_property.md`
 
-### Domain: wellbeing (30 files)
+### Domain: wellbeing (36 files)
 - `wellbeing/anxiety_mental_wellness.md`
 - `wellbeing/burnout_stress_management.md`
 - `wellbeing/cardio_strength_training.md`
@@ -270,17 +298,23 @@ Total Vector Chunks: 7931
 - `wellbeing/emotional_resilience.md`
 - `wellbeing/habit_building_consistency.md`
 - `wellbeing/manual_openstax_psychology_2e_selected.md`
+- `wellbeing/manual_who_doing_what_matters_in_times_of_stress.md`
 - `wellbeing/manual_who_physical_activity_at_a_glance.md`
 - `wellbeing/nutrition_macronutrients.md`
 - `wellbeing/sleep_hygiene_circadian.md`
 - `wellbeing/wiki_circadian_rhythm.md`
+- `wellbeing/wiki_conflict_process.md`
+- `wellbeing/wiki_digital_detox.md`
 - `wellbeing/wiki_emotional_intelligence.md`
 - `wellbeing/wiki_ergonomics.md`
 - `wellbeing/wiki_exercise.md`
+- `wellbeing/wiki_family_stress_model.md`
 - `wellbeing/wiki_goal_setting.md`
 - `wellbeing/wiki_gratitude.md`
 - `wellbeing/wiki_habit.md`
 - `wellbeing/wiki_healthy_diet.md`
+- `wellbeing/wiki_interpersonal_communication.md`
+- `wellbeing/wiki_intimate_relationship.md`
 - `wellbeing/wiki_mindfulness.md`
 - `wellbeing/wiki_motivation.md`
 - `wellbeing/wiki_procrastination.md`
@@ -292,3 +326,11 @@ Total Vector Chunks: 7931
 - `wellbeing/wiki_worklife_balance.md`
 - `wellbeing/wiki_yoga.md`
 - `wellbeing/work_life_balance.md`
+
+## Acknowledgements & Source Attributions
+
+Source: OpenStax, Rice University, Openstax Psychology 2E Selected, ©2026 Rice University. Textbook content produced by OpenStax is licensed under a Creative Commons Attribution Non-Commercial ShareAlike 4.0 International License (CC BY-NC-SA 4.0). (open_textbook)
+Source: OpenStax, Rice University, Principles of Management (Selected Chapters: 1, 2, 3, 5, 6, 7, 8, 10, 11, 13), ©2026 Rice University. Textbook content produced by OpenStax is licensed under a Creative Commons Attribution Non-Commercial ShareAlike 4.0 International License (CC BY-NC-SA 4.0). (open_textbook)
+Source: Reserve Bank of India, Rbi I Can Do Financial Planning, Reproduction is permitted provided an acknowledgement of the source is made. (official_gov)
+Source: World Health Organization, Doing What Matters in Times of Stress, Some rights reserved. This work is available under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 IGO licence (CC BY-NC-SA 3.0 IGO; https://creativecommons.org/licenses/by-nc-sa/3.0/igo). (official_gov)
+Source: World Health Organization, Who Physical Activity At A Glance, Some rights reserved. This work is available under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 IGO licence (CC BY-NC-SA 3.0 IGO; https://creativecommons.org/licenses/by-nc-sa/3.0/igo). (official_gov)
