@@ -478,34 +478,34 @@ def execute_turn_2(
             "warning": "Low relevance score in Knowledge Base. LLM call skipped."
         }
 
-    # Ensure Reddit community discussions are present for non-wellbeing domains (live mode)
-    if domain != "wellbeing" and not any(s.get("source_type") == "reddit" for s in sources) and not os.environ.get("PYTEST_CURRENT_TEST"):
+    # Ensure Community discussions (Reddit & Quora) are present for non-wellbeing domains (live mode)
+    if domain != "wellbeing" and not any(s.get("source_type") in ("reddit", "quora") for s in sources) and not os.environ.get("PYTEST_CURRENT_TEST"):
         try:
-            from backend.retrieval.tavily_search import search_reddit
-            reddit_threads = search_reddit(query, domain=domain, max_results=2)
-            for r_item in reddit_threads:
-                r_url = r_item.get("url", "").strip()
-                r_title = r_item.get("title", "Reddit Discussion")
-                if r_url and (r_title, r_url) not in seen_sources:
-                    seen_sources.add((r_title, r_url))
+            from backend.retrieval.tavily_search import search_community_discussions
+            comm_items = search_community_discussions(query, domain=domain, max_results=3)
+            for c_item in comm_items:
+                c_url = c_item.get("url", "").strip()
+                c_title = c_item.get("title", "Community Discussion")
+                if c_url and (c_title, c_url) not in seen_sources:
+                    seen_sources.add((c_title, c_url))
                     sources.append({
-                        "id": f"RedditSource-{len(sources)+1}",
-                        "title": r_title,
-                        "url": r_url,
-                        "source": r_item.get("source", "Reddit"),
+                        "id": f"CommunitySource-{len(sources)+1}",
+                        "title": c_title,
+                        "url": c_url,
+                        "source": c_item.get("source", "Community Q&A"),
                         "domain": domain,
                         "similarity_score": 0.88,
-                        "source_type": "reddit",
+                        "source_type": c_item.get("source_type", "community"),
                         "source_file": ""
                     })
         except Exception as e:
-            logger.warning(f"Turn 2 Reddit fetch error: {e}")
+            logger.warning(f"Turn 2 Community fetch error: {e}")
 
-    # Prioritize source order: 1. Reddit, 2. AI/Web resources, 3. Wikipedia, 4. Docs/Textbooks
+    # Prioritize source order: 1. Reddit & Quora, 2. AI/Web resources, 3. Wikipedia, 4. Docs/Textbooks
     def _source_priority(s):
         st = s.get("source_type", "")
         url = (s.get("url") or "").lower()
-        if st == "reddit" or "reddit.com" in url:
+        if st in ("reddit", "quora") or "reddit.com" in url or "quora.com" in url:
             return 1
         if st in ("ai_curated", "web_live", "official_gov"):
             return 2

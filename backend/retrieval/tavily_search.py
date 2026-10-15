@@ -148,6 +148,53 @@ def search_reddit(query: str, domain: str = "", max_results: int = 2) -> List[Di
         logger.error(f"Error calling Reddit Search: {e}")
         return []
 
+def search_community_discussions(query: str, domain: str = "", max_results: int = 3) -> List[Dict[str, Any]]:
+    """
+    Searches top community Q&A and discussion platforms: Reddit and Quora.
+    Returns real discussion links, post titles, and community answers.
+    """
+    if not TAVILY_API_KEY:
+        return []
+
+    community_results: List[Dict[str, Any]] = []
+
+    # 1. Fetch Reddit Discussions (1-2 threads)
+    try:
+        reddit_threads = search_reddit(query, domain=domain, max_results=2)
+        community_results.extend(reddit_threads)
+    except Exception as e:
+        logger.warning(f"Reddit fetch error in community search: {e}")
+
+    # 2. Fetch Quora Discussions (1 thread)
+    try:
+        quora_query = f"{query} site:quora.com"
+        payload = {
+            "api_key": TAVILY_API_KEY,
+            "query": quora_query,
+            "search_depth": "basic",
+            "include_answer": False,
+            "include_domains": ["quora.com"],
+            "max_results": 1
+        }
+        resp = requests.post(TAVILY_API_URL, json=payload, timeout=6)
+        if resp.status_code == 200:
+            for item in resp.json().get("results", []):
+                q_url = item.get("url", "")
+                if "quora.com" in q_url:
+                    community_results.append({
+                        "title": item.get("title", "Quora Community Discussion"),
+                        "url": q_url,
+                        "content": sanitize_tavily_text(item.get("content", ""), max_chars=800),
+                        "source": "Quora Q&A",
+                        "source_type": "quora",
+                        "community_name": "Quora"
+                    })
+    except Exception as e:
+        logger.warning(f"Quora fetch error: {e}")
+
+    return community_results[:max_results]
+
+
 if __name__ == "__main__":
     # Test execution
     test_res = search_tavily("latest AI developer hiring trends 2026")

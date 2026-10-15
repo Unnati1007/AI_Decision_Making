@@ -174,6 +174,12 @@ export default function ChatPage() {
       return;
     }
 
+    if (resource.url && resource.url.includes("quora.com") && !resource.source_file) {
+      setSourceContent(`### ❓ Quora Community Q&A\n\n**Topic / Question:** ${resource.title}\n\n**Direct Link:** [${resource.url}](${resource.url})\n\nThis is an authentic Q&A thread from the Quora community where practitioners, domain specialists, and real users share perspectives, detailed answers, and experiential trade-offs.\n\nClick the button above to view the full discussion thread directly on Quora.`);
+      setSourceLoading(false);
+      return;
+    }
+
     try {
       const params = new URLSearchParams();
       if (resource.source_file) params.append("path", resource.source_file);
@@ -255,11 +261,12 @@ export default function ChatPage() {
         url: s.url && s.url !== "#" ? s.url : "",
         source_file: s.source_file || "",
         domain: s.domain || domain || "career",
-        source_type: s.source_type || (s.url && s.url.includes("reddit.com") ? "reddit" : "ai_curated"),
+        source_type: s.source_type || (s.url && s.url.includes("reddit.com") ? "reddit" : (s.url && s.url.includes("quora.com") ? "quora" : "ai_curated")),
       })).sort((a, b) => {
         const getPriority = (item) => {
           const isReddit = item.source_type === "reddit" || (item.url && item.url.includes("reddit.com"));
-          if (isReddit) return 1;
+          const isQuora = item.source_type === "quora" || (item.url && item.url.includes("quora.com"));
+          if (isReddit || isQuora) return 1;
           if (item.source_type === "ai_curated" || item.source_type === "web_live" || item.source_type === "official_gov") return 2;
           if (item.source_type === "wikipedia" || (item.url && item.url.includes("wikipedia.org"))) return 3;
           return 4; // Docs, Decision Guides, Textbooks
@@ -650,6 +657,7 @@ export default function ChatPage() {
                                   {msg.resources.map((resource, i) => {
                                      const hasExternalUrl = Boolean(resource.url && resource.url.startsWith("http"));
                                      const isReddit = resource.source_type === "reddit" || Boolean(resource.url && resource.url.includes("reddit.com"));
+                                     const isQuora = resource.source_type === "quora" || Boolean(resource.url && resource.url.includes("quora.com"));
                                      return (
                                        <div 
                                          key={i} 
@@ -658,6 +666,8 @@ export default function ChatPage() {
                                            "group flex flex-col justify-between p-3.5 rounded-xl border transition-all duration-200 shadow-xs cursor-pointer",
                                            isReddit 
                                              ? "bg-orange-50/40 dark:bg-orange-950/10 border-orange-200/50 dark:border-orange-900/30 hover:border-orange-500/50 hover:bg-orange-50/70"
+                                             : isQuora
+                                             ? "bg-red-50/40 dark:bg-red-950/10 border-red-200/50 dark:border-red-900/30 hover:border-red-600/50 hover:bg-red-50/70"
                                              : "bg-[var(--surface-2)] border-[var(--border)] hover:border-blue-500/40 hover:bg-[var(--surface)]"
                                          )}
                                        >
@@ -665,7 +675,11 @@ export default function ChatPage() {
                                              <div className="flex items-center justify-between gap-2 mb-1">
                                                 <span className={cn(
                                                   "text-xs font-bold line-clamp-1 group-hover:underline",
-                                                  isReddit ? "text-orange-600 dark:text-orange-400" : "text-blue-600 dark:text-blue-400"
+                                                  isReddit 
+                                                    ? "text-orange-600 dark:text-orange-400" 
+                                                    : isQuora
+                                                    ? "text-red-600 dark:text-red-400"
+                                                    : "text-blue-600 dark:text-blue-400"
                                                 )}>
                                                   {resource.title}
                                                 </span>
@@ -675,11 +689,13 @@ export default function ChatPage() {
                                                      target="_blank"
                                                      rel="noopener noreferrer"
                                                      onClick={(e) => e.stopPropagation()}
-                                                     title={isReddit ? "Open Reddit discussion thread" : "Open external website in new tab"}
+                                                     title={isReddit ? "Open Reddit discussion thread" : isQuora ? "Open Quora Q&A discussion" : "Open external website in new tab"}
                                                      className={cn(
                                                        "p-1 rounded-md transition-colors",
                                                        isReddit
                                                          ? "text-orange-500 hover:text-orange-600 hover:bg-orange-100/50 dark:hover:bg-orange-900/40"
+                                                         : isQuora
+                                                         ? "text-red-500 hover:text-red-600 hover:bg-red-100/50 dark:hover:bg-red-900/40"
                                                          : "text-[var(--text-soft)] hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30"
                                                      )}
                                                    >
@@ -692,6 +708,8 @@ export default function ChatPage() {
                                              <p className="text-[10px] text-[var(--text-muted)] line-clamp-1">
                                                 {isReddit 
                                                   ? "Reddit Community Discussion • Click to view" 
+                                                  : isQuora
+                                                  ? "Quora Community Q&A • Click to view"
                                                   : hasExternalUrl 
                                                   ? "Official Web Resource" 
                                                   : "Internal Decision Guide • Click to read"}
@@ -705,10 +723,14 @@ export default function ChatPage() {
                                                "text-[9px] font-semibold px-2 py-0.5 rounded-md shrink-0",
                                                isReddit
                                                  ? "bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 font-bold"
+                                                 : isQuora
+                                                 ? "bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20 font-bold"
                                                  : "bg-blue-500/10 text-blue-600 dark:text-blue-400"
                                              )}>
                                                 {isReddit 
                                                   ? "Reddit Discussion" 
+                                                  : isQuora
+                                                  ? "Quora Q&A"
                                                   : resource.source_type === "open_textbook" 
                                                   ? "Open textbook (NC-SA)" 
                                                   : resource.source_type === "official_gov" 
@@ -933,15 +955,19 @@ export default function ChatPage() {
                 "px-5 py-2.5 border-b flex items-center justify-between gap-3",
                 selectedSource.url.includes("reddit.com")
                   ? "bg-orange-50/90 dark:bg-orange-950/20 border-orange-200/50 dark:border-orange-800/30"
+                  : selectedSource.url.includes("quora.com")
+                  ? "bg-red-50/90 dark:bg-red-950/20 border-red-200/50 dark:border-red-800/30"
                   : "bg-blue-50/80 dark:bg-blue-500/10 border-blue-200/50 dark:border-blue-500/20"
               )}>
                 <span className={cn(
                   "text-xs font-medium truncate",
                   selectedSource.url.includes("reddit.com")
                     ? "text-orange-800 dark:text-orange-300"
+                    : selectedSource.url.includes("quora.com")
+                    ? "text-red-800 dark:text-red-300"
                     : "text-blue-700 dark:text-blue-300"
                 )}>
-                  {selectedSource.url.includes("reddit.com") ? "Reddit Thread:" : "External URL:"} {selectedSource.url}
+                  {selectedSource.url.includes("reddit.com") ? "Reddit Thread:" : selectedSource.url.includes("quora.com") ? "Quora Thread:" : "External URL:"} {selectedSource.url}
                 </span>
                 <a
                   href={selectedSource.url}
@@ -951,10 +977,18 @@ export default function ChatPage() {
                     "inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 text-white rounded-lg transition-colors shrink-0",
                     selectedSource.url.includes("reddit.com")
                       ? "bg-orange-600 hover:bg-orange-700"
+                      : selectedSource.url.includes("quora.com")
+                      ? "bg-red-600 hover:bg-red-700"
                       : "bg-blue-600 hover:bg-blue-700"
                   )}
                 >
-                  <span>{selectedSource.url.includes("reddit.com") ? "Open on Reddit" : "Visit Website"}</span>
+                  <span>
+                    {selectedSource.url.includes("reddit.com") 
+                      ? "Open on Reddit" 
+                      : selectedSource.url.includes("quora.com") 
+                      ? "Open on Quora" 
+                      : "Visit Website"}
+                  </span>
                   <ExternalLink size={12} />
                 </a>
               </div>
