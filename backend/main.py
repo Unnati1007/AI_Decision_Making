@@ -1,9 +1,17 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from backend.routes.query_route import router as query_router
 from backend.routes.admin_route import router as admin_router
+from backend.services.warmup import prewarm_system
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Pre-warm models on startup to eliminate cold start latency
+    prewarm_system()
+    yield
+
+app = FastAPI(lifespan=lifespan)
 
 # Add CORS middleware
 app.add_middleware(
@@ -19,4 +27,4 @@ app.include_router(admin_router)
 
 @app.get("/")
 def root():
-    return {"message": "AI Decision System Backend Running 🚀"}
+    return {"message": "AI Decision System Backend Running 🚀"}

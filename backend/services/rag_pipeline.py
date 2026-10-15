@@ -45,12 +45,14 @@ def get_llm_client() -> Tuple[Optional[OpenAI], str]:
         return OpenAI(
             api_key=gemini_key,
             base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
-            http_client=httpx.Client()
+            http_client=httpx.Client(timeout=10.0),
+            max_retries=1
         ), model
     elif openai_key:
         model = model_env if model_env else "gpt-4o-mini"
-        return OpenAI(api_key=openai_key, http_client=httpx.Client()), model
+        return OpenAI(api_key=openai_key, http_client=httpx.Client(timeout=10.0), max_retries=1), model
     return None, "gpt-4o-mini"
+
 
 
 # ── Domain Fallback MCQs for Turn 1 ─────────────────────────
