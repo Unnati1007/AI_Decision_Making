@@ -1,0 +1,8 @@
+SOURCE_URL:
+URL:
+OWNER: ICMR - National Institute of Nutrition, Hyderabad
+TITLE: Dietary Guidelines for Indians 2024
+DOWNLOADED_ON: 2026-10-12
+REUSE_SENTENCE: The use and dissemination of the data in this book is encouraged. This publication can be reproduced
+REUSE_PAGE_URL: https://www.nin.res.in/
+DOMAIN: wellbeing

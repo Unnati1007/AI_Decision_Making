@@ -1,0 +1,8 @@
+SOURCE_URL:
+URL:
+OWNER: National Council of Educational Research and Training (NCERT)
+TITLE: NCERT Vocational Education and Career Counseling Handbook
+DOWNLOADED_ON: 2026-10-12
+REUSE_SENTENCE: ? No part of this publication may be reproduced, stored in a
+REUSE_PAGE_URL: https://ncert.nic.in/
+DOMAIN: career

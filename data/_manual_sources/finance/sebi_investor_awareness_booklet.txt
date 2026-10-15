@@ -1,0 +1,8 @@
+SOURCE_URL:
+URL:
+OWNER: Securities and Exchange Board of India (SEBI)
+TITLE: SEBI Investor Awareness Booklet
+DOWNLOADED_ON: 2026-10-12
+REUSE_SENTENCE: No part of this book can be reproduced or copied in any form or by any means (graphical or mechanical,
+REUSE_PAGE_URL: https://investor.sebi.gov.in/
+DOMAIN: finance
