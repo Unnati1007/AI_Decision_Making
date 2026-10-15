@@ -159,15 +159,29 @@ class GuardResult(BaseModel):
 # ============================================================
 # LAYER 1 — Quality Check
 # ============================================================
+from collections import Counter
+
 def is_gibberish(text: str) -> bool:
     words = text.split()
     if len(words) < 2:
         return True
     
-    # Check repeated character sequences (e.g. "asdfghjkl" or "aaaaaaa")
+    # Check repeated character sequences (e.g. "aaaaaaa" or "asdfghjkl")
     if re.search(r"(.)\1{4,}", text.lower()):
         return True
-        
+
+    # Check repeated words or low lexical diversity (e.g. "helo helo helo", "asdf asdf asdf")
+    cleaned_words = [re.sub(r'[^a-zA-Z0-9]', '', w.lower()) for w in words]
+    cleaned_words = [w for w in cleaned_words if w]
+    if len(cleaned_words) >= 3:
+        counts = Counter(cleaned_words)
+        # Any single word repeated 3 or more times is repetitive gibberish/spam
+        if any(c >= 3 for c in counts.values()):
+            return True
+        # If 4 or more words and 2 or fewer unique words (e.g. "yes no yes no", "foo bar foo bar")
+        if len(cleaned_words) >= 4 and len(set(cleaned_words)) <= 2:
+            return True
+
     # Check valid word character ratio
     valid_words = [w for w in words if re.match(r"^[a-zA-Z0-9\?\!\,\.\'\"]+$", w)]
     if len(valid_words) / max(len(words), 1) < MIN_VALID_WORD_RATIO:
@@ -176,11 +190,55 @@ def is_gibberish(text: str) -> bool:
     return False
 
 GENERIC_FILLER_WORDS = {
-    "hello", "hi", "hey", "hola", "namaste", "greetings", "user", "bot", "ai",
-    "test", "testing", "demo", "sample", "check", "checking", "ok", "okay",
-    "cool", "fine", "good", "morning", "afternoon", "evening", "night",
-    "bye", "goodbye", "thanks", "thank", "welcome", "please", "pls",
-    "m", "im", "i'm", "am", "haan", "theek", "bhai", "yaar", "kuch", "bhi"
+    # Greetings & Common misspellings/slang
+    "hello", "helo", "helllo", "hlo", "hlw", "hi", "hii", "hiii", "hey", "heyy", "heyyy",
+    "hola", "namaste", "pranam", "adaab", "salam", "yo", "sup", "wassup", "greetings",
+    # Closings & exits
+    "bye", "byee", "bue", "by", "goodbye", "tata", "cya",
+    # Fillers & bots & system words
+    "user", "bot", "ai", "test", "testing", "demo", "sample", "check", "checking",
+    "ok", "okay", "okk", "k", "cool", "fine", "good", "bad", "morning", "afternoon",
+    "evening", "night", "thanks", "thank", "welcome", "please", "pls", "plz",
+    # Hinglish fillers
+    "m", "im", "i'm", "am", "haan", "ha", "theek", "thik", "bhai", "bro", "dude",
+    "yaar", "yar", "kuch", "bhi", "kuchbhi", "lol", "lmao", "rofl", "haha", "hahaha"
+}
+
+GREETING_CLOSING_REGEX = re.compile(
+    r"^(?:h+[eaiou]+l+o*|h+i+|h+e+y+|b+y+e*|b+u+e*|t+e+s+t+\w*|o+k+[a-z]*|h+a+(?:h+a+)+)$",
+    re.IGNORECASE
+)
+
+def is_filler_token(token: str) -> bool:
+    t = token.lower().strip()
+    if t in GENERIC_FILLER_WORDS:
+        return True
+    if GREETING_CLOSING_REGEX.match(t):
+        return True
+    return False
+
+_domain_token_set = None
+
+def get_domain_token_set() -> set:
+    global _domain_token_set
+    if _domain_token_set is None:
+        kw_list = get_domain_keywords()
+        tokens = set()
+        for kw in kw_list:
+            for t in re.findall(r"\b[a-zA-Z0-9]+\b", kw.lower()):
+                if len(t) >= 3:
+                    tokens.add(t)
+        _domain_token_set = tokens
+    return _domain_token_set
+
+CORE_DECISION_VOCAB = {
+    "decision", "decide", "choosing", "choose", "choice", "option", "options",
+    "compare", "comparison", "versus", "vs", "better", "best", "should",
+    "advice", "suggest", "suggestion", "recommend", "recommendation", "pros",
+    "cons", "dilemma", "problem", "solution", "strategy", "plan", "planning",
+    "risk", "impact", "evaluate", "help", "guide", "guidance", "career",
+    "finance", "legal", "health", "wellbeing", "work", "job", "salary",
+    "money", "invest", "tax", "court", "lawyer", "stress", "sleep"
 }
 
 def is_conversational_filler(text: str) -> bool:
@@ -193,13 +251,24 @@ def is_conversational_filler(text: str) -> bool:
     if not tokens:
         return True
     
-    substantive = [t for t in tokens if t not in stopwords and t not in GENERIC_FILLER_WORDS]
-    # If all tokens are stopwords or generic filler words (e.g. 'hello i m user but', 'how are you')
-    if len(substantive) == 0:
+    substantive = [t for t in tokens if t not in stopwords and not is_filler_token(t)]
+    unique_substantive = set(substantive)
+
+    # 1. Zero substantive words (all are stopwords or greetings/fillers like "helo helo helo bye bue")
+    if len(unique_substantive) == 0:
         return True
-    # If substantive tokens < 2 and query contains conversational filler/greetings
-    if len(substantive) < 2 and any(t in GENERIC_FILLER_WORDS for t in tokens):
+    
+    # 2. Less than 2 unique substantive words
+    if len(unique_substantive) < 2:
         return True
+
+    # 3. Decision/Domain substance check: at least one unique substantive word must match
+    # known domain keywords or core decision vocabulary
+    domain_tokens = get_domain_token_set()
+    has_substance = bool(unique_substantive.intersection(domain_tokens)) or bool(unique_substantive.intersection(CORE_DECISION_VOCAB))
+    if not has_substance:
+        return True
+
     return False
 
 DECISION_INTENT_PATTERNS = [

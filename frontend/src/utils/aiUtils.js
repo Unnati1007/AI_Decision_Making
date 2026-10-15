@@ -1,16 +1,59 @@
 import { DOMAINS, domainKnowledge } from "../data/dummyData";
 
+const FILLER_GREETINGS = new Set([
+  "hello", "helo", "helllo", "hlo", "hlw", "hi", "hii", "hiii", "hey", "heyy", "heyyy",
+  "hola", "namaste", "pranam", "bye", "byee", "bue", "by", "goodbye", "tata", "cya",
+  "test", "testing", "check", "checking", "ok", "okay", "okk", "k", "cool", "fine",
+  "good", "bad", "morning", "night", "pls", "please", "plz", "haan", "ha", "theek",
+  "thik", "bhai", "bro", "dude", "yaar", "yar", "kuch", "bhi"
+]);
+
+// ─── Gibberish Detection ───────────────────────────────────
+export const isGibberish = (text) => {
+  const words = text.toLowerCase().split(/\s+/).filter(Boolean);
+  if (words.length < 2) return true;
+
+  // Check repeated character sequences (e.g. "aaaaaaa")
+  if (/(.)\1{4,}/.test(text.toLowerCase())) return true;
+
+  // Check repeated words (e.g. "helo helo helo", "asdf asdf asdf")
+  const cleaned = words.map((w) => w.replace(/[^a-zA-Z0-9]/g, "")).filter(Boolean);
+  if (cleaned.length >= 3) {
+    const counts = {};
+    for (const w of cleaned) {
+      counts[w] = (counts[w] || 0) + 1;
+      if (counts[w] >= 3) return true;
+    }
+    if (cleaned.length >= 4 && new Set(cleaned).size <= 2) return true;
+  }
+
+  const realWords = words.filter((w) => w.length >= 3 && /^[a-zA-Z]+$/.test(w));
+  return realWords.length / Math.max(words.length, 1) < 0.4;
+};
+
 // ─── Query Validation ─────────────────────────────────────
 export const validateQuery = (text, domain) => {
   const trimmed = text.trim();
   const words = trimmed.split(/\s+/).filter((w) => w.length > 0);
 
-  if (words.length < 5) {
-    return { valid: false, error: "Please enter a meaningful query (at least 5 words)." };
+  if (words.length < 2) {
+    return { valid: false, error: "Please enter a meaningful query (at least 2-3 words)." };
   }
   if (isGibberish(trimmed)) {
-    return { valid: false, error: "Please re-enter a valid, clear query." };
+    return { valid: false, error: "Please re-enter a valid, clear query without repetitive words." };
   }
+
+  // Check if all or most words are pure greetings or filler
+  const nonFiller = words.filter(
+    (w) => !FILLER_GREETINGS.has(w.toLowerCase().replace(/[^a-z]/g, ""))
+  );
+  if (nonFiller.length < 2) {
+    return {
+      valid: false,
+      error: "Please enter a specific decision question or dilemma (e.g., job offer comparison, notice period resignation, tax saving).",
+    };
+  }
+
   if (domain && !isDomainMatch(trimmed, domain)) {
     const domainLabel = DOMAINS[domain]?.label || domain;
     return {
@@ -38,14 +81,6 @@ export const isDomainMatch = (text, domain) => {
 
   // Allow if domain keyword found, or if no strong signal for other domain
   return domainHit || !otherHit;
-};
-
-// ─── Gibberish Detection ───────────────────────────────────
-export const isGibberish = (text) => {
-  const words = text.toLowerCase().split(/\s+/);
-  const realWords = words.filter((w) => w.length >= 3 && /^[a-zA-Z]+$/.test(w));
-  // Gibberish if less than 40% are real alphabetic words (catches "asd asd asd asd asd")
-  return realWords.length / Math.max(words.length, 1) < 0.4;
 };
 
 // ─── Match Query to Domain Knowledge Base ─────────────────

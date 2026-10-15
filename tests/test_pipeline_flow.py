@@ -200,6 +200,20 @@ class TestPipelineFlow(unittest.TestCase):
         self.assertEqual(t2.get("session_id"), sess_id)
         self.assertIsNotNone(sess.final_decision)
 
+    def test_j_repetitive_filler_and_slang_blocked_by_guard(self):
+        """(j) Tests that repetitive nonsense and slang greetings like 'helo helo helo bye bue' are blocked at Layer 1."""
+        test_cases = [
+            "helo",
+            "helo helo helo bye bue",
+            "asdf asdf asdf",
+            "bye bye bye",
+            "test test test test"
+        ]
+        for q in test_cases:
+            res = execute_turn_1(q, domain_override="career")
+            self.assertFalse(res["success"], f"Expected query '{q}' to be blocked, but it passed!")
+            self.assertEqual(res["error_layer"], "Layer 1: Quality Check")
+
 
 if __name__ == "__main__":
     unittest.main()
