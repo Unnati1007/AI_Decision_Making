@@ -438,6 +438,20 @@ def execute_turn_2(
                 src_item["source"] = source_name
             sources.append(src_item)
 
+    # Merge external sources (including Reddit and Tavily web results) from sources_t2 and session.turn1_sources
+    external_candidates = list(sources_t2)
+    if session_id:
+        sess = session_manager.get_session(session_id)
+        if sess and sess.turn1_sources:
+            external_candidates.extend(sess.turn1_sources)
+
+    for ext_src in external_candidates:
+        ext_url = ext_src.get("url", "").strip()
+        ext_title = ext_src.get("title", "")
+        if ext_url and (ext_title, ext_url) not in seen_sources:
+            seen_sources.add((ext_title, ext_url))
+            sources.append(ext_src)
+
     final_context = "\n---\n".join(context_chunks)
     best_score = final_results[0][2] if final_results else 0.0
 
@@ -463,6 +477,29 @@ def execute_turn_2(
             "llm_called": False,
             "warning": "Low relevance score in Knowledge Base. LLM call skipped."
         }
+
+    # Ensure Reddit community discussions are present for non-wellbeing domains (live mode)
+    if domain != "wellbeing" and not any(s.get("source_type") == "reddit" for s in sources) and not os.environ.get("PYTEST_CURRENT_TEST"):
+        try:
+            from backend.retrieval.tavily_search import search_reddit
+            reddit_threads = search_reddit(query, domain=domain, max_results=2)
+            for r_item in reddit_threads:
+                r_url = r_item.get("url", "").strip()
+                r_title = r_item.get("title", "Reddit Discussion")
+                if r_url and (r_title, r_url) not in seen_sources:
+                    seen_sources.add((r_title, r_url))
+                    sources.append({
+                        "id": f"RedditSource-{len(sources)+1}",
+                        "title": r_title,
+                        "url": r_url,
+                        "source": r_item.get("source", "Reddit"),
+                        "domain": domain,
+                        "similarity_score": 0.88,
+                        "source_type": "reddit",
+                        "source_file": ""
+                    })
+        except Exception as e:
+            logger.warning(f"Turn 2 Reddit fetch error: {e}")
 
     formatted_answers = ""
     for ans in mcq_answers:

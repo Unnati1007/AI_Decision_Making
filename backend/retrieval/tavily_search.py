@@ -88,6 +88,66 @@ def search_tavily(query: str, max_results: int = 4) -> List[Dict[str, Any]]:
         logger.error(f"Error calling Tavily Search API: {e}")
         return []
 
+def search_reddit(query: str, domain: str = "", max_results: int = 2) -> List[Dict[str, Any]]:
+    """
+    Searches Reddit community discussions via Tavily targeting reddit.com.
+    Returns real discussion thread links, titles, and snippets.
+    """
+    if not TAVILY_API_KEY:
+        logger.warning("TAVILY_API_KEY not configured. Reddit search skipped.")
+        return []
+
+    domain_subreddits = {
+        "finance": "site:reddit.com/r/investing OR site:reddit.com/r/stocks OR site:reddit.com/r/personalfinance OR site:reddit.com/r/IndiaInvestments OR site:reddit.com/r/dividends",
+        "career": "site:reddit.com/r/careerguidance OR site:reddit.com/r/cscareerquestions OR site:reddit.com/r/jobs",
+        "education": "site:reddit.com/r/college OR site:reddit.com/r/GradSchool OR site:reddit.com/r/learnprogramming",
+        "technology": "site:reddit.com/r/technology OR site:reddit.com/r/webdev OR site:reddit.com/r/programming"
+    }
+
+    sub_filter = domain_subreddits.get(domain.lower(), "site:reddit.com")
+    reddit_query = f"{query} {sub_filter}"
+
+    payload = {
+        "api_key": TAVILY_API_KEY,
+        "query": reddit_query,
+        "search_depth": "basic",
+        "include_answer": False,
+        "include_domains": ["reddit.com"],
+        "max_results": max_results
+    }
+
+    try:
+        response = requests.post(TAVILY_API_URL, json=payload, timeout=8)
+        if response.status_code == 200:
+            data = response.json()
+            results = data.get("results", [])
+            logger.info(f"✅ Reddit Search retrieved {len(results)} threads for query: '{query}'")
+
+            formatted_results = []
+            for res in results:
+                raw_url = res.get("url", "")
+                if "reddit.com" not in raw_url:
+                    continue
+                raw_content = res.get("content", "")
+                sub_match = re.search(r'reddit\.com/r/([^/]+)', raw_url)
+                sub_name = f"r/{sub_match.group(1)}" if sub_match else "r/Reddit"
+
+                formatted_results.append({
+                    "title": res.get("title", "Reddit Discussion"),
+                    "url": raw_url,
+                    "content": sanitize_tavily_text(raw_content, max_chars=800),
+                    "source": f"Reddit ({sub_name})",
+                    "source_type": "reddit",
+                    "subreddit": sub_name
+                })
+            return formatted_results
+        else:
+            logger.error(f"Reddit Search request failed with status code {response.status_code}: {response.text}")
+            return []
+    except Exception as e:
+        logger.error(f"Error calling Reddit Search: {e}")
+        return []
+
 if __name__ == "__main__":
     # Test execution
     test_res = search_tavily("latest AI developer hiring trends 2026")

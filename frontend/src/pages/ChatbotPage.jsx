@@ -167,6 +167,13 @@ export default function ChatPage() {
     setSelectedSource(resource);
     setSourceLoading(true);
     setSourceContent("");
+
+    if (resource.url && resource.url.includes("reddit.com") && !resource.source_file) {
+      setSourceContent(`### 💬 Reddit Community Discussion\n\n**Thread Title:** ${resource.title}\n\n**Direct Link:** [${resource.url}](${resource.url})\n\nThis is a real-world community discussion from Reddit. Users discuss firsthand investor experiences, trade-offs, and live market feedback.\n\nClick the button above to view the full discussion, upvoted comments, and user perspectives directly on Reddit.`);
+      setSourceLoading(false);
+      return;
+    }
+
     try {
       const params = new URLSearchParams();
       if (resource.source_file) params.append("path", resource.source_file);
@@ -248,7 +255,7 @@ export default function ChatPage() {
         url: s.url && s.url !== "#" ? s.url : "",
         source_file: s.source_file || "",
         domain: s.domain || domain || "career",
-        source_type: s.source_type || "ai_curated",
+        source_type: s.source_type || (s.url && s.url.includes("reddit.com") ? "reddit" : "ai_curated"),
       })),
     };
 
@@ -633,23 +640,39 @@ export default function ChatPage() {
                                <div className="grid gap-3 sm:grid-cols-2">
                                   {msg.resources.map((resource, i) => {
                                      const hasExternalUrl = Boolean(resource.url && resource.url.startsWith("http"));
+                                     const isReddit = resource.source_type === "reddit" || Boolean(resource.url && resource.url.includes("reddit.com"));
                                      return (
                                        <div 
                                          key={i} 
                                          onClick={() => handleOpenSource(resource)}
-                                         className="group flex flex-col justify-between p-3.5 rounded-xl bg-[var(--surface-2)] border border-[var(--border)] hover:border-blue-500/40 hover:bg-[var(--surface)] transition-all duration-200 shadow-xs cursor-pointer"
+                                         className={cn(
+                                           "group flex flex-col justify-between p-3.5 rounded-xl border transition-all duration-200 shadow-xs cursor-pointer",
+                                           isReddit 
+                                             ? "bg-orange-50/40 dark:bg-orange-950/10 border-orange-200/50 dark:border-orange-900/30 hover:border-orange-500/50 hover:bg-orange-50/70"
+                                             : "bg-[var(--surface-2)] border-[var(--border)] hover:border-blue-500/40 hover:bg-[var(--surface)]"
+                                         )}
                                        >
                                           <div>
                                              <div className="flex items-center justify-between gap-2 mb-1">
-                                                <span className="text-xs font-bold text-blue-600 dark:text-blue-400 group-hover:underline line-clamp-1">{resource.title}</span>
+                                                <span className={cn(
+                                                  "text-xs font-bold line-clamp-1 group-hover:underline",
+                                                  isReddit ? "text-orange-600 dark:text-orange-400" : "text-blue-600 dark:text-blue-400"
+                                                )}>
+                                                  {resource.title}
+                                                </span>
                                                 {hasExternalUrl ? (
                                                    <a
                                                      href={resource.url}
                                                      target="_blank"
                                                      rel="noopener noreferrer"
                                                      onClick={(e) => e.stopPropagation()}
-                                                     title="Open external website in new tab"
-                                                     className="p-1 rounded-md text-[var(--text-soft)] hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
+                                                     title={isReddit ? "Open Reddit discussion thread" : "Open external website in new tab"}
+                                                     className={cn(
+                                                       "p-1 rounded-md transition-colors",
+                                                       isReddit
+                                                         ? "text-orange-500 hover:text-orange-600 hover:bg-orange-100/50 dark:hover:bg-orange-900/40"
+                                                         : "text-[var(--text-soft)] hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30"
+                                                     )}
                                                    >
                                                      <ExternalLink size={13} />
                                                    </a>
@@ -658,15 +681,34 @@ export default function ChatPage() {
                                                 )}
                                              </div>
                                              <p className="text-[10px] text-[var(--text-muted)] line-clamp-1">
-                                                {hasExternalUrl ? "Official Web Resource" : "Internal Decision Guide • Click to read"}
+                                                {isReddit 
+                                                  ? "Reddit Community Discussion • Click to view" 
+                                                  : hasExternalUrl 
+                                                  ? "Official Web Resource" 
+                                                  : "Internal Decision Guide • Click to read"}
                                              </p>
                                           </div>
                                           <div className="flex items-center justify-between gap-2 pt-2 mt-2 border-t border-[var(--border)]/50">
                                              <span className="text-[9px] font-bold text-[var(--text-soft)] uppercase tracking-wider">
                                                 {resource.domain || domain || "General"}
                                              </span>
-                                             <span className="text-[9px] font-semibold px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0">
-                                                {resource.source_type === "open_textbook" ? "Open textbook (NC-SA)" : resource.source_type === "official_gov" ? "Official" : resource.source_type === "wikipedia" ? "Wikipedia" : resource.source_type === "web_live" ? "Live web, unverified" : "Decision Framework"}
+                                             <span className={cn(
+                                               "text-[9px] font-semibold px-2 py-0.5 rounded-md shrink-0",
+                                               isReddit
+                                                 ? "bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 font-bold"
+                                                 : "bg-blue-500/10 text-blue-600 dark:text-blue-400"
+                                             )}>
+                                                {isReddit 
+                                                  ? "Reddit Discussion" 
+                                                  : resource.source_type === "open_textbook" 
+                                                  ? "Open textbook (NC-SA)" 
+                                                  : resource.source_type === "official_gov" 
+                                                  ? "Official" 
+                                                  : resource.source_type === "wikipedia" 
+                                                  ? "Wikipedia" 
+                                                  : resource.source_type === "web_live" 
+                                                  ? "Live web, unverified" 
+                                                  : "Decision Framework"}
                                              </span>
                                           </div>
                                        </div>
@@ -878,17 +920,32 @@ export default function ChatPage() {
 
             {/* External URL Banner if available */}
             {selectedSource.url && selectedSource.url.startsWith("http") && (
-              <div className="px-5 py-2.5 bg-blue-50/80 dark:bg-blue-500/10 border-b border-blue-200/50 dark:border-blue-500/20 flex items-center justify-between gap-3">
-                <span className="text-xs text-blue-700 dark:text-blue-300 font-medium truncate">
-                  External URL: {selectedSource.url}
+              <div className={cn(
+                "px-5 py-2.5 border-b flex items-center justify-between gap-3",
+                selectedSource.url.includes("reddit.com")
+                  ? "bg-orange-50/90 dark:bg-orange-950/20 border-orange-200/50 dark:border-orange-800/30"
+                  : "bg-blue-50/80 dark:bg-blue-500/10 border-blue-200/50 dark:border-blue-500/20"
+              )}>
+                <span className={cn(
+                  "text-xs font-medium truncate",
+                  selectedSource.url.includes("reddit.com")
+                    ? "text-orange-800 dark:text-orange-300"
+                    : "text-blue-700 dark:text-blue-300"
+                )}>
+                  {selectedSource.url.includes("reddit.com") ? "Reddit Thread:" : "External URL:"} {selectedSource.url}
                 </span>
                 <a
                   href={selectedSource.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shrink-0"
+                  className={cn(
+                    "inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 text-white rounded-lg transition-colors shrink-0",
+                    selectedSource.url.includes("reddit.com")
+                      ? "bg-orange-600 hover:bg-orange-700"
+                      : "bg-blue-600 hover:bg-blue-700"
+                  )}
                 >
-                  <span>Visit Website</span>
+                  <span>{selectedSource.url.includes("reddit.com") ? "Open on Reddit" : "Visit Website"}</span>
                   <ExternalLink size={12} />
                 </a>
               </div>
