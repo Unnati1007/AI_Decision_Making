@@ -10,6 +10,7 @@ PyJWT>=2.8.0
 python-multipart>=0.0.9
 numpy>=1.26.0
 faiss-cpu>=1.7.4
+sentence-transformers>=2.6.0
 beautifulsoup4>=4.12.0
 PyYAML>=6.0.0
 pypdf>=4.0.0
