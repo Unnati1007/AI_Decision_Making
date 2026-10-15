@@ -56,13 +56,9 @@ export default function ChatPage() {
     setIsThinking(true);
     setThinkingStep(0);
 
-    for (let i = 0; i < 3; i++) {
-      setThinkingStep(i);
-      await new Promise((r) => setTimeout(r, 600));
-    }
-
-    const response = matchQueryToDomain(query, domain);
-    setIsThinking(false);
+    const stepInterval = setInterval(() => {
+      setThinkingStep((prev) => (prev < 2 ? prev + 1 : prev));
+    }, 1100);
 
     try {
       const res = await fetch("/api/query/turn1", {
@@ -74,6 +70,8 @@ export default function ChatPage() {
           session_id: sessionId
         }),
       });
+      clearInterval(stepInterval);
+      setIsThinking(false);
       if (!res.ok) throw new Error("Turn 1 API call failed");
       const data = await res.json();
       if (data.session_id) {
@@ -138,6 +136,8 @@ export default function ChatPage() {
         return;
       }
     } catch (err) {
+      clearInterval(stepInterval);
+      setIsThinking(false);
       console.error("Backend Turn 1 connection error:", err);
       setMessages((prev) => [
         ...prev,
@@ -216,11 +216,14 @@ export default function ChatPage() {
     const nextIndex = mcqFlow.currentIndex + 1;
 
     if (nextIndex < mcqFlow.questions.length) {
-      // Show next question
+      // Show thinking indicator between questions for seamless feedback
+      setIsThinking(true);
+      setThinkingStep(2);
       setMcqFlow((prev) => ({ ...prev, currentIndex: nextIndex, answers: newAnswers }));
       const nextQ = mcqFlow.questions[nextIndex];
 
       setTimeout(() => {
+        setIsThinking(false);
         setMessages((prev) => [
           ...prev,
           {
@@ -234,13 +237,17 @@ export default function ChatPage() {
             llm_called: mcqFlow.llm_called,
           },
         ]);
-      }, 500);
+      }, 450);
     } else {
       // Finished all questions, call Turn 2 API
       const activeFlow = { ...mcqFlow, answers: newAnswers };
       setMcqFlow(null);
       setIsThinking(true);
-      setThinkingStep(4);
+      setThinkingStep(3);
+
+      const turn2Interval = setInterval(() => {
+        setThinkingStep((prev) => (prev < 5 ? prev + 1 : prev));
+      }, 1400);
 
       try {
         const res = await fetch("/api/query/turn2", {
@@ -253,12 +260,13 @@ export default function ChatPage() {
             session_id: sessionId
           }),
         });
+        clearInterval(turn2Interval);
+        setIsThinking(false);
         if (!res.ok) throw new Error("Turn 2 API call failed");
         const data = await res.json();
         if (data.session_id) {
           setSessionId(data.session_id);
         }
-        setIsThinking(false);
 
         if (data.is_crisis) {
           setMessages((prev) => [
@@ -278,8 +286,9 @@ export default function ChatPage() {
           return;
         }
       } catch (err) {
-        console.error("Backend Turn 2 connection error:", err);
+        clearInterval(turn2Interval);
         setIsThinking(false);
+        console.error("Backend Turn 2 connection error:", err);
         setMessages((prev) => [
           ...prev,
           {
@@ -584,15 +593,34 @@ export default function ChatPage() {
         ))}
 
         {isThinking && (
-          <div className="flex w-full justify-start animate-fade-up">
-            <div className="flex gap-4">
-               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--surface-2)] text-blue-600 animate-pulse">
-                  <Brain size={18} />
+          <div className="flex w-full justify-start animate-fade-up my-3">
+            <div className="flex gap-3.5 max-w-lg items-start">
+               <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600/20 to-indigo-600/20 border border-blue-500/30 text-blue-500 shadow-sm shadow-blue-500/10">
+                  <Brain size={18} className="animate-pulse" />
+                  <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-500"></span>
+                  </span>
                </div>
-               <div className="flex flex-col gap-2">
-                  <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl px-5 py-3 flex items-center gap-3">
-                     <Loader2 size={16} className="animate-spin text-blue-600" />
-                     <span className="text-sm font-bold text-[var(--text-muted)]">{thinkingSteps[thinkingStep]}</span>
+               <div className="flex flex-col gap-1.5">
+                  <div className="bg-[var(--surface)] border border-blue-500/20 dark:border-blue-500/30 shadow-md shadow-blue-500/5 rounded-2xl px-5 py-3.5 flex items-center gap-3.5">
+                     <Loader2 size={16} className="animate-spin text-blue-500 shrink-0" />
+                     <div className="flex flex-col">
+                        <div className="flex items-center gap-1.5">
+                           <Sparkles size={11} className="text-blue-500" />
+                           <span className="text-[10px] font-black uppercase tracking-widest text-blue-500">
+                             AI Decision Engine
+                           </span>
+                        </div>
+                        <span className="text-xs font-semibold text-[var(--text)] transition-all duration-300">
+                          {thinkingSteps[thinkingStep] || "Processing decision context..."}
+                        </span>
+                     </div>
+                     <div className="flex gap-1 ml-2">
+                        <span className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-bounce [animation-delay:-0.3s]"></span>
+                        <span className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-bounce [animation-delay:-0.15s]"></span>
+                        <span className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-bounce"></span>
+                     </div>
                   </div>
                </div>
             </div>

@@ -126,11 +126,12 @@ export const getFollowUps = (domain, query) => {
 
 // ─── AI Thinking Steps ────────────────────────────────────
 export const thinkingSteps = [
-  "Validating input parameters...",
-  "Checking domain alignment...",
-  "Retrieving knowledge base entries...",
-  "Running outcome simulations...",
-  "Generating recommendation...",
+  "Validating decision query & security guard...",
+  "Searching domain knowledge base & guidelines...",
+  "Formulating targeted clarifying options with AI...",
+  "Analyzing your answers & trade-offs...",
+  "Synthesizing scenario simulations & risk matrices...",
+  "Finalizing decision recommendation & action plan...",
 ];
 
 // ─── Legacy exports ───────────────────────────────────────
