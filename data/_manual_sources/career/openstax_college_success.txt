@@ -1,0 +1,8 @@
+SOURCE_URL: https://openstax.org/details/books/college-success
+URL: https://assets.openstax.org/oscms-prodcms/media/documents/College_Success_-_WEB.pdf
+OWNER: OpenStax, Rice University
+TITLE: College Success - Study Skills and Academic Transitions
+DOWNLOADED_ON: 2026-10-12
+REUSE_SENTENCE: ©Rice University. Textbook content produced by OpenStax is licensed under a Creative Commons Attribution 4.0 International License (CC BY 4.0).
+REUSE_PAGE_URL: https://openstax.org/details/books/college-success
+DOMAIN: career

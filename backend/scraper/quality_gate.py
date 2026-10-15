@@ -19,7 +19,7 @@ MAX_RAW_HTML_TAGS = 3
 ERROR_MARKERS = [
     "Error Occured",
     "try again later",
-    "404",
+    "404 Not Found",
     "Access Denied",
     "JavaScript is required",
     "500 Internal Server Error",
@@ -95,7 +95,10 @@ def compute_nav_ratio(text: str) -> float:
             continue
         if is_formula_or_table_line(l):
             continue
+        if l.startswith(("- ", "* ", "• ", "+ ")) or re.match(r"^\d+[\.\)]\s", l):
+            continue
         content_lines.append(l)
+
 
     if not content_lines:
         return 0.0
@@ -178,14 +181,10 @@ def evaluate_quality_gate(
     # Detect error markers
     detected_error_marker = None
     for err in ERROR_MARKERS:
-        if err == "404":
-            if re.search(r'\b404\b', text, re.IGNORECASE):
-                detected_error_marker = err
-                break
-        else:
-            if err.lower() in text.lower():
-                detected_error_marker = err
-                break
+        if err.lower() in text.lower():
+            detected_error_marker = err
+            break
+
 
     is_duplicate_url, active_dup_filepath = find_duplicate_active_url(url, current_filepath, data_dir)
 

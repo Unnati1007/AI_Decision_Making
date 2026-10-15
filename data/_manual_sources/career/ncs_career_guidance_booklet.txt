@@ -1,0 +1,8 @@
+SOURCE_URL:
+URL:
+OWNER: National Career Service (NCS), Ministry of Labour and Employment
+TITLE: NCS Career Guidance and Vocational Counseling Booklet
+DOWNLOADED_ON: 2026-10-12
+REUSE_SENTENCE: NOT STATED IN SOURCE PDF
+REUSE_PAGE_URL: https://www.ncs.gov.in/
+DOMAIN: career

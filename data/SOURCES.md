@@ -1,11 +1,11 @@
 # IntelliChoice Knowledge Base Sources
 
-Total Active Files: 314
-Total Vector Chunks: 9899
+Total Active Files: 381
+Total Vector Chunks: 15239
 
 ## Active Files by Domain
 
-### Domain: career (92 files)
+### Domain: career (96 files)
 - `career/career_switch.md`
 - `career/certification_roi_decision.md`
 - `career/counter_offer_handling.md`
@@ -24,6 +24,9 @@ Total Vector Chunks: 9899
 - `career/labor_laws_and_statutory_benefits_india.md`
 - `career/layoff_first_30_days_plan.md`
 - `career/layoffs_career_gaps.md`
+- `career/manual_ncert_careers_vocational_education_school_counsellors.md`
+- `career/manual_ncs_career_guidance_booklet.md`
+- `career/manual_openstax_organizational_behavior_selected.md`
 - `career/manual_openstax_principles_of_management_selected.md`
 - `career/mba_vs_job.md`
 - `career/ms_abroad_vs_mtech.md`
@@ -93,19 +96,23 @@ Total Vector Chunks: 9899
 - `career/wiki_full/wiki_ministry_of_skill_development_and_entrepreneurship.md`
 - `career/wiki_full/wiki_national_skill_development_corporation.md`
 - `career/wiki_full/wiki_professional_development.md`
+- `career/wiki_full/wiki_retraining.md`
 - `career/wiki_full/wiki_skill_india.md`
 - `career/wiki_full/wiki_teamwork.md`
 - `career/wiki_full/wiki_union_public_service_commission.md`
 - `career/wiki_full/wiki_work_ethic.md`
 - `career/wiki_full/work_life_balance.md`
 
-### Domain: finance (123 files)
+### Domain: finance (138 files)
 - `finance/asset_allocation_investments.md`
 - `finance/credit_score_loans.md`
 - `finance/crypto_alternative_assets.md`
 - `finance/debt_payoff_vs_investing.md`
 - `finance/emergency_fund_insurance.md`
+- `finance/manual_openstax_principles_of_finance_2e_selected.md`
+- `finance/manual_rbi_financial_awareness_booklet.md`
 - `finance/manual_rbi_i_can_do_financial_planning.md`
+- `finance/manual_sebi_investor_awareness_booklet.md`
 - `finance/mutual_funds_sip.md`
 - `finance/real_estate_rent_vs_buy.md`
 - `finance/retirement_nps_ppf.md`
@@ -119,6 +126,7 @@ Total Vector Chunks: 9899
 - `finance/wiki_bank_account.md`
 - `finance/wiki_banking_in_india.md`
 - `finance/wiki_behavioral_economics.md`
+- `finance/wiki_benami_transactions_prohibition_act_1988.md`
 - `finance/wiki_bombay_stock_exchange.md`
 - `finance/wiki_bond_finance.md`
 - `finance/wiki_bse_sensex.md`
@@ -160,11 +168,16 @@ Total Vector Chunks: 9899
 - `finance/wiki_futures_contract.md`
 - `finance/wiki_general_insurance.md`
 - `finance/wiki_gold_as_an_investment.md`
+- `finance/wiki_goods_and_services_tax_2_0_indian.md`
 - `finance/wiki_goods_and_services_tax_india.md`
 - `finance/wiki_health_insurance_in_india.md`
 - `finance/wiki_home_insurance.md`
 - `finance/wiki_housing_in_india.md`
+- `finance/wiki_income_tax_act_1961.md`
+- `finance/wiki_income_tax_act_2025.md`
+- `finance/wiki_income_tax_department.md`
 - `finance/wiki_income_tax_in_india.md`
+- `finance/wiki_income_tax_return_india.md`
 - `finance/wiki_index_fund.md`
 - `finance/wiki_india_post_payments_bank.md`
 - `finance/wiki_indian_rupee.md`
@@ -183,10 +196,13 @@ Total Vector Chunks: 9899
 - `finance/wiki_national_pension_system.md`
 - `finance/wiki_national_stock_exchange_of_india.md`
 - `finance/wiki_net_worth.md`
+- `finance/wiki_new_tax_regime.md`
 - `finance/wiki_nifty_50.md`
 - `finance/wiki_non_performing_loan.md`
+- `finance/wiki_old_pension_scheme.md`
 - `finance/wiki_peer_to_peer_lending.md`
 - `finance/wiki_pension_fund_regulatory_and_development_authority.md`
+- `finance/wiki_pensions_in_india.md`
 - `finance/wiki_permanent_account_number.md`
 - `finance/wiki_personal_budget.md`
 - `finance/wiki_personal_finance.md`
@@ -206,6 +222,8 @@ Total Vector Chunks: 9899
 - `finance/wiki_retirement_planning.md`
 - `finance/wiki_reverse_mortgage.md`
 - `finance/wiki_securities_and_exchange_board_of_india.md`
+- `finance/wiki_securities_transaction_tax.md`
+- `finance/wiki_social_security_in_india.md`
 - `finance/wiki_sovereign_gold_bond.md`
 - `finance/wiki_statutory_liquidity_ratio.md`
 - `finance/wiki_stock_exchange.md`
@@ -221,10 +239,11 @@ Total Vector Chunks: 9899
 - `finance/wiki_united_states_treasury_security.md`
 - `finance/wiki_unsecured_debt.md`
 - `finance/wiki_value_added_tax.md`
+- `finance/wiki_value_added_taxation_in_india.md`
 - `finance/wiki_vehicle_insurance.md`
 - `finance/wiki_voice_phishing.md`
 
-### Domain: legal (63 files)
+### Domain: legal (91 files)
 - `legal/consumer_rights_court.md`
 - `legal/contract_review_guide.md`
 - `legal/cyber_crime_data_privacy.md`
@@ -232,34 +251,49 @@ Total Vector Chunks: 9899
 - `legal/employment_labor_laws.md`
 - `legal/freelancer_vendor_contracts.md`
 - `legal/ip_trademark_copyright.md`
+- `legal/manual_bprd_volume_2_selected.md`
+- `legal/manual_code_on_social_security_2020.md`
+- `legal/manual_model_tenancy_act.md`
+- `legal/manual_rti_act_2005.md`
 - `legal/startup_legal_checklist.md`
 - `legal/tenant_landlord_rights.md`
+- `legal/wiki_adultery_law_in_india.md`
 - `legal/wiki_alimony.md`
+- `legal/wiki_anticipatory_bail.md`
 - `legal/wiki_arbitration_and_conciliation_act_1996.md`
 - `legal/wiki_bail.md`
 - `legal/wiki_bar_council_of_india.md`
 - `legal/wiki_bharatiya_nagarik_suraksha_sanhita.md`
 - `legal/wiki_bharatiya_nyaya_sanhita_2023.md`
+- `legal/wiki_bharatiya_sakshya_adhiniyam.md`
+- `legal/wiki_central_consumer_protection_authority.md`
 - `legal/wiki_child_custody.md`
+- `legal/wiki_child_labour_in_india.md`
 - `legal/wiki_code_of_criminal_procedure_1973.md`
 - `legal/wiki_code_on_wages_2019.md`
 - `legal/wiki_constitution_of_india.md`
 - `legal/wiki_consumer_court.md`
 - `legal/wiki_consumer_protection.md`
+- `legal/wiki_consumer_protection_act_1986.md`
 - `legal/wiki_consumer_protection_act_2019.md`
 - `legal/wiki_contract.md`
 - `legal/wiki_copyright_law_of_india.md`
 - `legal/wiki_crime_in_india.md`
+- `legal/wiki_criminal_law_amendment_act_2013.md`
 - `legal/wiki_cybercrime.md`
 - `legal/wiki_digital_personal_data_protection_act_2023.md`
 - `legal/wiki_dishonoured_cheque.md`
 - `legal/wiki_divorce.md`
 - `legal/wiki_domestic_violence_in_india.md`
 - `legal/wiki_fundamental_rights_in_india.md`
+- `legal/wiki_goa_civil_code.md`
+- `legal/wiki_grievance_redressal.md`
 - `legal/wiki_hindu_adoptions_and_maintenance_act_1956.md`
 - `legal/wiki_hindu_marriage_act_1955.md`
+- `legal/wiki_hindu_minority_and_guardianship_act_1956.md`
 - `legal/wiki_hindu_succession_act_1956.md`
 - `legal/wiki_impressed_duty_stamp.md`
+- `legal/wiki_indian_christian_marriage_act_1872.md`
 - `legal/wiki_indian_contract_act_1872.md`
 - `legal/wiki_indian_evidence_act_1872.md`
 - `legal/wiki_indian_penal_code.md`
@@ -267,29 +301,42 @@ Total Vector Chunks: 9899
 - `legal/wiki_information_technology_act_2000.md`
 - `legal/wiki_information_technology_rules_2021.md`
 - `legal/wiki_inheritance_tax.md`
+- `legal/wiki_labour_in_india.md`
 - `legal/wiki_labour_laws_in_india.md`
+- `legal/wiki_land_acquisition_in_india.md`
 - `legal/wiki_law_of_india.md`
 - `legal/wiki_legal_aid.md`
 - `legal/wiki_legal_services_authorities_act_1987.md`
+- `legal/wiki_maternity_benefit_amendment_act_2017.md`
+- `legal/wiki_minimum_wages_act_1948.md`
 - `legal/wiki_mohd_ahmed_khan_v_shah_bano_begum.md`
 - `legal/wiki_muslim_personal_law.md`
 - `legal/wiki_muslim_women_protection_of_rights_on_divorce_act_1986.md`
+- `legal/wiki_muslim_women_protection_of_rights_on_marriage_act_2019.md`
 - `legal/wiki_negotiable_instruments_act_1881.md`
 - `legal/wiki_non_disclosure_agreement.md`
+- `legal/wiki_parsi_marriage_and_divorce_act_1936.md`
 - `legal/wiki_payment_of_gratuity_act_1972.md`
+- `legal/wiki_prohibition_of_child_marriage_act_2006.md`
 - `legal/wiki_protection_of_women_from_domestic_violence_act_2005.md`
 - `legal/wiki_real_estate_regulation_and_development_act_2016.md`
 - `legal/wiki_renting.md`
 - `legal/wiki_right_to_information_act_2005.md`
+- `legal/wiki_sarla_mudgal_and_others_v_union_of_india.md`
 - `legal/wiki_sexual_harassment.md`
 - `legal/wiki_sexual_harassment_of_women_at_workplace_prevention_prohibition_and_redressal_act_2013.md`
+- `legal/wiki_special_marriage_act_1954.md`
+- `legal/wiki_specific_relief_act_1963.md`
 - `legal/wiki_stamp_duty.md`
+- `legal/wiki_trade_unions_in_india.md`
 - `legal/wiki_transfer_of_property_act_1882.md`
 - `legal/wiki_uniform_civil_code.md`
+- `legal/wiki_uniform_civil_code_of_uttarakhand_act_2024.md`
 - `legal/wiki_violence_against_women_in_india.md`
+- `legal/wiki_vishakha_and_others_v_state_of_rajasthan.md`
 - `legal/wills_inheritance_property.md`
 
-### Domain: wellbeing (36 files)
+### Domain: wellbeing (56 files)
 - `wellbeing/anxiety_mental_wellness.md`
 - `wellbeing/burnout_stress_management.md`
 - `wellbeing/cardio_strength_training.md`
@@ -297,14 +344,22 @@ Total Vector Chunks: 9899
 - `wellbeing/diet_intermittent_fasting.md`
 - `wellbeing/emotional_resilience.md`
 - `wellbeing/habit_building_consistency.md`
+- `wellbeing/manual_icmr_nin_dietary_guidelines.md`
+- `wellbeing/manual_manodarpan_mental_health_guide.md`
 - `wellbeing/manual_openstax_psychology_2e_selected.md`
+- `wellbeing/manual_openstax_psychology_sleep_disorders_therapy.md`
 - `wellbeing/manual_who_doing_what_matters_in_times_of_stress.md`
 - `wellbeing/manual_who_physical_activity_at_a_glance.md`
+- `wellbeing/manual_who_sleep_fact_sheet.md`
 - `wellbeing/nutrition_macronutrients.md`
 - `wellbeing/sleep_hygiene_circadian.md`
+- `wellbeing/wiki_aerobic_exercise.md`
+- `wellbeing/wiki_anxiety_disorder.md`
 - `wellbeing/wiki_circadian_rhythm.md`
+- `wellbeing/wiki_cognitive_behavioral_therapy.md`
 - `wellbeing/wiki_conflict_process.md`
 - `wellbeing/wiki_digital_detox.md`
+- `wellbeing/wiki_digital_media_use_and_mental_health.md`
 - `wellbeing/wiki_emotional_intelligence.md`
 - `wellbeing/wiki_ergonomics.md`
 - `wellbeing/wiki_exercise.md`
@@ -313,13 +368,25 @@ Total Vector Chunks: 9899
 - `wellbeing/wiki_gratitude.md`
 - `wellbeing/wiki_habit.md`
 - `wellbeing/wiki_healthy_diet.md`
+- `wellbeing/wiki_insomnia.md`
+- `wellbeing/wiki_intermittent_fasting.md`
 - `wellbeing/wiki_interpersonal_communication.md`
 - `wellbeing/wiki_intimate_relationship.md`
+- `wellbeing/wiki_loneliness.md`
+- `wellbeing/wiki_loneliness_epidemic.md`
+- `wellbeing/wiki_major_depressive_disorder.md`
 - `wellbeing/wiki_mindfulness.md`
+- `wellbeing/wiki_mindfulness_based_stress_reduction.md`
 - `wellbeing/wiki_motivation.md`
+- `wellbeing/wiki_nutritional_psychology.md`
+- `wellbeing/wiki_physical_activity.md`
 - `wellbeing/wiki_procrastination.md`
 - `wellbeing/wiki_psychological_stress.md`
+- `wellbeing/wiki_screen_time.md`
+- `wellbeing/wiki_sedentary_lifestyle.md`
 - `wellbeing/wiki_sleep_hygiene.md`
+- `wellbeing/wiki_social_isolation.md`
+- `wellbeing/wiki_strength_training.md`
 - `wellbeing/wiki_stress_management.md`
 - `wellbeing/wiki_time_management.md`
 - `wellbeing/wiki_walking.md`
@@ -329,8 +396,22 @@ Total Vector Chunks: 9899
 
 ## Acknowledgements & Source Attributions
 
+Source: Bureau of Police Research and Development (BPR&D), MHA, GoI, Bprd Volume 2 (selected chapters 1, 4, 5, 7, 22, 23, 24, 28, 29), NOT STATED IN SOURCE PDF (official_gov)
+Source: ICMR - National Institute of Nutrition, Hyderabad, Icmr Nin Dietary Guidelines, The use and dissemination of the data in this book is encouraged. This publication can be reproduced (official_gov)
+Source: Ministry of Education, Government of India, Manodarpan Psychosocial Support and Mental Health Guide, NOT STATED IN SOURCE PDF (official_gov)
+Source: Ministry of Housing and Urban Affairs, Government of India, Model Tenancy Act, NOT STATED IN SOURCE PDF (official_gov)
+Source: Ministry of Labour and Employment, Government of India, Code On Social Security 2020, NOT STATED IN SOURCE PDF (official_gov)
+Source: Ministry of Law and Justice, Government of India, Rti Act 2005, NOT STATED IN SOURCE PDF (official_gov)
+Source: National Career Service (NCS), Ministry of Labour and Employment, Ncs Career Guidance Booklet, NOT STATED IN SOURCE PDF (official_gov)
+Source: National Council of Educational Research and Training (NCERT), Ncert Careers Vocational Education School Counsellors, ? No part of this publication may be reproduced, stored in a (official_gov)
+Source: OpenStax, Rice University, OpenStax Psychology: Sleep, Psychological Disorders and Therapy, ©2026 Rice University. Textbook content produced by OpenStax is licensed under a Creative Commons Attribution Non-Commercial ShareAlike 4.0 International License (CC BY-NC-SA 4.0). Under this license, any (official_gov)
+Source: OpenStax, Rice University, Openstax Principles Of Finance 2E Selected, ©2026 Rice University. Textbook content produced by OpenStax is licensed under a Creative Commons Attribution Non-Commercial ShareAlike 4.0 International License (CC BY-NC-SA 4.0). (open_textbook)
 Source: OpenStax, Rice University, Openstax Psychology 2E Selected, ©2026 Rice University. Textbook content produced by OpenStax is licensed under a Creative Commons Attribution Non-Commercial ShareAlike 4.0 International License (CC BY-NC-SA 4.0). (open_textbook)
+Source: OpenStax, Rice University, Organizational Behavior (Selected Chapters: 3, 7, 11, 12, 14), ©2026 Rice University. Textbook content produced by OpenStax is licensed under a Creative Commons (open_textbook)
 Source: OpenStax, Rice University, Principles of Management (Selected Chapters: 1, 2, 3, 5, 6, 7, 8, 10, 11, 13), ©2026 Rice University. Textbook content produced by OpenStax is licensed under a Creative Commons Attribution Non-Commercial ShareAlike 4.0 International License (CC BY-NC-SA 4.0). (open_textbook)
+Source: Reserve Bank of India (RBI), Rbi Financial Awareness Booklet, Reproduction is permitted provided the source is acknowledged (official_gov)
 Source: Reserve Bank of India, Rbi I Can Do Financial Planning, Reproduction is permitted provided an acknowledgement of the source is made. (official_gov)
+Source: Securities and Exchange Board of India (SEBI), Sebi Investor Awareness Booklet, No part of this book can be reproduced or copied in any form or by any means (graphical or mechanical, (official_gov)
+Source: World Health Organization (WHO), Who Sleep Fact Sheet, This work is available under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 IGO licence (CC BY-NC-SA 3.0 IGO; https://creativecommons.org/licenses/by-nc-sa/3.0/igo). Under the terms of this licence, you (official_gov)
 Source: World Health Organization, Doing What Matters in Times of Stress, Some rights reserved. This work is available under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 IGO licence (CC BY-NC-SA 3.0 IGO; https://creativecommons.org/licenses/by-nc-sa/3.0/igo). (official_gov)
 Source: World Health Organization, Who Physical Activity At A Glance, Some rights reserved. This work is available under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 IGO licence (CC BY-NC-SA 3.0 IGO; https://creativecommons.org/licenses/by-nc-sa/3.0/igo). (official_gov)
