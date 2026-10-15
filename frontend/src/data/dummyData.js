@@ -8,7 +8,7 @@ export const DOMAINS = {
     icon: "Briefcase",
     color: "blue",
     description: "Job changes, growth paths, MBA decisions",
-    keywords: ["job", "career", "work", "mba", "resume", "salary", "promotion", "hire", "interview", "skills", "internship", "switch", "corporate", "startup", "employment", "profession", "occupation", "workplace", "manager", "leadership"],
+    keywords: ["job", "career", "work", "mba", "resume", "salary", "promotion", "hire", "interview", "skills", "internship", "switch", "corporate", "startup", "employment", "profession", "occupation", "workplace", "manager", "leadership", "exam", "exams", "ssc", "upsc", "bank exam", "bank exams", "banking exam", "banking exams", "ibps", "sbi po", "bank po", "bank clerk", "government job", "sarkari", "govt job", "civil services", "gate", "cat", "competitive exam", "preparation", "prepare", "study", "syllabus", "placement", "campus", "fresher", "recruitment", "vacancy"],
   },
   Finance: {
     key: "Finance",
@@ -16,7 +16,7 @@ export const DOMAINS = {
     icon: "TrendingUp",
     color: "emerald",
     description: "Investments, savings, and financial planning",
-    keywords: ["money", "invest", "finance", "stock", "fund", "savings", "budget", "tax", "insurance", "loan", "debt", "mutual", "real estate", "returns", "portfolio", "wealth", "expense", "income", "profit", "loss", "bank", "crypto"],
+    keywords: ["money", "invest", "finance", "stock", "fund", "savings", "budget", "tax", "insurance", "loan", "debt", "mutual", "real estate", "returns", "portfolio", "wealth", "expense", "income", "profit", "loss", "banking", "bank account", "fixed deposit", "bank interest", "crypto"],
   },
   Legal: {
     key: "Legal",

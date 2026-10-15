@@ -1,4 +1,4 @@
-import { DOMAINS, domainKnowledge } from "../data/dummyData";
+import { DOMAINS, domainKnowledge } from "../data/dummyData.js";
 
 const FILLER_GREETINGS = new Set([
   "hello", "helo", "helllo", "hlo", "hlw", "hi", "hii", "hiii", "hey", "heyy", "heyyy",
@@ -115,22 +115,46 @@ export const validateQuery = (text, domain) => {
 
 // ─── Domain Match ──────────────────────────────────────────
 export const isDomainMatch = (text, domain) => {
+  if (!domain) return true; // no domain set, allow all
   const normalized = text.toLowerCase();
   const domainConfig = DOMAINS[domain];
-  if (!domainConfig) return true; // no domain set, allow all
+  if (!domainConfig) return true;
 
-  // Check if query matches selected domain keywords
-  const domainHit = domainConfig.keywords.some((kw) => normalized.includes(kw));
+  // Career examinations, preparations, and tests are unambiguously Career
+  const isCareerExam = /\b(ssc|upsc|bank\s+exam|bank\s+exams|banking\s+exam|banking\s+exams|bank\s+po|bank\s+clerk|ibps|sbi\s+po|gate|cat|gre|gmat|competitive\s+exam|exam\s+preparation|government\s+job|sarkari|govt\s+job|admit\s+card|syllabus|exams?)\b/i.test(normalized);
+  if (domain.toLowerCase() === "career" && isCareerExam) {
+    return true;
+  }
 
-  // Check if query matches any OTHER domain
+  // Exact word-boundary matching instead of substring matching
+  const hasWordMatch = (kwList) => {
+    return kwList.some((kw) => {
+      const escaped = kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return new RegExp(`\\b${escaped}\\b`, "i").test(normalized);
+    });
+  };
+
+  const domainHit = hasWordMatch(domainConfig.keywords);
+  if (domainHit) return true;
+
+  // If user selected Career and query is an exam or preparation query, never reject
+  if (domain.toLowerCase() === "career" && /\b(exam|exams|prepare|preparation|study|syllabus|test)\b/i.test(normalized)) {
+    return true;
+  }
+
+  // Check if query strongly matches any other domain (requires at least 2 distinct keyword matches)
   const otherDomains = Object.values(DOMAINS).filter(
     (d) => d.key.toLowerCase() !== domain.toLowerCase()
   );
-  const otherMatch = otherDomains.find((d) =>
-    d.keywords.some((kw) => normalized.includes(kw))
-  );
+  const otherMatch = otherDomains.find((d) => {
+    const hits = d.keywords.filter((kw) => {
+      const escaped = kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return new RegExp(`\\b${escaped}\\b`, "i").test(normalized);
+    });
+    return hits.length >= 2;
+  });
 
-  // If another domain matches and current domain has NO matches, reject as domain mismatch
+  // If another domain has 2+ strong hits and current domain has NO matches, reject as domain mismatch
   if (otherMatch && !domainHit) {
     return false;
   }
