@@ -230,6 +230,7 @@ export default function ChatPage() {
       mode: data.mode || (data.llm_called ? "llm_generated" : "template_fallback"),
       llm_called: Boolean(data.llm_called),
       recommendation: decision.executive_summary || "Recommended Decision Path",
+      detailedAnalysis: decision.detailed_analysis || "",
       reasoning: decision.tradeoffs
         ? (Array.isArray(decision.tradeoffs)
             ? decision.tradeoffs.map(t => typeof t === 'object' ? `${t.aspect || ''}: ${t.details || ''}` : String(t))
@@ -534,6 +535,18 @@ export default function ChatPage() {
                            </div>
                            <p className="text-lg font-bold leading-tight" style={{ color: "var(--text)" }}>{msg.recommendation}</p>
                         </div>
+
+                        {msg.detailedAnalysis && (
+                          <div className="p-4 rounded-xl bg-blue-50/60 dark:bg-blue-950/20 border border-blue-200/60 dark:border-blue-800/40 space-y-2.5">
+                             <div className="flex items-center gap-2 text-blue-700 dark:text-blue-300">
+                                <FileText size={14} className="shrink-0" />
+                                <h4 className="text-[10px] font-black uppercase tracking-widest">In-Depth Strategy & Allocation</h4>
+                             </div>
+                             <div className="text-[13px] font-normal leading-relaxed whitespace-pre-line" style={{ color: "var(--text)" }}>
+                                {msg.detailedAnalysis}
+                             </div>
+                          </div>
+                        )}
 
                         {msg.reasoning && msg.reasoning.length > 0 && (
                           <div className="space-y-3">

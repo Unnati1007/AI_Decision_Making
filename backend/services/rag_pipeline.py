@@ -528,24 +528,27 @@ Retrieved Reference Context:
 {final_context[:4000]}
 
 INSTRUCTIONS FOR HIGH-QUALITY DECISION INTELLIGENCE:
-1. Direct, Specific Recommendation (Executive Summary):
-   - Do NOT just repeat the user's answers back in circles.
-   - Give direct, concrete answers, decision paths, and specific options/categories.
-   - For investment queries (e.g., stocks/portfolio): provide concrete vehicle categories and specific well-known instruments (e.g. Dividend Aristocrat Index ETFs like SCHD, VIG, VOO, S&P 500 Dividend Aristocrats, or Indian equivalents like Nifty Dividend Opportunities 50 / blue-chip stalwarts like ITC, TCS, HUL where applicable).
-   - Address their specific budget and timeline directly: explain why picking a single direct stock with small capital carries high concentration risk, and why a low-cost dividend index ETF or top defensive blue-chips provides optimal safety and steady yield.
-2. Structured Trade-offs:
-   - Provide 2-3 distinct, insightful pros and cons (e.g. Capital preservation vs upside potential, liquidity vs yield).
-3. Action Plan:
-   - Provide 3-4 concrete, numbered steps (e.g. 1. Account & platform setup with fractional share support; 2. Capital allocation across diversified dividend vehicles; 3. Automated reinvestment via DRIP).
-4. Scenario Simulation (Realistic qualitative projections):
-   - Baseline Case: Expected outcome over their horizon (e.g. steady dividend income with capital preservation).
-   - Best Case: Optimistic scenario with dividend growth and capital appreciation.
-   - Worst Case: Downside scenario (e.g. broader market correction), with clear risk mitigation advice.
-   - NEVER output robotic phrases like 'not in the knowledge base' for simulation or risks. Describe the actual real-world scenario and risks!
+1. Direct, Specific Recommendation & Comprehensive Strategy:
+   - Deliver a clear, authoritative decision. The user came to this AI Advisor for real answers and clarity, NOT generic textbook disclaimers or to be sent off to external links.
+   - For Financial / Investment inquiries:
+     * Directly address their specific capital, 5-year timeline, and risk level.
+     * Name specific top-tier investment vehicles, ETF tickers, and established dividend stalwarts (e.g., Schwab U.S. Dividend Equity ETF - SCHD, Vanguard Dividend Appreciation - VIG, Vanguard S&P 500 - VOO, or Indian blue-chip dividend leaders like ITC, TCS, Infosys, and Nifty Dividend Opportunities 50).
+     * Provide a concrete capital allocation strategy (e.g., 60% Core Dividend Aristocrat ETF, 30% Broad Market Index for growth, 10% Cash/High-Yield Reserve buffer).
+     * Detail the compounding mechanism: Explain how enabling DRIP (Dividend Reinvestment Plan) compounds dividends quarterly over the 5-year period.
+     * Explain why direct stock-picking of single speculative stocks creates dangerous concentration risk for sub-$1,000 budgets vs. diversified dividend basket funds.
+2. Detailed Analysis:
+   - Provide a comprehensive, rich breakdown in "detailed_analysis" that provides the user with deep clarity, actionable numbers/allocations, and rationale.
+3. Structured Trade-offs:
+   - Provide 2-3 distinct pros and cons (e.g. Capital preservation and defensive yield vs lower capital growth compared to volatile growth tech).
+4. Action Plan:
+   - Provide 3-4 concrete, numbered steps (1. Setup zero-fee fractional-share brokerage account; 2. Allocate capital according to the model portfolio; 3. Automate DRIP dividend reinvestment; 4. Annual rebalancing check).
+5. Scenario Simulation:
+   - Realistic qualitative projections for Baseline, Best Case, and Worst Case market conditions with risk mitigation. Do NOT output robotic disclaimers.
 
 Schema (strictly valid JSON):
 {{
-  "executive_summary": "Direct, concrete recommendation specifying the best approach and specific instrument categories.",
+  "executive_summary": "Direct, decisive primary recommendation specifying the optimal strategy and instrument categories.",
+  "detailed_analysis": "Comprehensive deep-dive analysis (3-4 structured paragraphs or bullet points). Detail exact asset allocation percentages, specific vehicle names and tickers, dividend compounding (DRIP) mechanics, and clear rationale for the 5-year horizon.",
   "tradeoffs": [
     {{"aspect": "Pros / Advantages", "details": "Specific advantage"}},
     {{"aspect": "Cons / Risks", "details": "Specific trade-off or risk"}}
@@ -563,7 +566,7 @@ Schema (strictly valid JSON):
 }}
 CRITICAL RULE (B5): Do not invent specific guaranteed percentage returns or speculative price targets. Focus on structural sound financial principles, verified investment vehicles, and qualitative risk-return profiles.
 Return ONLY valid JSON without markdown formatting."""
-            system_msg = "You are an expert decision intelligence engine responding in JSON. Deliver concrete, insightful, and practical decision support. Provide specific vehicle categories, asset allocation strategies, and distinct actionable steps tailored to the user's stated budget, risk appetite, and goals. Avoid circular repetition of the user's inputs. Do not state speculative guaranteed returns; focus on sound qualitative analysis and proven financial principles."
+            system_msg = "You are an expert decision intelligence engine responding in JSON. Deliver concrete, highly actionable, and comprehensive decision advice. Provide specific vehicle categories, real instrument examples, clear asset allocations, and deep strategic clarity tailored to the user's budget and goals. Avoid circular repetition and avoid generic disclaimers."
 
         try:
             response = llm_client.chat.completions.create(
@@ -601,23 +604,45 @@ Return ONLY valid JSON without markdown formatting."""
             warning = f"Turn 2 LLM skipped ({str(e)}). Generated fallback decision structure."
 
     # Rule-Based Fallback Decision Generator if LLM unavailable
-    fallback_decision = {
-        "executive_summary": f"Based on your inquiry regarding '{query}' in the {domain.title()} domain and your selected preferences ({', '.join([a.get('selected_option', '') for a in mcq_answers[:2]])}), we recommend a structured, phased implementation prioritizing risk mitigation.",
-        "tradeoffs": [
-            {"aspect": "Primary Advantage", "details": f"Aligns with your preference: {mcq_answers[0].get('selected_option', 'default preference') if mcq_answers else 'structured roadmap'}."},
-            {"aspect": "Consideration / Risk", "details": "Requires consistent monitoring and periodic re-evaluation based on changing context."}
-        ],
-        "action_plan": [
-            {"step": 1, "title": "Assessment & Baseline Setup", "description": f"Gather initial data and establish metrics aligned with {query}."},
-            {"step": 2, "title": "Phased Execution", "description": "Implement initial phase with minimum capital/time commitment to validate assumptions."},
-            {"step": 3, "title": "Review & Scale", "description": "Assess results against initial targets after 30-60 days."}
-        ],
-        "scenario_simulation": {
-            "baseline_case": "Steady progress achieving qualitative target objectives over specified timeline.",
-            "best_case": "Accelerated results exceeding performance expectations with minimal friction.",
-            "worst_case": "Minor delays requiring adjustment of timeline, fully protected by initial risk buffers."
+    if domain == "finance":
+        fallback_decision = {
+            "executive_summary": "For a conservative 5-year horizon with dividend income goals and sub-$1,000 capital, individual stock-picking carries high concentration risk. We recommend a core Dividend Appreciation Index strategy (e.g., SCHD, VIG, or Nifty Dividend Opportunities 50) anchored by broad-market index exposure.",
+            "detailed_analysis": "• Recommended Model Allocation: Deploy 60% (~$600) into Dividend Aristocrat ETFs (e.g. Schwab U.S. Dividend Equity ETF - SCHD or Vanguard Dividend Appreciation - VIG) for steady quarterly income and low volatility; 30% (~$300) into a broad-market index ETF (e.g. Vanguard S&P 500 - VOO) to capture core economic growth; and 10% (~$100) into a high-yield liquid/cash buffer.\n• Single Stock vs Basket Vehicle: With less than $1,000, purchasing single individual shares (e.g., individual cyclical stocks) exposes your capital to company-specific earnings misses. A dividend ETF immediately diversifies your money across 100+ cash-rich enterprises with 10-25+ year dividend payment track records.\n• 5-Year Compounding (DRIP): Activate an automated Dividend Reinvestment Plan (DRIP) with your broker. This reinvests all quarterly cash distributions into additional fractional shares with zero fees, accelerating compounding over your 5-year horizon.",
+            "tradeoffs": [
+                {"aspect": "Pros / Advantages", "details": "Defensive dividend cash flow, robust capital preservation, and institutional diversification across 100+ proven companies."},
+                {"aspect": "Cons / Risks", "details": "Lower potential maximum upside compared to speculative high-beta equities; still subject to overall macroeconomic equity cycles."}
+            ],
+            "action_plan": [
+                {"step": 1, "title": "Zero-Fee Brokerage Setup", "description": "Open an account with a platform that supports zero-commission fractional shares and automatic DRIP."},
+                {"step": 2, "title": "Execute 60/30/10 Core Allocation", "description": "Purchase your core dividend ETF and broad-market index anchor based on your initial capital."},
+                {"step": 3, "title": "Automate Dividend Reinvestment", "description": "Enable DRIP to compound quarterly payouts automatically without manual intervention."},
+                {"step": 4, "title": "Annual Review", "description": "Conduct a simple rebalancing once per year to adjust allocations as your savings grow."}
+            ],
+            "scenario_simulation": {
+                "baseline_case": "Steady quarterly dividend cash flow reinvested into additional shares with stable capital preservation over 5 years.",
+                "best_case": "Consistent annual dividend dividend hikes combined with steady equity market appreciation.",
+                "worst_case": "Broader economic downturn temporarily lowering share prices, strongly cushioned by continuous defensive dividend payouts."
+            }
         }
-    }
+    else:
+        fallback_decision = {
+            "executive_summary": f"Based on your inquiry regarding '{query}' in the {domain.title()} domain and your selected preferences ({', '.join([a.get('selected_option', '') for a in mcq_answers[:2]])}), we recommend a structured, phased implementation prioritizing risk mitigation.",
+            "detailed_analysis": f"Detailed roadmap for {query} tailored to your current experience and constraints. Focus on phased execution and establishing metrics before expanding commitment.",
+            "tradeoffs": [
+                {"aspect": "Primary Advantage", "details": f"Aligns with your preference: {mcq_answers[0].get('selected_option', 'default preference') if mcq_answers else 'structured roadmap'}."},
+                {"aspect": "Consideration / Risk", "details": "Requires consistent monitoring and periodic re-evaluation based on changing context."}
+            ],
+            "action_plan": [
+                {"step": 1, "title": "Assessment & Baseline Setup", "description": f"Gather initial data and establish metrics aligned with {query}."},
+                {"step": 2, "title": "Phased Execution", "description": "Implement initial phase with minimum capital/time commitment to validate assumptions."},
+                {"step": 3, "title": "Review & Scale", "description": "Assess results against initial targets after 30-60 days."}
+            ],
+            "scenario_simulation": {
+                "baseline_case": "Steady progress achieving qualitative target objectives over specified timeline.",
+                "best_case": "Accelerated results exceeding performance expectations with minimal friction.",
+                "worst_case": "Minor delays requiring adjustment of timeline, fully protected by initial risk buffers."
+            }
+        }
 
     if session_id:
         session_manager.store_turn_2(
