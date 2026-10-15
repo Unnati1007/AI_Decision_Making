@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Brain, AlertCircle, Loader2, Sparkles, ChevronRight, User, Bot, CheckCircle2, ListFilter, HeartHandshake, RotateCcw } from "lucide-react";
+import { Send, Brain, AlertCircle, Loader2, Sparkles, ChevronRight, User, Bot, CheckCircle2, ListFilter, HeartHandshake, RotateCcw, Lock } from "lucide-react";
 import { useApp } from "../context/AppContext";
 import { validateQuery, matchQueryToDomain, thinkingSteps, isGibberish } from "../utils/aiUtils";
 import { DOMAINS } from "../data/dummyData";
@@ -13,6 +13,9 @@ export default function ChatPage() {
   const [thinkingStep, setThinkingStep] = useState(0);
   const [mcqFlow, setMcqFlow] = useState(null);
   const [sessionId, setSessionId] = useState(null);
+  
+  const isMcqActive = Boolean(mcqFlow);
+  const isInputLocked = isThinking || isMcqActive;
   
   const messagesEndRef = useRef(null);
   const domain = currentUser?.domain;
@@ -28,7 +31,7 @@ export default function ChatPage() {
 
   const handleSend = async (text = input) => {
     const query = text.trim();
-    if (!query || isThinking) return;
+    if (!query || isInputLocked) return;
 
     // Add user message
     const userMsg = { id: Date.now(), role: "user", text: query, type: "text" };
@@ -179,7 +182,6 @@ export default function ChatPage() {
       ...formattedResponse,
     };
     setMessages((prev) => [...prev, assistantMsg]);
-    setPendingResponse(formattedResponse);
 
     addArchiveEntry({
       query,
@@ -634,26 +636,68 @@ export default function ChatPage() {
 
       {/* Input Area */}
       <div className="border-t border-[var(--border)] bg-[var(--surface)] p-4 lg:px-8">
+        {isMcqActive && (
+          <div className="mx-auto max-w-4xl mb-3 flex items-center justify-between rounded-xl bg-blue-50/80 dark:bg-blue-500/10 border border-blue-200/70 dark:border-blue-500/20 py-2.5 px-4 text-xs text-blue-700 dark:text-blue-300 animate-fade-in shadow-xs">
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-blue-600/10 dark:bg-blue-400/20 text-blue-600 dark:text-blue-400">
+                <Lock size={13} />
+              </span>
+              <span className="font-semibold">
+                Clarification in progress — Please select an option above to continue.
+              </span>
+            </div>
+            {mcqFlow?.questions && (
+              <span className="text-[10px] font-black uppercase tracking-wider bg-blue-100 dark:bg-blue-500/20 px-2.5 py-1 rounded-md text-blue-700 dark:text-blue-300 shrink-0">
+                Question {(mcqFlow?.currentIndex ?? 0) + 1} of {mcqFlow?.questions?.length || 1}
+              </span>
+            )}
+          </div>
+        )}
+
         <form
-          onSubmit={(e) => { e.preventDefault(); handleSend(); }}
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (!isInputLocked) handleSend();
+          }}
           className="mx-auto max-w-4xl relative"
         >
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={`Ask about ${domainInfo?.label || 'anything'}...`}
-            disabled={isThinking}
-            className="input pr-12 h-12 bg-[var(--surface-2)] border-none focus:bg-[var(--surface)] focus:ring-2 focus:ring-blue-500/10 text-sm font-medium shadow-inner"
+            placeholder={
+              isMcqActive
+                ? "Locked: Please select an option from the choices above..."
+                : isThinking
+                ? "AI is analyzing your decision context..."
+                : `Ask about ${domainInfo?.label || 'anything'}...`
+            }
+            disabled={isInputLocked}
+            readOnly={isInputLocked}
+            className={cn(
+              "input pr-12 h-12 bg-[var(--surface-2)] border-none focus:bg-[var(--surface)] focus:ring-2 focus:ring-blue-500/10 text-sm font-medium shadow-inner transition-all",
+              isInputLocked && "opacity-60 cursor-not-allowed select-none bg-[var(--surface-2)]/80"
+            )}
           />
           <button
             type="submit"
-            disabled={!input.trim() || isThinking}
+            disabled={!input.trim() || isInputLocked}
+            title={isMcqActive ? "Text input locked during MCQ clarification" : undefined}
             className={cn(
               "absolute right-1.5 top-1.5 h-9 w-9 flex items-center justify-center rounded-lg transition-all",
-              input.trim() ? "bg-blue-600 text-white shadow-lg shadow-blue-500/30 hover:-rotate-12" : "text-[var(--text-soft)]"
+              isMcqActive
+                ? "bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed"
+                : input.trim() && !isInputLocked
+                ? "bg-blue-600 text-white shadow-lg shadow-blue-500/30 hover:-rotate-12 cursor-pointer"
+                : "text-[var(--text-soft)] cursor-not-allowed"
             )}
           >
-            {isThinking ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
+            {isThinking ? (
+              <Loader2 size={18} className="animate-spin" />
+            ) : isMcqActive ? (
+              <Lock size={16} />
+            ) : (
+              <Send size={18} />
+            )}
           </button>
         </form>
         <p className="mt-2 text-center text-[9px] font-bold text-[var(--text-soft)] uppercase tracking-widest opacity-60">
