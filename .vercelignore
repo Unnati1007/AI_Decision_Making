@@ -1,0 +1,22 @@
+# Ignore frontend from Python serverless function
+frontend/
+node_modules/
+
+# Ignore local env and cache
+.venv/
+backend/myenv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore tests, scratch, docs
+tests/
+scratch/
+.pytest_cache/
+*.md
+.git/
+.github/
+
+# Ignore raw data that is not needed at serverless runtime
+data/raw_datasets/
+data/_archive_/
