@@ -214,6 +214,23 @@ class TestPipelineFlow(unittest.TestCase):
             self.assertFalse(res["success"], f"Expected query '{q}' to be blocked, but it passed!")
             self.assertEqual(res["error_layer"], "Layer 1: Quality Check")
 
+    def test_k_word_salad_and_unstructured_queries_blocked_by_guard(self):
+        """(k) Tests that word salads and keyword dumps lacking sentence structure are blocked at Layer 1."""
+        word_salads = [
+            "career bad good happy nice no no no",
+            "career bad good happy nice",
+            "money tax salary investment",
+            "health doctor hospital medicine pain"
+        ]
+        for q in word_salads:
+            res = execute_turn_1(q, domain_override="career")
+            self.assertFalse(res["success"], f"Expected word salad '{q}' to be blocked, but it passed!")
+            self.assertEqual(res["error_layer"], "Layer 1: Quality Check")
+            self.assertTrue(
+                "sentence" in res["message"].lower() or "meaningful" in res["message"].lower() or "valid" in res["message"].lower(),
+                f"Unexpected rejection message for '{q}': {res['message']}"
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

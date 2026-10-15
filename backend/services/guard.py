@@ -100,6 +100,7 @@ class GuardFailReason(str, Enum):
     GIBBERISH = "query_gibberish_or_invalid"
     CONVERSATIONAL_FILLER = "conversational_filler_no_decision"
     VAGUE_NO_DECISION = "vague_statement_no_decision_dilemma"
+    NOT_A_SENTENCE = "query_lacks_sentence_structure_or_verb"
     BLOCKED_KEYWORD = "blocked_keyword_detected"
     INJECTION_ATTEMPT = "prompt_injection_attempt"
     LLM_UNSAFE = "llm_flagged_unsafe"
@@ -307,6 +308,34 @@ def is_vague_without_decision(text: str) -> bool:
     has_decision_intent = any(re.search(pat, q) for pat in DECISION_INTENT_PATTERNS)
     return not has_decision_intent
 
+SENTENCE_STRUCTURE_PATTERNS = [
+    # Interrogatives & Question auxiliaries
+    r"\b(should|can|could|would|will|shall|may|might|must|is|are|am|was|were|do|does|did|have|has|had|what|how|why|which|who|whom|whose|where|when|whether|if)\b",
+    r"\b(kya|kaise|kyun|kaun|kaunsa|kab|kahan|kisko|kiska)\b",
+    r"\?",
+    # Choice, Comparison & Dilemma Connectors
+    r"\b(or|vs|versus|ya|than|either|neither|between|against|prefer|better than)\b",
+    # Personal Situation / Subject Pronouns
+    r"\b(i|my|me|mine|myself|we|our|us|you|your|he|she|they|their)\b",
+    r"\b(mujhe|mera|meri|mere|hum|hamara|apna|apni|apne|tera|teri|tere)\b",
+    # Real Action Verbs & Decision Predicates (strictly verbs/actions, no static nouns)
+    r"\b(switch|switching|switched|resign|resigning|resigned|quit|quitting|stay|staying|stayed|leave|leaving|left|join|joining|joined|accept|accepting|accepted|negotiate|negotiating|negotiated|promote|promoting|promoted|apply|applying|applied|hire|hiring|interview|interviewing|upskill|upskilling)\b",
+    r"\b(invest|investing|invested|buy|buying|bought|sell|selling|sold|save|saving|saved|prepay|prepaying|prepaid|deposit|depositing|withdraw|withdrawing|spend|spending|spent|calculate|calculating|opt|opting|opted|allocate|allocating)\b",
+    r"\b(file|filing|filed|draft|drafting|drafted|send|sending|sent|sue|suing|sued|evict|evicting|evicted|dispute|disputing|disputed|claim|claiming|claimed|terminate|terminating|terminated|sign|signing|signed|complain|complaining)\b",
+    r"\b(manage|managing|managed|cure|curing|cured|prevent|preventing|prevented|treat|treating|treated|improve|improving|improved|reduce|reducing|reduced|cope|coping|exercise|exercising|sleep|sleeping|slept|relax|relaxing|heal|healing|meditate|meditating)\b",
+    r"\b(choose|choosing|chose|chosen|select|selecting|selected|decide|deciding|decided|compare|comparing|compared|plan|planning|planned|evaluate|evaluating|evaluated|recommend|recommending|suggest|suggesting|advise|advising|need|needing|needed|want|wanting|wanted|look|looking|looked|help|helping|helped|guide|guiding|guided|tell|telling|told|explain|explaining|explained|think|thinking|thought|feel|feeling|felt)\b",
+    # Hindi verbs & predicates
+    r"\b(karna|karein|karun|kare|karte|karti|karta|chahiye|raha|rahi|rahe|gaya|gayi|gaye|hoga|hogi|hoge|hona|badal|badalna|chhod|chhodna|lu|le|lena|dena|diya|de|batao|bataiye|samjhao|samjhaiye|lagta|lagti|lagte|soch|sochna|hai|hain|tha|thi|the)\b"
+]
+
+def has_sentence_structure(text: str) -> bool:
+    """
+    Verifies that the text is not merely a random word salad / list of isolated adjectives/nouns,
+    and contains at least one verb, question marker, choice connector, subject pronoun, or action predicate.
+    """
+    q = text.lower().strip()
+    return any(re.search(pat, q) for pat in SENTENCE_STRUCTURE_PATTERNS)
+
 def check_query_quality(query: str) -> GuardResult:
     q = query.strip()
 
@@ -347,6 +376,14 @@ def check_query_quality(query: str) -> GuardResult:
             passed=False,
             reason=GuardFailReason.VAGUE_NO_DECISION,
             message="Please specify your decision question or dilemma (e.g., 'Should I switch to another company or stay for promotion?', 'Is an MBA better than continuing my current job?').",
+            layer="Layer 1: Quality Check"
+        )
+
+    if not has_sentence_structure(q):
+        return GuardResult(
+            passed=False,
+            reason=GuardFailReason.NOT_A_SENTENCE,
+            message="Please enter a complete, meaningful sentence or question (e.g., 'Should I switch jobs for higher pay?' or 'How should I invest between mutual funds and FD?').",
             layer="Layer 1: Quality Check"
         )
 

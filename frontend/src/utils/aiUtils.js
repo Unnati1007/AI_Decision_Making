@@ -31,6 +31,32 @@ export const isGibberish = (text) => {
   return realWords.length / Math.max(words.length, 1) < 0.4;
 };
 
+const SENTENCE_PREDICATE_REGEX = new RegExp(
+  "\\b(" +
+  // Interrogatives & Question words
+  "should|can|could|would|will|shall|may|might|must|is|are|am|was|were|do|does|did|have|has|had|" +
+  "what|how|why|which|who|whom|whose|where|when|whether|if|" +
+  "kya|kaise|kyun|kaun|kaunsa|kab|kahan|kisko|kiska|" +
+  // Choice & Comparison
+  "or|vs|versus|ya|than|either|neither|between|against|prefer|better than|" +
+  // Personal Pronouns
+  "i|my|me|mine|myself|we|our|us|you|your|he|she|they|their|" +
+  "mujhe|mera|meri|mere|hum|hamara|apna|apni|apne|tera|teri|tere|" +
+  // Real Action Verbs & Decision Predicates (strictly verbs/actions, no static nouns)
+  "switch|switching|switched|resign|resigning|resigned|quit|quitting|stay|staying|stayed|leave|leaving|left|join|joining|joined|accept|accepting|accepted|negotiate|negotiating|negotiated|promote|promoting|promoted|apply|applying|applied|hire|hiring|interview|interviewing|upskill|upskilling|" +
+  "invest|investing|invested|buy|buying|bought|sell|selling|sold|save|saving|saved|prepay|prepaying|prepaid|deposit|depositing|withdraw|withdrawing|spend|spending|spent|calculate|calculating|opt|opting|opted|allocate|allocating|" +
+  "file|filing|filed|draft|drafting|drafted|send|sending|sent|sue|suing|sued|evict|evicting|evicted|dispute|disputing|disputed|claim|claiming|claimed|terminate|terminating|terminated|sign|signing|signed|complain|complaining|" +
+  "manage|managing|managed|cure|curing|cured|prevent|preventing|prevented|treat|treating|treated|improve|improving|improved|reduce|reducing|reduced|cope|coping|exercise|exercising|sleep|sleeping|slept|relax|relaxing|heal|healing|meditate|meditating|" +
+  "choose|choosing|chose|chosen|select|selecting|selected|decide|deciding|decided|compare|comparing|compared|plan|planning|planned|evaluate|evaluating|evaluated|recommend|recommending|suggest|suggesting|advise|advising|need|needing|needed|want|wanting|wanted|look|looking|looked|help|helping|helped|guide|guiding|guided|tell|telling|told|explain|explaining|explained|think|thinking|thought|feel|feeling|felt|" +
+  "karna|karein|karun|kare|karte|karti|karta|chahiye|raha|rahi|rahe|gaya|gayi|gaye|hoga|hogi|hoge|hona|badal|badalna|chhod|chhodna|lu|le|lena|dena|diya|de|batao|bataiye|samjhao|samjhaiye|lagta|lagti|lagte|soch|sochna|hai|hain|tha|thi|the" +
+  ")\\b|\\?",
+  "i"
+);
+
+export const hasSentenceStructure = (text) => {
+  return SENTENCE_PREDICATE_REGEX.test(text);
+};
+
 // ─── Query Validation ─────────────────────────────────────
 export const validateQuery = (text, domain) => {
   const trimmed = text.trim();
@@ -51,6 +77,14 @@ export const validateQuery = (text, domain) => {
     return {
       valid: false,
       error: "Please enter a specific decision question or dilemma (e.g., job offer comparison, notice period resignation, tax saving).",
+    };
+  }
+
+  // Check sentence structure / predicate presence (blocks word salads like 'career bad good happy nice')
+  if (!hasSentenceStructure(trimmed)) {
+    return {
+      valid: false,
+      error: "Please enter a complete, meaningful sentence or question (e.g., 'Should I switch jobs for higher pay?' or 'How should I invest between mutual funds and FD?').",
     };
   }
 
