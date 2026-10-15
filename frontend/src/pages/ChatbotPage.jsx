@@ -75,7 +75,10 @@ export default function ChatPage() {
       });
       clearInterval(stepInterval);
       setIsThinking(false);
-      if (!res.ok) throw new Error("Turn 1 API call failed");
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => null);
+        throw new Error(errJson?.detail || errJson?.message || "Turn 1 request failed");
+      }
       const data = await res.json();
       if (data.session_id) {
         setSessionId(data.session_id);
@@ -148,7 +151,9 @@ export default function ChatPage() {
           id: Date.now() + 2,
           role: "assistant",
           type: "error",
-          text: "Backend se connect nahi ho paya, dobara try karo",
+          text: err.message && err.message !== "Turn 1 request failed"
+            ? err.message
+            : "Unable to connect to the backend server. Please verify the server is running and try again.",
         },
       ]);
     }
@@ -264,7 +269,10 @@ export default function ChatPage() {
         });
         clearInterval(turn2Interval);
         setIsThinking(false);
-        if (!res.ok) throw new Error("Turn 2 API call failed");
+        if (!res.ok) {
+          const errJson = await res.json().catch(() => null);
+          throw new Error(errJson?.detail || errJson?.message || "Turn 2 request failed");
+        }
         const data = await res.json();
         if (data.session_id) {
           setSessionId(data.session_id);
@@ -297,7 +305,9 @@ export default function ChatPage() {
             id: Date.now() + 2,
             role: "assistant",
             type: "error",
-            text: "Backend se connect nahi ho paya, dobara try karo",
+            text: err.message && err.message !== "Turn 2 request failed"
+              ? err.message
+              : "Unable to connect to the backend server. Please verify the server is running and try again.",
           },
         ]);
       }
@@ -442,7 +452,7 @@ export default function ChatPage() {
                        <div className="rounded-2xl px-5 py-3 bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 flex items-center gap-3">
                          <AlertCircle size={18} className="text-amber-600 shrink-0" />
                          <p className="text-xs font-bold text-amber-700 dark:text-amber-400">
-                           LLM nahi chala, yeh template jawab hai, asli AI decision nahi.
+                           Automated standard guidance applied (fallback template).
                          </p>
                        </div>
                      )}
@@ -544,7 +554,7 @@ export default function ChatPage() {
 
                         <div className="pt-4 border-t border-[var(--border)] mt-4">
                            <p className="text-[11px] font-semibold text-[var(--text-muted)] italic">
-                             Yeh AI-generated jawab hai, legal/financial advice nahi. Law, tax aur salary ke numbers official source se khud check karo.
+                             This is an AI-generated decision recommendation, not formal legal, medical, or financial advice. Always verify statutory regulations, tax rates, and official terms with primary sources.
                            </p>
                         </div>
                      </div>
@@ -557,7 +567,7 @@ export default function ChatPage() {
                        <div className="rounded-2xl px-5 py-3 bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 flex items-center gap-3">
                          <AlertCircle size={18} className="text-amber-600 shrink-0" />
                          <p className="text-xs font-bold text-amber-700 dark:text-amber-400">
-                           LLM nahi chala, yeh template jawab hai, asli AI decision nahi.
+                           Automated standard guidance applied (fallback template).
                          </p>
                        </div>
                      )}

@@ -80,7 +80,7 @@ export const validateQuery = (text, domain) => {
   if (PRESCRIPTION_REGEX.test(trimmed)) {
     return {
       valid: false,
-      error: "AI decision system cannot prescribe medicines or drugs (dawai). For medical prescriptions or clinical diagnosis, please consult a qualified doctor or physician.",
+      error: "The AI decision system cannot prescribe medicines or pharmaceuticals. For clinical diagnoses and medical prescriptions, please consult a licensed healthcare professional.",
     };
   }
 
