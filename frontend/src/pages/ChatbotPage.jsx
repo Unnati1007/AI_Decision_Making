@@ -725,21 +725,17 @@ export default function ChatPage() {
                                                  ? "bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 font-bold"
                                                  : isQuora
                                                  ? "bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20 font-bold"
-                                                 : "bg-blue-500/10 text-blue-600 dark:text-blue-400"
+                                                 : resource.source_type === "wikipedia"
+                                                 ? "bg-blue-500/10 text-blue-600 dark:text-blue-400"
+                                                 : "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-bold"
                                              )}>
                                                 {isReddit 
                                                   ? "Reddit Discussion" 
                                                   : isQuora
                                                   ? "Quora Q&A"
-                                                  : resource.source_type === "open_textbook" 
-                                                  ? "Open textbook (NC-SA)" 
-                                                  : resource.source_type === "official_gov" 
-                                                  ? "Official" 
                                                   : resource.source_type === "wikipedia" 
                                                   ? "Wikipedia" 
-                                                  : resource.source_type === "web_live" 
-                                                  ? "Verified Web" 
-                                                  : "Decision Framework"}
+                                                  : "Verified"}
                                              </span>
                                           </div>
                                        </div>
