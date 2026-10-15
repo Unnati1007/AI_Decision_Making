@@ -1,0 +1,8 @@
+SOURCE_URL:
+URL:
+OWNER: OpenStax, Rice University
+TITLE: Psychology 2e
+DOWNLOADED_ON: 2026-10-12
+REUSE_SENTENCE: ©2026 Rice University. Textbook content produced by OpenStax is licensed under a Creative Commons Attribution Non-Commercial ShareAlike 4.0 International License (CC BY-NC-SA 4.0). Under this license, any
+REUSE_PAGE_URL: https://openstax.org/details/books/psychology-2e
+DOMAIN: wellbeing

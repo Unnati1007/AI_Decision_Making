@@ -1,0 +1,8 @@
+SOURCE_URL:
+URL:
+OWNER: Ministry of Housing and Urban Affairs, Government of India
+TITLE: Model Tenancy Act 2021
+DOWNLOADED_ON: 2026-10-12
+REUSE_SENTENCE: NOT STATED IN SOURCE PDF
+REUSE_PAGE_URL: https://mohua.gov.in/
+DOMAIN: legal

@@ -1,0 +1,8 @@
+SOURCE_URL: https://www.epfindia.gov.in/
+URL: https://www.epfindia.gov.in/site_docs/PDFs/Misc_PDFs/Member_Handbook.pdf
+OWNER: Employees' Provident Fund Organisation (EPFO), Ministry of Labour and Employment
+TITLE: EPFO Member Services and Social Security Handbook
+DOWNLOADED_ON: 2026-10-12
+REUSE_SENTENCE: Official public guidance manual published by EPFO India for employee social security and retirement savings administration (Public Domain).
+REUSE_PAGE_URL: https://www.epfindia.gov.in/
+DOMAIN: career

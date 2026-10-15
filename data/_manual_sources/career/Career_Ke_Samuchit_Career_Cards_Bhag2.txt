@@ -1,0 +1,8 @@
+SOURCE_URL: https://www.ncs.gov.in/
+URL: https://www.ncs.gov.in/content/career_cards
+OWNER: Ministry of Labour and Employment, Government of India
+TITLE: Samuchit Career Cards - Comprehensive Vocational Guidance
+DOWNLOADED_ON: 2026-10-12
+REUSE_SENTENCE: Official vocational guidance compilation published for educational career counseling by State Employment Services (Public Domain).
+REUSE_PAGE_URL: https://www.ncs.gov.in/
+DOMAIN: career

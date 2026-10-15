@@ -1,0 +1,8 @@
+SOURCE_URL:
+URL:
+OWNER: Ministry of Labour and Employment, Government of India
+TITLE: The Code on Social Security 2020
+DOWNLOADED_ON: 2026-10-12
+REUSE_SENTENCE: NOT STATED IN SOURCE PDF
+REUSE_PAGE_URL: https://labour.gov.in/
+DOMAIN: legal

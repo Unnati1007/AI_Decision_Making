@@ -1,0 +1,8 @@
+SOURCE_URL: https://www.nsdcindia.org/
+URL: https://www.nsdcindia.org/pdf/skill_india_guide.pdf
+OWNER: National Skill Development Corporation (NSDC)
+TITLE: NSDC Skill India Qualification and Career Development Guide
+DOWNLOADED_ON: 2026-10-12
+REUSE_SENTENCE: Official publication under the Ministry of Skill Development and Entrepreneurship for vocational qualifications and upskilling pathways (Public Domain).
+REUSE_PAGE_URL: https://www.nsdcindia.org/
+DOMAIN: career

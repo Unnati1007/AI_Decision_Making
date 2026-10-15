@@ -1,0 +1,8 @@
+SOURCE_URL:
+URL:
+OWNER: Ministry of Education, Government of India
+TITLE: Manodarpan Psychosocial Support and Mental Health Guide
+DOWNLOADED_ON: 2026-10-12
+REUSE_SENTENCE: NOT STATED IN SOURCE PDF
+REUSE_PAGE_URL: https://manodarpan.education.gov.in/
+DOMAIN: wellbeing

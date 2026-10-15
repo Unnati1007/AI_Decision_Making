@@ -1,0 +1,8 @@
+SOURCE_URL:
+URL:
+OWNER: Reserve Bank of India (RBI)
+TITLE: RBI Financial Awareness Messages (FAME)
+DOWNLOADED_ON: 2026-10-12
+REUSE_SENTENCE: Reproduction is permitted provided the source is acknowledged
+REUSE_PAGE_URL: https://www.rbi.org.in/
+DOMAIN: finance
