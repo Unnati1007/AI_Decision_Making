@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Brain, AlertCircle, Loader2, Sparkles, ChevronRight, User, Bot, CheckCircle2, ListFilter, HeartHandshake, RotateCcw, Lock } from "lucide-react";
+import { Send, Brain, AlertCircle, Loader2, Sparkles, ChevronRight, User, Bot, CheckCircle2, ListFilter, HeartHandshake, RotateCcw, Lock, ExternalLink, FileText, X, BookOpen } from "lucide-react";
 import { useApp } from "../context/AppContext";
 import { validateQuery, matchQueryToDomain, thinkingSteps, isGibberish } from "../utils/aiUtils";
 import { DOMAINS } from "../data/dummyData";
@@ -13,6 +13,9 @@ export default function ChatPage() {
   const [thinkingStep, setThinkingStep] = useState(0);
   const [mcqFlow, setMcqFlow] = useState(null);
   const [sessionId, setSessionId] = useState(null);
+  const [selectedSource, setSelectedSource] = useState(null);
+  const [sourceLoading, setSourceLoading] = useState(false);
+  const [sourceContent, setSourceContent] = useState("");
   
   const isMcqActive = Boolean(mcqFlow);
   const isInputLocked = isThinking || isMcqActive;
@@ -159,6 +162,40 @@ export default function ChatPage() {
     }
   };
 
+  const handleOpenSource = async (resource) => {
+    setSelectedSource(resource);
+    setSourceLoading(true);
+    setSourceContent("");
+    try {
+      const params = new URLSearchParams();
+      if (resource.source_file) params.append("path", resource.source_file);
+      if (resource.title) params.append("title", resource.title);
+      const res = await fetch(`/api/query/source-document?${params.toString()}`);
+      if (res.ok) {
+        const data = await res.json();
+        setSourceContent(data.content || "No document content available.");
+        if (data.url && (!resource.url || resource.url === "#")) {
+          setSelectedSource((prev) => ({ ...prev, url: data.url }));
+        }
+      } else {
+        setSourceContent(
+          resource.url && resource.url.startsWith("http")
+            ? `External reference resource: ${resource.url}\n\nYou can access the full publication directly via the button above.`
+            : "Reference framework content could not be loaded."
+        );
+      }
+    } catch (e) {
+      console.warn("Error fetching source document:", e);
+      setSourceContent(
+        resource.url && resource.url.startsWith("http")
+          ? `External reference resource: ${resource.url}\n\nYou can access the full publication directly via the button above.`
+          : "Reference framework content could not be loaded."
+      );
+    } finally {
+      setSourceLoading(false);
+    }
+  };
+
   const showRecommendationFromTurn2 = (data, query) => {
     const decision = data.decision || {};
     const formattedResponse = {
@@ -174,8 +211,9 @@ export default function ChatPage() {
       actionPlan: decision.action_plan || [],
       resources: (data.sources || []).map((s) => ({
         title: s.title || s.id,
-        url: s.url || "#",
-        domain: s.domain || "career",
+        url: s.url && s.url !== "#" ? s.url : "",
+        source_file: s.source_file || "",
+        domain: s.domain || domain || "career",
         source_type: s.source_type || "ai_curated",
       })),
     };
@@ -520,37 +558,58 @@ export default function ChatPage() {
                         )}
 
                         {msg.resources && msg.resources.length > 0 && (
-                           <div className="pt-5 border-t border-[var(--border)] mt-2">
-                              <div className="flex items-center gap-2 mb-4">
-                                 <div className="h-5 w-5 rounded-md bg-blue-600/10 text-blue-600 flex items-center justify-center">
-                                    <ListFilter size={12} />
-                                 </div>
-                                 <h4 className="text-[10px] font-black uppercase tracking-widest text-[var(--text-soft)]">Sources</h4>
-                              </div>
-                              <div className="grid gap-3 sm:grid-cols-2">
-                                 {msg.resources.map((resource, i) => (
-                                    <a 
-                                      key={i} 
-                                      href={resource.url} 
-                                      target="_blank" 
-                                      rel="noopener noreferrer"
-                                      className="group flex flex-col p-3 rounded-xl bg-[var(--surface-2)] border border-transparent hover:border-blue-500/30 hover:bg-[var(--surface)] transition-all duration-300 shadow-sm"
-                                    >
-                                       <div className="flex items-center justify-between gap-2 mb-1">
-                                          <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400 group-hover:translate-x-0.5 transition-transform truncate">{resource.title}</span>
-                                          <ChevronRight size={14} className="text-[var(--text-soft)] group-hover:text-blue-500 transition-colors shrink-0" />
+                            <div className="pt-5 border-t border-[var(--border)] mt-2">
+                               <div className="flex items-center gap-2 mb-4">
+                                  <div className="h-5 w-5 rounded-md bg-blue-600/10 text-blue-600 flex items-center justify-center">
+                                     <ListFilter size={12} />
+                                  </div>
+                                  <h4 className="text-[10px] font-black uppercase tracking-widest text-[var(--text-soft)]">Sources & References</h4>
+                               </div>
+                               <div className="grid gap-3 sm:grid-cols-2">
+                                  {msg.resources.map((resource, i) => {
+                                     const hasExternalUrl = Boolean(resource.url && resource.url.startsWith("http"));
+                                     return (
+                                       <div 
+                                         key={i} 
+                                         onClick={() => handleOpenSource(resource)}
+                                         className="group flex flex-col justify-between p-3.5 rounded-xl bg-[var(--surface-2)] border border-[var(--border)] hover:border-blue-500/40 hover:bg-[var(--surface)] transition-all duration-200 shadow-xs cursor-pointer"
+                                       >
+                                          <div>
+                                             <div className="flex items-center justify-between gap-2 mb-1">
+                                                <span className="text-xs font-bold text-blue-600 dark:text-blue-400 group-hover:underline line-clamp-1">{resource.title}</span>
+                                                {hasExternalUrl ? (
+                                                   <a
+                                                     href={resource.url}
+                                                     target="_blank"
+                                                     rel="noopener noreferrer"
+                                                     onClick={(e) => e.stopPropagation()}
+                                                     title="Open external website in new tab"
+                                                     className="p-1 rounded-md text-[var(--text-soft)] hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
+                                                   >
+                                                     <ExternalLink size={13} />
+                                                   </a>
+                                                ) : (
+                                                   <ChevronRight size={14} className="text-[var(--text-soft)] group-hover:text-blue-500 group-hover:translate-x-0.5 transition-all shrink-0" />
+                                                )}
+                                             </div>
+                                             <p className="text-[10px] text-[var(--text-muted)] line-clamp-1">
+                                                {hasExternalUrl ? "Official Web Resource" : "Internal Decision Guide • Click to read"}
+                                             </p>
+                                          </div>
+                                          <div className="flex items-center justify-between gap-2 pt-2 mt-2 border-t border-[var(--border)]/50">
+                                             <span className="text-[9px] font-bold text-[var(--text-soft)] uppercase tracking-wider">
+                                                {resource.domain || domain || "General"}
+                                             </span>
+                                             <span className="text-[9px] font-semibold px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0">
+                                                {resource.source_type === "open_textbook" ? "Open textbook (NC-SA)" : resource.source_type === "official_gov" ? "Official" : resource.source_type === "wikipedia" ? "Wikipedia" : resource.source_type === "web_live" ? "Live web, unverified" : "Decision Framework"}
+                                             </span>
+                                          </div>
                                        </div>
-                                       <div className="flex items-center justify-between gap-2">
-                                          <p className="text-[9px] font-medium text-[var(--text-muted)] line-clamp-1 opacity-60">Source: External Repository</p>
-                                          <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-500 shrink-0">
-                                            {resource.source_type === "open_textbook" ? "Open textbook (NC-SA)" : resource.source_type === "official_gov" ? "Official" : resource.source_type === "wikipedia" ? "Wikipedia" : resource.source_type === "web_live" ? "Live web, unverified" : "AI-generated, unverified"}
-                                          </span>
-                                       </div>
-                                    </a>
-                                 ))}
-                              </div>
-                           </div>
-                        )}
+                                     );
+                                  })}
+                               </div>
+                            </div>
+                         )}
 
                         <div className="pt-4 border-t border-[var(--border)] mt-4">
                            <p className="text-[11px] font-semibold text-[var(--text-muted)] italic">
@@ -718,6 +777,85 @@ export default function ChatPage() {
             Disclaimer: This platform provides informational decision support only and is not a substitute for professional medical, psychological, or crisis healthcare services.
           </p>
         )}
+      {/* Source Document Reader Modal */}
+      {selectedSource && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-fade-in"
+          onClick={() => setSelectedSource(null)}
+        >
+          <div 
+            className="card max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-[var(--border)] overflow-hidden animate-scale-up"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="p-4 border-b border-[var(--border)] flex items-start justify-between gap-3 bg-[var(--surface)]">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-blue-600/10 text-blue-600">
+                    <BookOpen size={14} />
+                  </span>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-blue-600 dark:text-blue-400">
+                    {selectedSource.source_type === "open_textbook" ? "Open Textbook Reference" : "Knowledge Base Source"}
+                  </span>
+                </div>
+                <h3 className="text-base font-bold text-[var(--text)] leading-snug">
+                  {selectedSource.title}
+                </h3>
+              </div>
+              <button 
+                onClick={() => setSelectedSource(null)}
+                className="p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface-2)] transition-colors cursor-pointer"
+                title="Close"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* External URL Banner if available */}
+            {selectedSource.url && selectedSource.url.startsWith("http") && (
+              <div className="px-5 py-2.5 bg-blue-50/80 dark:bg-blue-500/10 border-b border-blue-200/50 dark:border-blue-500/20 flex items-center justify-between gap-3">
+                <span className="text-xs text-blue-700 dark:text-blue-300 font-medium truncate">
+                  External URL: {selectedSource.url}
+                </span>
+                <a
+                  href={selectedSource.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shrink-0"
+                >
+                  <span>Visit Website</span>
+                  <ExternalLink size={12} />
+                </a>
+              </div>
+            )}
+
+            {/* Document Content */}
+            <div className="p-5 overflow-y-auto flex-1 text-xs leading-relaxed text-[var(--text)] space-y-3 font-normal whitespace-pre-wrap selection:bg-blue-500/20">
+              {sourceLoading ? (
+                <div className="flex flex-col items-center justify-center py-12 gap-3 text-[var(--text-muted)]">
+                  <Loader2 size={24} className="animate-spin text-blue-500" />
+                  <span className="text-xs font-semibold">Loading document content...</span>
+                </div>
+              ) : (
+                sourceContent || "No document text available for preview."
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-3 border-t border-[var(--border)] bg-[var(--surface-2)] flex items-center justify-between">
+              <span className="text-[10px] text-[var(--text-muted)]">
+                IntelliChoice Decision Support Corpus
+              </span>
+              <button
+                onClick={() => setSelectedSource(null)}
+                className="px-4 py-1.5 rounded-lg text-xs font-semibold bg-[var(--surface)] border border-[var(--border)] hover:bg-[var(--surface-2)] transition-colors cursor-pointer text-[var(--text)]"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       </div>
     </div>
   );

@@ -430,7 +430,8 @@ def execute_turn_2(
                 "title": title,
                 "domain": doc_domain,
                 "similarity_score": round(score, 4),
-                "source_type": meta.get("source_type", "ai_curated")
+                "source_type": meta.get("source_type", "ai_curated"),
+                "source_file": meta.get("source_file", "")
             }
             if url:
                 src_item["url"] = url
