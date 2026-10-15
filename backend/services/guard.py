@@ -85,8 +85,6 @@ def get_domain_embeddings(domain: Optional[str] = None):
     if dom_key not in _domain_embeddings:
         if dom_key in kw_by_domain:
             anchors = list(kw_by_domain[dom_key])
-            if "general_decision" in kw_by_domain:
-                anchors.extend(kw_by_domain["general_decision"])
         else:
             anchors = get_domain_keywords()
         _domain_embeddings[dom_key] = model.encode(anchors, convert_to_tensor=True)
@@ -336,6 +334,17 @@ def has_sentence_structure(text: str) -> bool:
     q = text.lower().strip()
     return any(re.search(pat, q) for pat in SENTENCE_STRUCTURE_PATTERNS)
 
+PRESCRIPTION_PATTERNS = [
+    r"\b(?:kaunsi|kounsi|which|what)\s+(?:dawai|dawa|medicine|medicines|tablet|tablets|drug|drugs|dosage|dose)\b",
+    r"\b(?:dawai|dawa|medicine|medicines|tablet|tablets|drug|drugs)\s+(?:leni|lena|khani|khana|suggest|prescribe|recommend)\b",
+    r"\b(?:suggest|prescribe|recommend)\s+(?:me\s+)?(?:a\s+)?(?:medicine|drug|tablet|dosage)\b",
+    r"\b(?:which|what)\s+(?:medicine|tablet|drug)\s+(?:should\s+i|to)\s+(?:take|use)\b"
+]
+
+def is_prescription_request(text: str) -> bool:
+    q = text.lower().strip()
+    return any(re.search(pat, q) for pat in PRESCRIPTION_PATTERNS)
+
 def check_query_quality(query: str) -> GuardResult:
     q = query.strip()
 
@@ -360,6 +369,14 @@ def check_query_quality(query: str) -> GuardResult:
             passed=False,
             reason=GuardFailReason.GIBBERISH,
             message="Please re-enter a valid query",
+            layer="Layer 1: Quality Check"
+        )
+
+    if is_prescription_request(q):
+        return GuardResult(
+            passed=False,
+            reason=GuardFailReason.BLOCKED_KEYWORD,
+            message="AI decision system cannot prescribe medicines or drugs (dawai). For medical prescriptions or clinical diagnosis, please consult a qualified doctor or physician.",
             layer="Layer 1: Quality Check"
         )
 
@@ -430,6 +447,20 @@ def check_safety(query: str) -> GuardResult:
 # LAYER 3 — Embedding Relevance Check
 # ============================================================
 def check_relevance(query: str, selected_domain: Optional[str] = None) -> GuardResult:
+    from backend.services.domain_router import detect_domain
+
+    # If domain is selected, verify query does not strongly belong to a different domain
+    if selected_domain and selected_domain.lower() in ["career", "finance", "legal", "wellbeing"]:
+        detected_domain = detect_domain(query)
+        if detected_domain != "unknown" and detected_domain != selected_domain.lower():
+            logger.info(f"Domain mismatch: user selected {selected_domain}, but query detected as {detected_domain}")
+            return GuardResult(
+                passed=False,
+                reason=GuardFailReason.NOT_RELEVANT,
+                message=f"Your query appears to belong to the {detected_domain.capitalize()} domain, not {selected_domain.capitalize()}. Please select the {detected_domain.capitalize()} agent or ask a {selected_domain.capitalize()}-related decision question.",
+                layer="Layer 3: Embedding Relevance"
+            )
+
     model = get_embed_model()
     target_embeddings = get_domain_embeddings(selected_domain)
 

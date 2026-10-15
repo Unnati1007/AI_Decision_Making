@@ -32,7 +32,7 @@ export const DOMAINS = {
     icon: "Heart",
     color: "rose",
     description: "Health, mental wellness, and lifestyle choices",
-    keywords: ["health", "mental", "stress", "diet", "fitness", "sleep", "anxiety", "depression", "exercise", "wellbeing", "wellness", "therapy", "meditation", "nutrition", "weight", "fasting", "lifestyle", "habit", "energy", "burnout"],
+    keywords: ["health", "mental", "stress", "diet", "fitness", "sleep", "anxiety", "depression", "exercise", "wellbeing", "wellness", "therapy", "meditation", "nutrition", "weight", "fasting", "lifestyle", "habit", "energy", "burnout", "insomnia", "dawai", "dawa", "medicine", "tablet", "doctor", "hospital", "pain"],
   },
 };
 

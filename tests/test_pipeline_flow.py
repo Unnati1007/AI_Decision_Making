@@ -231,6 +231,21 @@ class TestPipelineFlow(unittest.TestCase):
                 f"Unexpected rejection message for '{q}': {res['message']}"
             )
 
+    def test_l_domain_mismatch_and_prescription_blocked(self):
+        """(l) Tests that asking wellbeing queries in finance is rejected, and prescription queries are blocked."""
+        # Test 1: Prescription blocked
+        presc_query = "insomnia ke liye kaunsi dawai leni chahiye"
+        res1 = execute_turn_1(presc_query, domain_override="finance")
+        self.assertFalse(res1["success"])
+        self.assertIn("cannot prescribe medicines", res1["message"].lower())
+
+        # Test 2: Wellbeing lifestyle query asked under Finance domain is rejected with domain mismatch
+        cross_dom_query = "How to improve sleep schedule and manage insomnia?"
+        res2 = execute_turn_1(cross_dom_query, domain_override="finance")
+        self.assertFalse(res2["success"])
+        self.assertEqual(res2["error_layer"], "Layer 3: Embedding Relevance")
+        self.assertIn("wellbeing domain, not finance", res2["message"].lower())
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -57,6 +57,13 @@ export const hasSentenceStructure = (text) => {
   return SENTENCE_PREDICATE_REGEX.test(text);
 };
 
+const PRESCRIPTION_REGEX = new RegExp(
+  "\\b(kaunsi|kounsi|which|what)\\s+(dawai|dawa|medicine|medicines|tablet|tablets|drug|drugs|dosage)\\b|" +
+  "\\b(dawai|dawa|medicine|medicines|tablet|tablets|drug|drugs)\\s+(leni|lena|khani|khana|suggest|prescribe|recommend)\\b|" +
+  "\\b(suggest|prescribe|recommend)\\s+(me\\s+)?(a\\s+)?(medicine|drug|tablet)\\b",
+  "i"
+);
+
 // ─── Query Validation ─────────────────────────────────────
 export const validateQuery = (text, domain) => {
   const trimmed = text.trim();
@@ -67,6 +74,14 @@ export const validateQuery = (text, domain) => {
   }
   if (isGibberish(trimmed)) {
     return { valid: false, error: "Please re-enter a valid, clear query without repetitive words." };
+  }
+
+  // Check clinical / medical prescription request
+  if (PRESCRIPTION_REGEX.test(trimmed)) {
+    return {
+      valid: false,
+      error: "AI decision system cannot prescribe medicines or drugs (dawai). For medical prescriptions or clinical diagnosis, please consult a qualified doctor or physician.",
+    };
   }
 
   // Check if all or most words are pure greetings or filler
@@ -107,14 +122,20 @@ export const isDomainMatch = (text, domain) => {
   // Check if query matches selected domain keywords
   const domainHit = domainConfig.keywords.some((kw) => normalized.includes(kw));
 
-  // Check if query matches any OTHER domain strongly
-  const otherDomains = Object.values(DOMAINS).filter((d) => d.key !== domain);
-  const otherHit = otherDomains.some((d) =>
-    d.keywords.filter((kw) => normalized.includes(kw)).length >= 2
+  // Check if query matches any OTHER domain
+  const otherDomains = Object.values(DOMAINS).filter(
+    (d) => d.key.toLowerCase() !== domain.toLowerCase()
+  );
+  const otherMatch = otherDomains.find((d) =>
+    d.keywords.some((kw) => normalized.includes(kw))
   );
 
-  // Allow if domain keyword found, or if no strong signal for other domain
-  return domainHit || !otherHit;
+  // If another domain matches and current domain has NO matches, reject as domain mismatch
+  if (otherMatch && !domainHit) {
+    return false;
+  }
+
+  return true;
 };
 
 // ─── Match Query to Domain Knowledge Base ─────────────────
