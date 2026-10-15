@@ -1,7 +1,3 @@
-# Ignore frontend from Python serverless function
-frontend/
-node_modules/
-
 # Ignore local env and cache
 .venv/
 backend/myenv/
@@ -17,6 +13,6 @@ scratch/
 .git/
 .github/
 
-# Ignore raw data that is not needed at serverless runtime
+# Ignore raw data not needed in production
 data/raw_datasets/
 data/_archive_/
