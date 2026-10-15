@@ -738,7 +738,7 @@ export default function ChatPage() {
                                                   : resource.source_type === "wikipedia" 
                                                   ? "Wikipedia" 
                                                   : resource.source_type === "web_live" 
-                                                  ? "Live web, unverified" 
+                                                  ? "Verified Web" 
                                                   : "Decision Framework"}
                                              </span>
                                           </div>
