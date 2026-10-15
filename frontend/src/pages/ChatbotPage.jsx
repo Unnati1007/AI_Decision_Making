@@ -30,9 +30,9 @@ export default function ChatPage() {
     const query = text.trim();
     if (!query || isThinking) return;
 
-    // Add user message
+    // Add user message and clear any previous temporary error banners
     const userMsg = { id: Date.now(), role: "user", text: query, type: "text" };
-    setMessages((prev) => [...prev, userMsg]);
+    setMessages((prev) => [...prev.filter((m) => m.type !== "error"), userMsg]);
     setInput("");
 
     // Validation
