@@ -529,26 +529,29 @@ Retrieved Reference Context:
 
 INSTRUCTIONS FOR HIGH-QUALITY DECISION INTELLIGENCE:
 1. Direct, Specific Recommendation & Comprehensive Strategy:
-   - Deliver a clear, authoritative decision. The user came to this AI Advisor for real answers and clarity, NOT generic textbook disclaimers or to be sent off to external links.
+   - Deliver a clear, authoritative, highly factual decision. The user came to this AI Advisor for real answers, actionable stock/ETF picks, and personalized clarity—far superior to generic search engine results.
+   - Ground the answer deeply in the user's personalized profile (risk appetite, budget, timeline, and primary goal).
    - For Financial / Investment inquiries:
-     * Directly address their specific capital, 5-year timeline, and risk level.
-     * Name specific top-tier investment vehicles, ETF tickers, and established dividend stalwarts (e.g., Schwab U.S. Dividend Equity ETF - SCHD, Vanguard Dividend Appreciation - VIG, Vanguard S&P 500 - VOO, or Indian blue-chip dividend leaders like ITC, TCS, Infosys, and Nifty Dividend Opportunities 50).
-     * Provide a concrete capital allocation strategy (e.g., 60% Core Dividend Aristocrat ETF, 30% Broad Market Index for growth, 10% Cash/High-Yield Reserve buffer).
-     * Detail the compounding mechanism: Explain how enabling DRIP (Dividend Reinvestment Plan) compounds dividends quarterly over the 5-year period.
-     * Explain why direct stock-picking of single speculative stocks creates dangerous concentration risk for sub-$1,000 budgets vs. diversified dividend basket funds.
+     * Name specific, top-tier stock and ETF picks with concrete fundamentals matching their profile:
+       - Conservative Dividend Stalwarts (e.g., ITC Ltd: 3-4% yield, debt-free balance sheet, FMCG moat; Power Grid Corp / NTPC: 3.5-4.5% yield, sovereign-backed transmission monopoly with regulated 15.5% ROE; TCS / Infosys: massive free cash flow returning 70-80% to shareholders through regular dividends and buybacks).
+       - Core Dividend Growth ETFs (e.g., Schwab U.S. Dividend Equity ETF - SCHD, Vanguard Dividend Appreciation - VIG, or Nifty Dividend Opportunities 50) providing instant institutional diversification across 100+ vetted dividend growers.
+     * Provide the fundamental rationale: Order book visibility, steady free cash flow (FCF), dividend growth history, and balance sheet resilience over 5-year multi-year cycles.
+     * Personalized Capital Allocation Blueprint: Give an exact percentage allocation for their specific budget (e.g., 50% Core Dividend Leaders, 30% Broad Market Index for steady GDP growth, 20% Liquid/Short-term buffer for dry powder).
+     * 5-Year Compounding (DRIP): Explain how activating Dividend Reinvestment Plans (DRIP) compounds quarterly cash distributions into fractional shares without transaction drag.
+     * Trade-off contrast: Explain why speculative high-beta stocks or cyclical momentum picks carry excessive drawdown risk for conservative dividend seekers, whereas defensive dividend blue-chips protect principal while paying cash.
 2. Detailed Analysis:
-   - Provide a comprehensive, rich breakdown in "detailed_analysis" that provides the user with deep clarity, actionable numbers/allocations, and rationale.
+   - Provide a comprehensive, rich breakdown in "detailed_analysis" that provides the user with deep clarity, actionable company/ETF picks, exact allocation numbers, and rationale.
 3. Structured Trade-offs:
-   - Provide 2-3 distinct pros and cons (e.g. Capital preservation and defensive yield vs lower capital growth compared to volatile growth tech).
+   - Provide 2-3 distinct pros and cons (e.g. Capital preservation, recurring cash yield, and defensive moat vs lower capital appreciation compared to volatile high-beta tech).
 4. Action Plan:
-   - Provide 3-4 concrete, numbered steps (1. Setup zero-fee fractional-share brokerage account; 2. Allocate capital according to the model portfolio; 3. Automate DRIP dividend reinvestment; 4. Annual rebalancing check).
+   - Provide 3-4 concrete, numbered steps (1. Setup zero-fee fractional-share brokerage account; 2. Deploy capital according to the model allocation; 3. Automate DRIP dividend reinvestment; 4. Annual portfolio health review).
 5. Scenario Simulation:
    - Realistic qualitative projections for Baseline, Best Case, and Worst Case market conditions with risk mitigation. Do NOT output robotic disclaimers.
 
 Schema (strictly valid JSON):
 {{
   "executive_summary": "Direct, decisive primary recommendation specifying the optimal strategy and instrument categories.",
-  "detailed_analysis": "Comprehensive deep-dive analysis (3-4 structured paragraphs or bullet points). Detail exact asset allocation percentages, specific vehicle names and tickers, dividend compounding (DRIP) mechanics, and clear rationale for the 5-year horizon.",
+  "detailed_analysis": "Comprehensive deep-dive analysis (3-4 structured paragraphs or bullet points). Detail specific company and ETF picks with their fundamental moat (cash flows, dividend yield, debt levels), exact asset allocation percentages for their budget, dividend compounding (DRIP) mechanics, and clear rationale for the 5-year horizon.",
   "tradeoffs": [
     {{"aspect": "Pros / Advantages", "details": "Specific advantage"}},
     {{"aspect": "Cons / Risks", "details": "Specific trade-off or risk"}}
@@ -566,7 +569,7 @@ Schema (strictly valid JSON):
 }}
 CRITICAL RULE (B5): Do not invent specific guaranteed percentage returns or speculative price targets. Focus on structural sound financial principles, verified investment vehicles, and qualitative risk-return profiles.
 Return ONLY valid JSON without markdown formatting."""
-            system_msg = "You are an expert decision intelligence engine responding in JSON. Deliver concrete, highly actionable, and comprehensive decision advice. Provide specific vehicle categories, real instrument examples, clear asset allocations, and deep strategic clarity tailored to the user's budget and goals. Avoid circular repetition and avoid generic disclaimers."
+            system_msg = "You are an expert decision intelligence engine responding in JSON. Deliver concrete, highly actionable, and comprehensive decision advice. Provide specific company names, real instrument examples, fundamental moats (cash flow, order books, dividend track records), and tailored asset allocations for the user's stated budget and goals. Outperform generic search engine overviews by providing personalized, high-clarity investment intelligence."
 
         try:
             response = llm_client.chat.completions.create(
@@ -606,11 +609,11 @@ Return ONLY valid JSON without markdown formatting."""
     # Rule-Based Fallback Decision Generator if LLM unavailable
     if domain == "finance":
         fallback_decision = {
-            "executive_summary": "For a conservative 5-year horizon with dividend income goals and sub-$1,000 capital, individual stock-picking carries high concentration risk. We recommend a core Dividend Appreciation Index strategy (e.g., SCHD, VIG, or Nifty Dividend Opportunities 50) anchored by broad-market index exposure.",
-            "detailed_analysis": "• Recommended Model Allocation: Deploy 60% (~$600) into Dividend Aristocrat ETFs (e.g. Schwab U.S. Dividend Equity ETF - SCHD or Vanguard Dividend Appreciation - VIG) for steady quarterly income and low volatility; 30% (~$300) into a broad-market index ETF (e.g. Vanguard S&P 500 - VOO) to capture core economic growth; and 10% (~$100) into a high-yield liquid/cash buffer.\n• Single Stock vs Basket Vehicle: With less than $1,000, purchasing single individual shares (e.g., individual cyclical stocks) exposes your capital to company-specific earnings misses. A dividend ETF immediately diversifies your money across 100+ cash-rich enterprises with 10-25+ year dividend payment track records.\n• 5-Year Compounding (DRIP): Activate an automated Dividend Reinvestment Plan (DRIP) with your broker. This reinvests all quarterly cash distributions into additional fractional shares with zero fees, accelerating compounding over your 5-year horizon.",
+            "executive_summary": "For a conservative 5-year investment horizon with regular dividend income goals and sub-$1,000 capital, individual stock-picking carries high single-company concentration risk. We recommend an anchor strategy in defensive cash-cow dividend stalwarts (or Dividend Aristocrat ETFs) paired with a broad-market index core.",
+            "detailed_analysis": "• Top Conservative Stock & ETF Picks:\n  1. ITC Ltd (NSE: ITC): Offers a consistent ~3.5-4% dividend yield, debt-free balance sheet, and a resilient FMCG cash-cow moat that reliably funds quarterly payouts.\n  2. Power Grid Corporation / NTPC: High dividend yield (~3.5-4.5%), sovereign utility monopoly with regulated 15.5% ROE and strong multi-year infrastructure capex visibility.\n  3. Tata Consultancy Services (TCS) / Infosys (INFY): Steady free cash flow machines returning 70-80% of cash to shareholders via dividends and buybacks with virtually zero debt.\n  4. Core Dividend Growth ETFs (e.g. SCHD / VIG or Nifty Dividend Opportunities 50): Immediate institutional diversification across 100+ vetted dividend growers with zero stock-picking stress.\n• Recommended Capital Allocation for <$1,000:\n  - 50% (~$500): Core Dividend Leaders (ITC, Power Grid, or Dividend ETF like SCHD/Nifty Dividend 50)\n  - 30% (~$300): Broad Market Index anchor (Nifty 50 or S&P 500 ETF) for steady compounding\n  - 20% (~$200): High-Yield Liquid/Cash buffer for downside protection\n• 5-Year Compounding (DRIP): Enable an automated Dividend Reinvestment Plan (DRIP) to reinvest quarterly cash payouts into additional shares commission-free, compounding share count over your 5-year timeline.",
             "tradeoffs": [
-                {"aspect": "Pros / Advantages", "details": "Defensive dividend cash flow, robust capital preservation, and institutional diversification across 100+ proven companies."},
-                {"aspect": "Cons / Risks", "details": "Lower potential maximum upside compared to speculative high-beta equities; still subject to overall macroeconomic equity cycles."}
+                {"aspect": "Pros / Advantages", "details": "Defensive dividend cash flow, robust capital preservation, and institutional diversification across proven cash-rich companies."},
+                {"aspect": "Cons / Risks", "details": "Lower potential maximum upside compared to speculative high-beta growth equities; vulnerable to broad equity market corrections."}
             ],
             "action_plan": [
                 {"step": 1, "title": "Zero-Fee Brokerage Setup", "description": "Open an account with a platform that supports zero-commission fractional shares and automatic DRIP."},
