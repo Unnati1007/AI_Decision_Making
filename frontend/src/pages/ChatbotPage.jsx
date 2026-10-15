@@ -198,17 +198,49 @@ export default function ChatPage() {
 
   const showRecommendationFromTurn2 = (data, query) => {
     const decision = data.decision || {};
+
+    const isRoboticPlaceholder = (val) => {
+      if (!val || typeof val !== 'string') return true;
+      const lower = val.toLowerCase();
+      return lower.includes("not in the knowledge base") || lower.includes("insufficient information");
+    };
+
+    let risks = [];
+    if (decision.scenario_simulation?.worst_case && !isRoboticPlaceholder(decision.scenario_simulation.worst_case)) {
+      risks.push(decision.scenario_simulation.worst_case);
+    }
+    if (risks.length === 0 && Array.isArray(decision.tradeoffs)) {
+      decision.tradeoffs.forEach(t => {
+        if (typeof t === 'object' && t.aspect && /risk|con|downside|caution/i.test(t.aspect)) {
+          if (t.details && !isRoboticPlaceholder(t.details)) {
+            risks.push(t.details);
+          }
+        }
+      });
+    }
+
+    const bestCase = !isRoboticPlaceholder(decision.scenario_simulation?.best_case)
+      ? decision.scenario_simulation.best_case
+      : "";
+    const timeline = !isRoboticPlaceholder(decision.scenario_simulation?.baseline_case)
+      ? decision.scenario_simulation.baseline_case
+      : "";
+
     const formattedResponse = {
       mode: data.mode || (data.llm_called ? "llm_generated" : "template_fallback"),
       llm_called: Boolean(data.llm_called),
       recommendation: decision.executive_summary || "Recommended Decision Path",
-      reasoning: decision.tradeoffs ? (Array.isArray(decision.tradeoffs) ? decision.tradeoffs.map(t => typeof t === 'object' ? `${t.aspect || ''}: ${t.details || ''}` : str(t)) : [String(decision.tradeoffs)]) : [],
-      risks: decision.scenario_simulation?.worst_case ? [decision.scenario_simulation.worst_case] : [],
+      reasoning: decision.tradeoffs
+        ? (Array.isArray(decision.tradeoffs)
+            ? decision.tradeoffs.map(t => typeof t === 'object' ? `${t.aspect || ''}: ${t.details || ''}` : String(t))
+            : [String(decision.tradeoffs)])
+        : [],
+      risks: risks,
       simulation: {
-        best_case: decision.scenario_simulation?.best_case || "",
-        timeline: decision.scenario_simulation?.baseline_case || "",
+        best_case: bestCase,
+        timeline: timeline,
       },
-      actionPlan: decision.action_plan || [],
+      actionPlan: Array.isArray(decision.action_plan) ? decision.action_plan : [],
       resources: (data.sources || []).map((s) => ({
         title: s.title || s.id,
         url: s.url && s.url !== "#" ? s.url : "",
@@ -517,42 +549,63 @@ export default function ChatPage() {
                           </div>
                         )}
 
-                        {(msg.risks.length > 0 || msg.simulation.best_case || msg.simulation.timeline) && (
+                        {msg.actionPlan && msg.actionPlan.length > 0 && (
+                          <div className="space-y-3 pt-1">
+                             <h4 className="text-[10px] font-black uppercase tracking-widest text-[var(--text-soft)]">Recommended Action Plan</h4>
+                             <div className="space-y-2.5">
+                                {msg.actionPlan.map((step, idx) => {
+                                  const stepNum = typeof step === 'object' && step.step ? step.step : idx + 1;
+                                  const stepTitle = typeof step === 'object' ? (step.title || `Step ${stepNum}`) : `Step ${stepNum}`;
+                                  const stepDesc = typeof step === 'object' ? (step.description || "") : String(step);
+                                  return (
+                                    <div key={idx} className="flex gap-3 items-start p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-[var(--border)]">
+                                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-blue-600 text-[11px] font-bold text-white shadow-sm">
+                                        {stepNum}
+                                      </span>
+                                      <div className="space-y-0.5">
+                                        <p className="text-xs font-bold" style={{ color: "var(--text)" }}>{stepTitle}</p>
+                                        {stepDesc && (
+                                          <p className="text-[12px] font-medium leading-relaxed" style={{ color: "var(--text-muted)" }}>
+                                            {stepDesc}
+                                          </p>
+                                        )}
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                             </div>
+                          </div>
+                        )}
+
+                        {((msg.risks && msg.risks.length > 0) || msg.simulation?.best_case || msg.simulation?.timeline) && (
                           <div className="grid sm:grid-cols-2 gap-4">
                              {msg.risks && msg.risks.length > 0 && (
                                <div className="rounded-xl bg-red-50 dark:bg-red-500/10 p-4 space-y-2">
-                                  <h5 className="text-[10px] font-black uppercase tracking-widest text-red-600 dark:text-red-400">Risks Identified</h5>
-                                  <ul className="space-y-1">
+                                  <h5 className="text-[10px] font-black uppercase tracking-widest text-red-600 dark:text-red-400">Risks & Considerations</h5>
+                                  <ul className="space-y-1.5">
                                      {msg.risks.map((r, i) => (
-                                       <li key={i} className="text-[11px] font-bold text-red-700/80 dark:text-red-400/80 flex items-center gap-1.5">• {r}</li>
+                                       <li key={i} className="text-[11px] font-bold text-red-700/90 dark:text-red-400/90 flex items-start gap-1.5">
+                                         <span className="shrink-0 leading-tight">•</span>
+                                         <span>{r}</span>
+                                       </li>
                                      ))}
                                   </ul>
                                </div>
                              )}
-                             {(msg.simulation.best_case || msg.simulation.timeline) && (
-                                msg.simulation.best_case === "not in the knowledge base, check the official source" &&
-                                msg.simulation.timeline === "not in the knowledge base, check the official source" ? (
-                                  <div className="rounded-xl bg-amber-50 dark:bg-amber-500/10 p-4 space-y-1">
-                                     <h5 className="text-[10px] font-black uppercase tracking-widest text-amber-600 dark:text-amber-400">Outcome Simulation</h5>
-                                     <p className="text-[11px] font-bold text-amber-700 dark:text-amber-400">
-                                       Outcome simulation details not in the knowledge base, check the official source.
-                                     </p>
-                                  </div>
-                                ) : (
-                                  <div className="rounded-xl bg-emerald-50 dark:bg-emerald-500/10 p-4 space-y-2">
-                                     <h5 className="text-[10px] font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Outcome Simulation</h5>
-                                     {msg.simulation.best_case && (
-                                       <p className="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 leading-tight">
-                                         <span className="opacity-60">Best:</span> {msg.simulation.best_case}
-                                       </p>
-                                     )}
-                                     {msg.simulation.timeline && (
-                                       <p className="text-[11px] font-bold opacity-70 text-emerald-700 dark:text-emerald-400">
-                                         <span className="opacity-60">Timeline:</span> {msg.simulation.timeline}
-                                       </p>
-                                     )}
-                                  </div>
-                                )
+                             {(msg.simulation?.best_case || msg.simulation?.timeline) && (
+                               <div className="rounded-xl bg-emerald-50 dark:bg-emerald-500/10 p-4 space-y-2">
+                                  <h5 className="text-[10px] font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Outcome Simulation</h5>
+                                  {msg.simulation.best_case && (
+                                    <p className="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 leading-tight">
+                                      <span className="opacity-60">Best:</span> {msg.simulation.best_case}
+                                    </p>
+                                  )}
+                                  {msg.simulation.timeline && (
+                                    <p className="text-[11px] font-bold opacity-70 text-emerald-700 dark:text-emerald-400">
+                                      <span className="opacity-60">Timeline:</span> {msg.simulation.timeline}
+                                    </p>
+                                  )}
+                               </div>
                              )}
                           </div>
                         )}
