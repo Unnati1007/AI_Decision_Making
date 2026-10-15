@@ -165,6 +165,41 @@ class TestPipelineFlow(unittest.TestCase):
         self.assertEqual(res["error_layer"], "Layer 1: Quality Check")
         self.assertIn("specific decision question", res["message"])
 
+    def test_h_vague_statement_without_decision_blocked(self):
+        """(h) Option B: Tests that vague confusion statements without a decision dilemma are intercepted."""
+        vague_query = "career is running good but i cam confused"
+        res = execute_turn_1(vague_query, domain_override="career")
+        self.assertFalse(res["success"])
+        self.assertEqual(res["error_layer"], "Layer 1: Quality Check")
+        self.assertIn("specify your decision question or dilemma", res["message"])
+
+    def test_i_session_memory_binding_turn1_to_turn2(self):
+        """(i) Tests session memory caching: Turn 1 binds context to session_id, Turn 2 reuses it."""
+        from backend.services.session_manager import session_manager
+        
+        t1 = execute_turn_1("Should I switch jobs for a 30% raise?", domain_override="career")
+        self.assertTrue(t1["success"])
+        self.assertIn("session_id", t1)
+        sess_id = t1["session_id"]
+        
+        # Verify session state stored
+        sess = session_manager.get_session(sess_id)
+        self.assertIsNotNone(sess)
+        self.assertEqual(sess.domain, "career")
+        self.assertGreater(len(sess.turn1_raw_results), 0)
+        
+        # Call Turn 2 passing ONLY session_id (turn1_raw_results=None)
+        t2 = execute_turn_2(
+            query="Should I switch jobs for a 30% raise?",
+            domain="career",
+            mcq_answers=[{"question": "Career Stage", "selected_option": "Mid-Career"}],
+            turn1_raw_results=None,
+            session_id=sess_id
+        )
+        self.assertTrue(t2["success"])
+        self.assertEqual(t2.get("session_id"), sess_id)
+        self.assertIsNotNone(sess.final_decision)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Brain, AlertCircle, Loader2, Sparkles, ChevronRight, User, Bot, CheckCircle2, ListFilter, HeartHandshake } from "lucide-react";
+import { Send, Brain, AlertCircle, Loader2, Sparkles, ChevronRight, User, Bot, CheckCircle2, ListFilter, HeartHandshake, RotateCcw } from "lucide-react";
 import { useApp } from "../context/AppContext";
 import { validateQuery, matchQueryToDomain, thinkingSteps, isGibberish } from "../utils/aiUtils";
 import { DOMAINS } from "../data/dummyData";
@@ -11,8 +11,8 @@ export default function ChatPage() {
   const [input, setInput] = useState("");
   const [isThinking, setIsThinking] = useState(false);
   const [thinkingStep, setThinkingStep] = useState(0);
-  const [pendingResponse, setPendingResponse] = useState(null);
   const [mcqFlow, setMcqFlow] = useState(null);
+  const [sessionId, setSessionId] = useState(null);
   
   const messagesEndRef = useRef(null);
   const domain = currentUser?.domain;
@@ -68,10 +68,17 @@ export default function ChatPage() {
       const res = await fetch("/api/query/turn1", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query, domain: domain ? domain.toLowerCase() : null }),
+        body: JSON.stringify({
+          query,
+          domain: domain ? domain.toLowerCase() : null,
+          session_id: sessionId
+        }),
       });
       if (!res.ok) throw new Error("Turn 1 API call failed");
       const data = await res.json();
+      if (data.session_id) {
+        setSessionId(data.session_id);
+      }
 
       if (data.is_crisis) {
         setMessages((prev) => [
@@ -243,10 +250,14 @@ export default function ChatPage() {
             query: activeFlow.originalQuery,
             domain: activeFlow.domain || (domain ? domain.toLowerCase() : "career"),
             mcq_answers: newAnswers,
+            session_id: sessionId
           }),
         });
         if (!res.ok) throw new Error("Turn 2 API call failed");
         const data = await res.json();
+        if (data.session_id) {
+          setSessionId(data.session_id);
+        }
         setIsThinking(false);
 
         if (data.is_crisis) {
@@ -282,6 +293,20 @@ export default function ChatPage() {
     }
   };
 
+  const handleResetDecision = async () => {
+    if (sessionId) {
+      try {
+        await fetch(`/api/query/session/${sessionId}`, { method: "DELETE" });
+      } catch (e) {
+        console.warn("Session reset failed:", e);
+      }
+    }
+    setSessionId(null);
+    setMessages([]);
+    setMcqFlow(null);
+    setInput("");
+  };
+
   return (
     <div className="flex h-[calc(100vh-80px)] flex-col bg-[var(--bg)] animate-fade-up">
       {/* Domain Header */}
@@ -298,9 +323,21 @@ export default function ChatPage() {
             </div>
           </div>
         </div>
-        <div className="hidden sm:flex items-center gap-2 rounded-lg bg-[var(--surface-2)] px-3 py-1.5">
-            <ListFilter size={14} className="text-[var(--text-soft)]" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--text-muted)]">Locked Domain: {domain || "General"}</span>
+        <div className="flex items-center gap-2">
+          {sessionId && (
+            <button
+              onClick={handleResetDecision}
+              title="Start a new decision thread"
+              className="flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-1 text-xs font-semibold text-[var(--text-muted)] hover:text-blue-600 hover:border-blue-500/30 transition-all cursor-pointer"
+            >
+              <RotateCcw size={12} />
+              <span>New Decision</span>
+            </button>
+          )}
+          <div className="hidden sm:flex items-center gap-2 rounded-lg bg-[var(--surface-2)] px-3 py-1.5">
+              <ListFilter size={14} className="text-[var(--text-soft)]" />
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--text-muted)]">Locked Domain: {domain || "General"}</span>
+          </div>
         </div>
       </div>
 

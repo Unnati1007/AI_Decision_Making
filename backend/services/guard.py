@@ -99,6 +99,7 @@ class GuardFailReason(str, Enum):
     TOO_LONG = "query_too_long"
     GIBBERISH = "query_gibberish_or_invalid"
     CONVERSATIONAL_FILLER = "conversational_filler_no_decision"
+    VAGUE_NO_DECISION = "vague_statement_no_decision_dilemma"
     BLOCKED_KEYWORD = "blocked_keyword_detected"
     INJECTION_ATTEMPT = "prompt_injection_attempt"
     LLM_UNSAFE = "llm_flagged_unsafe"
@@ -201,6 +202,42 @@ def is_conversational_filler(text: str) -> bool:
         return True
     return False
 
+DECISION_INTENT_PATTERNS = [
+    # Interrogatives & Question structures
+    r"\b(should|can|could|would|will|which|what|how|why|where|when|whether|is it|am i)\b",
+    r"\b(kya|kaunsa|kaun|kaise|kyun|kahan|kab)\b",
+    # Comparison & Choice
+    r"\b(vs|versus|or|ya|better than|compare|difference between|option|choose|choosing|select|selecting)\b",
+    # Concrete action / dilemma verbs
+    r"\b(switch|switching|resign|resigning|quit|quitting|negotiate|negotiating|appraisal|promotion)\b",
+    r"\b(invest|investing|buy|buying|sell|selling|prepay|saving|tax|regime|itr|tds|sip|fd|mf)\b",
+    r"\b(file|filing|notice|complaint|bail|fir|court|agreement|lease|evict|eviction)\b",
+    r"\b(cure|manage|managing|prevent|preventing|exercise|diet|sleep|routine|therapy|relief)\b",
+    # Question mark
+    r"\?"
+]
+
+VAGUE_CONFUSION_PATTERNS = [
+    r"\b(confused|confusion|confusing)\b",
+    r"\b(not sure|unsure|uncertain)\b",
+    r"\b(stuck|feeling stuck|lost)\b",
+    r"\b(don'?t know|do not know)\b",
+    r"\b(samajh nahi|soch raha|kuch samajh)\b",
+    r"\b(running good|going good|everything ok|fine)\b"
+]
+
+def is_vague_without_decision(text: str) -> bool:
+    """
+    Option B Strict Decision Filter:
+    Intercepts vague statements of feeling/confusion lacking a concrete decision question/dilemma.
+    """
+    q = text.lower().strip()
+    has_confusion_signal = any(re.search(pat, q) for pat in VAGUE_CONFUSION_PATTERNS)
+    if not has_confusion_signal:
+        return False
+    has_decision_intent = any(re.search(pat, q) for pat in DECISION_INTENT_PATTERNS)
+    return not has_decision_intent
+
 def check_query_quality(query: str) -> GuardResult:
     q = query.strip()
 
@@ -233,6 +270,14 @@ def check_query_quality(query: str) -> GuardResult:
             passed=False,
             reason=GuardFailReason.CONVERSATIONAL_FILLER,
             message="Please enter a specific decision question or problem (e.g., job offer comparison, notice period resignation, tax regime selection).",
+            layer="Layer 1: Quality Check"
+        )
+
+    if is_vague_without_decision(q):
+        return GuardResult(
+            passed=False,
+            reason=GuardFailReason.VAGUE_NO_DECISION,
+            message="Please specify your decision question or dilemma (e.g., 'Should I switch to another company or stay for promotion?', 'Is an MBA better than continuing my current job?').",
             layer="Layer 1: Quality Check"
         )
 

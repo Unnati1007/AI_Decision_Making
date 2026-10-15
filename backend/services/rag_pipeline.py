@@ -22,6 +22,7 @@ from backend.config import (
 from backend.services.guard import guard_pipeline, GuardResult, detect_crisis_intent
 from backend.services.domain_router import detect_domain
 from backend.retrieval.retriever import retrieve_context
+from backend.services.session_manager import session_manager
 
 from pathlib import Path
 from dotenv import load_dotenv
@@ -163,7 +164,11 @@ def build_crisis_response(query: str, domain: str = "wellbeing") -> Dict[str, An
 # ============================================================
 # TURN 1 — MCQ Generation Pipeline
 # ============================================================
-def execute_turn_1(query: str, domain_override: Optional[str] = None) -> Dict[str, Any]:
+def execute_turn_1(
+    query: str,
+    domain_override: Optional[str] = None,
+    session_id: Optional[str] = None
+) -> Dict[str, Any]:
     """
     Executes Guard Check, Domain Detection, RAG Context Retrieval,
     and Turn 1 LLM MCQ Generation.
@@ -196,8 +201,18 @@ def execute_turn_1(query: str, domain_override: Optional[str] = None) -> Dict[st
     best_score = raw_results[0][2] if raw_results else 0.0
     if best_score < RELEVANCE_THRESHOLD and not any(s.get("source") == "Tavily Live Web Search" for s in sources):
         logger.info(f"Turn 1 query low relevance score ({best_score:.4f} < {RELEVANCE_THRESHOLD}). Skipping LLM call.")
+        session = session_manager.store_turn_1(
+            session_id=session_id,
+            query=query,
+            domain=domain,
+            mcqs=DEFAULT_DOMAIN_MCQS.get(domain, DEFAULT_DOMAIN_MCQS["career"]),
+            sources=sources,
+            raw_results=raw_results,
+            rag_context=rag_context
+        )
         return {
             "success": True,
+            "session_id": session.session_id,
             "query": query,
             "domain": domain,
             "mcqs": DEFAULT_DOMAIN_MCQS.get(domain, DEFAULT_DOMAIN_MCQS["career"]),
@@ -285,8 +300,18 @@ Do NOT output markdown formatting or backticks, return ONLY valid raw JSON."""
         mcqs = DEFAULT_DOMAIN_MCQS.get(domain, DEFAULT_DOMAIN_MCQS["career"])
 
     llm_was_called = bool(llm_client and mcqs and warning is None)
+    session = session_manager.store_turn_1(
+        session_id=session_id,
+        query=query,
+        domain=domain,
+        mcqs=mcqs,
+        sources=sources,
+        raw_results=raw_results,
+        rag_context=rag_context
+    )
     return {
         "success": True,
+        "session_id": session.session_id,
         "query": query,
         "domain": domain,
         "mcqs": mcqs,
@@ -305,13 +330,23 @@ def execute_turn_2(
     query: str,
     domain: str,
     mcq_answers: List[Dict[str, Any]],
-    turn1_raw_results: Optional[List[Tuple[str, Dict[str, Any], float]]] = None
+    turn1_raw_results: Optional[List[Tuple[str, Dict[str, Any], float]]] = None,
+    session_id: Optional[str] = None
 ) -> Dict[str, Any]:
     """
     Executes Turn 2 Decision Support Generation:
-    Reuses Turn 1 chunks/results + retrieves fresh context for combined query,
+    Reuses Turn 1 chunks/results (from session cache or parameter) + retrieves fresh context,
     merges, dedupes by chunk text, caps at TOP_K_DEFAULT * 2, and enforces MAX_CHUNKS_PER_FILE.
     """
+    # Check session memory if turn1_raw_results missing
+    if turn1_raw_results is None and session_id:
+        sess = session_manager.get_session(session_id)
+        if sess and sess.turn1_raw_results:
+            turn1_raw_results = sess.turn1_raw_results
+            if not query and sess.initial_query:
+                query = sess.initial_query
+            if not domain and sess.domain:
+                domain = sess.domain
     # Step 0: Immediate Crisis Safety Check on query and any free-text MCQ answers
     # (BEFORE Retrieval, Tavily, and LLM)
     is_crisis = detect_crisis_intent(query)
@@ -524,8 +559,16 @@ Return ONLY valid JSON without markdown formatting."""
             raw_json = response.choices[0].message.content
             decision_payload = json.loads(raw_json)
 
+            if session_id:
+                session_manager.store_turn_2(
+                    session_id=session_id,
+                    mcq_answers=mcq_answers,
+                    final_decision=decision_payload
+                )
+
             return {
                 "success": True,
+                "session_id": session_id,
                 "query": query,
                 "domain": domain,
                 "decision": decision_payload,
@@ -557,8 +600,16 @@ Return ONLY valid JSON without markdown formatting."""
         }
     }
 
+    if session_id:
+        session_manager.store_turn_2(
+            session_id=session_id,
+            mcq_answers=mcq_answers,
+            final_decision=fallback_decision
+        )
+
     return {
         "success": True,
+        "session_id": session_id,
         "query": query,
         "domain": domain,
         "decision": fallback_decision,
