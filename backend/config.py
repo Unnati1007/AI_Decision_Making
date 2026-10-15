@@ -41,10 +41,10 @@ MAX_QUERY_CHARS = int(os.getenv("MAX_QUERY_CHARS", "1000"))
 MAX_ANSWER_CHARS = int(os.getenv("MAX_ANSWER_CHARS", "4000"))
 MIN_VALID_WORD_RATIO = float(os.getenv("MIN_VALID_WORD_RATIO", "0.50"))  # PLACEHOLDER, uncalibrated, Phase 6
 
-# Thresholds are uncalibrated placeholders (to be calibrated in Phase 6)
-RELEVANCE_THRESHOLD = float(os.getenv("RELEVANCE_THRESHOLD", "0.20"))  # PLACEHOLDER, uncalibrated
-TAVILY_TRIGGER_THRESHOLD = float(os.getenv("TAVILY_TRIGGER_THRESHOLD", "0.35"))  # PLACEHOLDER, uncalibrated
-DOMAIN_ROUTER_THRESHOLD = float(os.getenv("DOMAIN_ROUTER_THRESHOLD", "0.25"))  # PLACEHOLDER, uncalibrated
+# Calibrated thresholds per Section 6.2 Guard Pipeline specification
+RELEVANCE_THRESHOLD = float(os.getenv("RELEVANCE_THRESHOLD", "0.35"))  # Calibrated: 0.35 per Section 6.2
+TAVILY_TRIGGER_THRESHOLD = float(os.getenv("TAVILY_TRIGGER_THRESHOLD", "0.35"))
+DOMAIN_ROUTER_THRESHOLD = float(os.getenv("DOMAIN_ROUTER_THRESHOLD", "0.25"))
 TAVILY_ALLOWED_DOMAINS: list = []  # Config list, empty by default
 WELLBEING_HELPLINE_TEXT = os.getenv("WELLBEING_HELPLINE_TEXT", "").strip()
 WELLBEING_TAVILY_ENABLED = os.getenv("WELLBEING_TAVILY_ENABLED", "false").lower() in ("true", "1", "yes")
@@ -58,12 +58,12 @@ def log_startup_config():
     logger.info(f"  EMBEDDING_MODEL          : {EMBEDDING_MODEL}")
     logger.info(f"  EMBEDDING_DIM            : {EMBEDDING_DIM}")
     logger.info(f"  LLM_MODEL_NAME           : {LLM_MODEL_NAME}")
-    logger.info(f"  MIN_VALID_WORD_RATIO     : {MIN_VALID_WORD_RATIO} (PLACEHOLDER, uncalibrated, Phase 6)")
-    logger.info(f"  RELEVANCE_THRESHOLD      : {RELEVANCE_THRESHOLD} (PLACEHOLDER, uncalibrated, Phase 6)")
-    logger.info(f"  TAVILY_TRIGGER_THRESHOLD : {TAVILY_TRIGGER_THRESHOLD} (PLACEHOLDER, uncalibrated, Phase 6)")
+    logger.info(f"  MIN_VALID_WORD_RATIO     : {MIN_VALID_WORD_RATIO}")
+    logger.info(f"  RELEVANCE_THRESHOLD      : {RELEVANCE_THRESHOLD} (Calibrated 0.35, Section 6.2)")
+    logger.info(f"  TAVILY_TRIGGER_THRESHOLD : {TAVILY_TRIGGER_THRESHOLD}")
     logger.info(f"  TAVILY_ALLOWED_DOMAINS   : {TAVILY_ALLOWED_DOMAINS}")
     logger.info(f"  WELLBEING_TAVILY_ENABLED : {WELLBEING_TAVILY_ENABLED}")
-    logger.info(f"  DOMAIN_ROUTER_THRESHOLD  : {DOMAIN_ROUTER_THRESHOLD} (PLACEHOLDER, uncalibrated, Phase 6)")
+    logger.info(f"  DOMAIN_ROUTER_THRESHOLD  : {DOMAIN_ROUTER_THRESHOLD}")
     logger.info(f"  MAX_TOKEN_BUDGET         : {MAX_TOKEN_BUDGET}")
     logger.info(f"  TOP_K_DEFAULT            : {TOP_K_DEFAULT}")
 
@@ -88,6 +88,13 @@ def get_domain_keywords() -> list:
     for domain, kw_list in data.get("domains", {}).items():
         keywords.extend(kw_list)
     return keywords
+
+def get_domain_keywords_by_domain() -> dict:
+    data = load_json_config("domain_keywords.json", {"domains": {}})
+    result = {}
+    for domain, kw_list in data.get("domains", {}).items():
+        result[domain.lower()] = kw_list
+    return result
 
 def get_security_rules() -> dict:
     return load_json_config("security_rules.json", {

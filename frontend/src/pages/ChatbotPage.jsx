@@ -86,6 +86,19 @@ export default function ChatPage() {
         return;
       }
 
+      if (data.success === false) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 2,
+            role: "assistant",
+            type: "error",
+            text: data.message || "Please enter a specific decision question or problem.",
+          },
+        ]);
+        return;
+      }
+
       if (data.mcqs && data.mcqs.length > 0) {
         const flowId = Date.now();
         const responseMode = data.mode || (data.llm_called ? "llm_generated" : "template_fallback");

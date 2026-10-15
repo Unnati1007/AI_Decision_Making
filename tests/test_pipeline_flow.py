@@ -157,6 +157,14 @@ class TestPipelineFlow(unittest.TestCase):
         for chunk, meta, score in results:
             self.assertEqual(meta["domain"], "wellbeing")
 
+    def test_g_conversational_filler_blocked_by_guard(self):
+        """(g) Tests that random/conversational filler queries like 'hello i m user but' are intercepted at Layer 1."""
+        filler_query = "hello i m user but"
+        res = execute_turn_1(filler_query, domain_override="career")
+        self.assertFalse(res["success"])
+        self.assertEqual(res["error_layer"], "Layer 1: Quality Check")
+        self.assertIn("specific decision question", res["message"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -52,11 +52,14 @@ from backend.config import (
     EMBEDDING_MODEL,
     LLM_MODEL_NAME,
     get_domain_keywords,
-    get_security_rules
+    get_domain_keywords_by_domain,
+    get_security_rules,
+    get_nlp_config
 )
 
 _embed_model = None
 _keyword_embeddings = None
+_domain_embeddings = {}
 
 def get_embed_model():
     global _embed_model
@@ -73,12 +76,29 @@ def get_keyword_embeddings():
         _keyword_embeddings = model.encode(domain_keywords, convert_to_tensor=True)
     return _keyword_embeddings
 
+def get_domain_embeddings(domain: Optional[str] = None):
+    global _domain_embeddings
+    model = get_embed_model()
+    kw_by_domain = get_domain_keywords_by_domain()
+    
+    dom_key = domain.lower() if domain else "all"
+    if dom_key not in _domain_embeddings:
+        if dom_key in kw_by_domain:
+            anchors = list(kw_by_domain[dom_key])
+            if "general_decision" in kw_by_domain:
+                anchors.extend(kw_by_domain["general_decision"])
+        else:
+            anchors = get_domain_keywords()
+        _domain_embeddings[dom_key] = model.encode(anchors, convert_to_tensor=True)
+    return _domain_embeddings[dom_key]
+
 
 # ── Guard Failure Reasons ──────────────────────────────────
 class GuardFailReason(str, Enum):
     TOO_SHORT = "query_too_short"
     TOO_LONG = "query_too_long"
     GIBBERISH = "query_gibberish_or_invalid"
+    CONVERSATIONAL_FILLER = "conversational_filler_no_decision"
     BLOCKED_KEYWORD = "blocked_keyword_detected"
     INJECTION_ATTEMPT = "prompt_injection_attempt"
     LLM_UNSAFE = "llm_flagged_unsafe"
@@ -154,6 +174,33 @@ def is_gibberish(text: str) -> bool:
 
     return False
 
+GENERIC_FILLER_WORDS = {
+    "hello", "hi", "hey", "hola", "namaste", "greetings", "user", "bot", "ai",
+    "test", "testing", "demo", "sample", "check", "checking", "ok", "okay",
+    "cool", "fine", "good", "morning", "afternoon", "evening", "night",
+    "bye", "goodbye", "thanks", "thank", "welcome", "please", "pls",
+    "m", "im", "i'm", "am", "haan", "theek", "bhai", "yaar", "kuch", "bhi"
+}
+
+def is_conversational_filler(text: str) -> bool:
+    """
+    Detects pure greetings, chitchat, filler words, or incomplete fragments
+    that lack substantive decision-making context.
+    """
+    stopwords = set(get_nlp_config().get("stopwords", []))
+    tokens = re.findall(r"\b[a-zA-Z0-9]+(?:'[a-zA-Z0-9]+)?\b", text.lower())
+    if not tokens:
+        return True
+    
+    substantive = [t for t in tokens if t not in stopwords and t not in GENERIC_FILLER_WORDS]
+    # If all tokens are stopwords or generic filler words (e.g. 'hello i m user but', 'how are you')
+    if len(substantive) == 0:
+        return True
+    # If substantive tokens < 2 and query contains conversational filler/greetings
+    if len(substantive) < 2 and any(t in GENERIC_FILLER_WORDS for t in tokens):
+        return True
+    return False
+
 def check_query_quality(query: str) -> GuardResult:
     q = query.strip()
 
@@ -178,6 +225,14 @@ def check_query_quality(query: str) -> GuardResult:
             passed=False,
             reason=GuardFailReason.GIBBERISH,
             message="Please re-enter a valid query",
+            layer="Layer 1: Quality Check"
+        )
+
+    if is_conversational_filler(q):
+        return GuardResult(
+            passed=False,
+            reason=GuardFailReason.CONVERSATIONAL_FILLER,
+            message="Please enter a specific decision question or problem (e.g., job offer comparison, notice period resignation, tax regime selection).",
             layer="Layer 1: Quality Check"
         )
 
@@ -225,19 +280,20 @@ def check_safety(query: str) -> GuardResult:
 # ============================================================
 def check_relevance(query: str, selected_domain: Optional[str] = None) -> GuardResult:
     model = get_embed_model()
-    keyword_embeddings = get_keyword_embeddings()
+    target_embeddings = get_domain_embeddings(selected_domain)
 
     query_embedding = model.encode(query, convert_to_tensor=True)
-    similarity = util.cos_sim(query_embedding, keyword_embeddings)
+    similarity = util.cos_sim(query_embedding, target_embeddings)
     score = round(similarity.max().item(), 4)
 
     logger.info(f"Layer 3 Embedding Relevance score: {score} (domain: {selected_domain})")
 
     if score < RELEVANCE_THRESHOLD:
+        domain_name = selected_domain.capitalize() if selected_domain else "your selected"
         return GuardResult(
             passed=False,
             reason=GuardFailReason.NOT_RELEVANT,
-            message="Please ask queries related to your selected domain",
+            message=f"Please ask queries related to the {domain_name} domain.",
             layer="Layer 3: Embedding Relevance",
             relevance_score=score
         )

@@ -175,7 +175,7 @@ def execute_turn_1(query: str, domain_override: Optional[str] = None) -> Dict[st
         return build_crisis_response(query=query, domain=target_domain)
 
     # Step 1: Guard Pipeline Check
-    guard_res: GuardResult = guard_pipeline(query)
+    guard_res: GuardResult = guard_pipeline(query, selected_domain=domain_override)
     if not guard_res.passed:
         return {
             "success": False,
