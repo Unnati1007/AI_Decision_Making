@@ -4,6 +4,7 @@ import { useApp } from "../context/AppContext";
 import { validateQuery, matchQueryToDomain, thinkingSteps, isGibberish } from "../utils/aiUtils";
 import { DOMAINS } from "../data/dummyData";
 import { cn } from "../lib/utils";
+import MarkdownRenderer from "../components/MarkdownRenderer";
 
 export default function ChatPage() {
   const { currentUser, addArchiveEntry } = useApp();
@@ -542,9 +543,7 @@ export default function ChatPage() {
                                 <FileText size={14} className="shrink-0" />
                                 <h4 className="text-[10px] font-black uppercase tracking-widest">In-Depth Strategy & Allocation</h4>
                              </div>
-                             <div className="text-[13px] font-normal leading-relaxed whitespace-pre-line" style={{ color: "var(--text)" }}>
-                                {msg.detailedAnalysis}
-                             </div>
+                             <MarkdownRenderer content={msg.detailedAnalysis} className="text-[13px]" />
                           </div>
                         )}
 
@@ -896,14 +895,16 @@ export default function ChatPage() {
             )}
 
             {/* Document Content */}
-            <div className="p-5 overflow-y-auto flex-1 text-xs leading-relaxed text-[var(--text)] space-y-3 font-normal whitespace-pre-wrap selection:bg-blue-500/20">
+            <div className="p-6 overflow-y-auto flex-1 leading-relaxed text-[var(--text)] selection:bg-blue-500/20">
               {sourceLoading ? (
                 <div className="flex flex-col items-center justify-center py-12 gap-3 text-[var(--text-muted)]">
                   <Loader2 size={24} className="animate-spin text-blue-500" />
                   <span className="text-xs font-semibold">Loading document content...</span>
                 </div>
+              ) : sourceContent ? (
+                <MarkdownRenderer content={sourceContent} />
               ) : (
-                sourceContent || "No document text available for preview."
+                <p className="text-sm text-[var(--text-muted)]">No document text available for preview.</p>
               )}
             </div>
 
