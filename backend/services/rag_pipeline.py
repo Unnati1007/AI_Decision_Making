@@ -501,6 +501,20 @@ def execute_turn_2(
         except Exception as e:
             logger.warning(f"Turn 2 Reddit fetch error: {e}")
 
+    # Prioritize source order: 1. Reddit, 2. AI/Web resources, 3. Wikipedia, 4. Docs/Textbooks
+    def _source_priority(s):
+        st = s.get("source_type", "")
+        url = (s.get("url") or "").lower()
+        if st == "reddit" or "reddit.com" in url:
+            return 1
+        if st in ("ai_curated", "web_live", "official_gov"):
+            return 2
+        if st == "wikipedia" or "wikipedia.org" in url:
+            return 3
+        return 4
+
+    sources.sort(key=_source_priority)
+
     formatted_answers = ""
     for ans in mcq_answers:
         q_text = ans.get("question", ans.get("id", "Question"))

@@ -256,7 +256,16 @@ export default function ChatPage() {
         source_file: s.source_file || "",
         domain: s.domain || domain || "career",
         source_type: s.source_type || (s.url && s.url.includes("reddit.com") ? "reddit" : "ai_curated"),
-      })),
+      })).sort((a, b) => {
+        const getPriority = (item) => {
+          const isReddit = item.source_type === "reddit" || (item.url && item.url.includes("reddit.com"));
+          if (isReddit) return 1;
+          if (item.source_type === "ai_curated" || item.source_type === "web_live" || item.source_type === "official_gov") return 2;
+          if (item.source_type === "wikipedia" || (item.url && item.url.includes("wikipedia.org"))) return 3;
+          return 4; // Docs, Decision Guides, Textbooks
+        };
+        return getPriority(a) - getPriority(b);
+      }),
     };
 
     const assistantMsg = {
