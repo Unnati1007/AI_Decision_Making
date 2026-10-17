@@ -1,20 +1,20 @@
 # Tell Vercel to IGNORE Python backend entirely (Backend is deployed on Render!)
-backend/
-requirements.txt
-.python-version
-render.yaml
+/backend/
+/requirements.txt
+/.python-version
+/render.yaml
 
-# Ignore data, tests, scratch
-data/
-tests/
-scratch/
-.pytest_cache/
+# Ignore root data, tests, scratch (anchored with leading / so frontend/src/data/ is NOT touched)
+/data/
+/tests/
+/scratch/
+/.pytest_cache/
 
 # Ignore local env and cache
-.venv/
+/.venv/
 __pycache__/
 *.pyc
 *.pyo
-.git/
-.github/
-*.md
+/.git/
+/.github/
+/*.md
