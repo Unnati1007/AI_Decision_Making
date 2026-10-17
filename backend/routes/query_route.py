@@ -11,7 +11,6 @@ from fastapi import APIRouter, HTTPException, Body
 from pydantic import BaseModel, Field
 
 from backend.config import DATA_DIR
-from backend.services.rag_pipeline import execute_turn_1, execute_turn_2
 from backend.services.session_manager import session_manager
 
 router = APIRouter(prefix="/api/query", tags=["Query"])
@@ -41,6 +40,7 @@ def handle_turn_1(payload: Turn1Request):
     Turn 1: Runs 4-layer Guard check, domain classification, RAG retrieval,
     binds to session memory, and returns clarifying MCQs + retrieved sources.
     """
+    from backend.services.rag_pipeline import execute_turn_1
     result = execute_turn_1(
         query=payload.query,
         domain_override=payload.domain,
@@ -54,6 +54,7 @@ def handle_turn_2(payload: Turn2Request):
     Turn 2: Accepts original query, domain, and user's MCQ selections to generate
     final structured decision recommendation, leveraging cached session context.
     """
+    from backend.services.rag_pipeline import execute_turn_2
     mcq_dicts = [item.model_dump() for item in payload.mcq_answers]
     result = execute_turn_2(
         query=payload.query,
@@ -87,6 +88,7 @@ def reset_session(session_id: str):
 # Backward compatibility single-turn endpoint
 @router.post("")
 def handle_legacy_query(payload: Dict[str, Any] = Body(...)):
+    from backend.services.rag_pipeline import execute_turn_1
     user_query = payload.get("query", "")
     domain = payload.get("domain")
     session_id = payload.get("session_id")
