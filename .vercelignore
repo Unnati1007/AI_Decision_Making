@@ -1,18 +1,20 @@
-# Ignore local env and cache
-.venv/
-backend/myenv/
-__pycache__/
-*.pyc
-*.pyo
+# Tell Vercel to IGNORE Python backend entirely (Backend is deployed on Render!)
+backend/
+requirements.txt
+.python-version
+render.yaml
 
-# Ignore tests, scratch, docs
+# Ignore data, tests, scratch
+data/
 tests/
 scratch/
 .pytest_cache/
-*.md
+
+# Ignore local env and cache
+.venv/
+__pycache__/
+*.pyc
+*.pyo
 .git/
 .github/
-
-# Ignore raw data not needed in production
-data/raw_datasets/
-data/_archive_/
+*.md
