@@ -9,6 +9,12 @@ from backend.config import EMBEDDING_MODEL
 
 logger = logging.getLogger("intellichoice.embedder")
 
+try:
+    import torch
+    torch.set_num_threads(1)
+except Exception:
+    pass
+
 _embedder_model = None
 
 def get_embedder() -> SentenceTransformer:

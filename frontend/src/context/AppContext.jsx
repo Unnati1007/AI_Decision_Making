@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useCallback, useEffect } from "rea
 import { seedArchive } from "../data/dummyData";
 
 const AppContext = createContext(null);
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "/admin";
+const API_BASE = import.meta.env.VITE_API_BASE_URL || (typeof window !== "undefined" && window.location.hostname.includes("vercel.app") ? "https://ai-decision-making.onrender.com/admin" : "/admin");
 
 const DEFAULT_USERS = [
   { id: "admin-1", name: "System Admin", email: "admin@intellichoice.ai", role: "admin", queryCount: 0, joined: "2026-04-20", status: "Active" },
