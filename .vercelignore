@@ -6,6 +6,7 @@
 
 # Ignore root data, tests, scratch (anchored with leading / so frontend/src/data/ is NOT touched)
 /data/
+/vector_db/
 /tests/
 /scratch/
 /.pytest_cache/

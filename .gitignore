@@ -56,7 +56,6 @@ Thumbs.db
 # -------------------------------
 # 🔹 Database / Cache (your project)
 # -------------------------------
-vector_db/
 cache_db/
 *.sqlite3
 *.db

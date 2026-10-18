@@ -8,8 +8,7 @@ from backend.services.warmup import prewarm_system
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Pre-warm models in a background thread so port binds immediately (<1 sec) for cloud providers (Render, Fly, etc.)
-    asyncio.create_task(asyncio.to_thread(prewarm_system))
+    # Port binds instantly (<0.1s) for cloud providers (Render) without background CPU contention
     yield
 
 app = FastAPI(title="IntelliChoice API", lifespan=lifespan)
