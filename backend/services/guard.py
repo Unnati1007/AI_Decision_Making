@@ -57,34 +57,46 @@ from backend.config import (
     get_nlp_config
 )
 
-_keyword_embeddings = None
-_domain_embeddings = {}
+from backend.config import CONFIG_DIR
+_precomputed_embeddings_path = CONFIG_DIR / "domain_embeddings.pt"
+_domain_embeddings = None
 
 def get_embed_model():
     from backend.retrieval.embedder import get_embedder
     return get_embedder()
 
-def get_keyword_embeddings():
-    global _keyword_embeddings
-    if _keyword_embeddings is None:
-        model = get_embed_model()
-        domain_keywords = get_domain_keywords()
-        _keyword_embeddings = model.encode(domain_keywords, convert_to_tensor=True)
-    return _keyword_embeddings
-
 def get_domain_embeddings(domain: Optional[str] = None):
     global _domain_embeddings
+    dom_key = domain.lower() if domain else "all"
+    
+    # Fast path: load precomputed embeddings in milliseconds
+    if _domain_embeddings is None:
+        if _precomputed_embeddings_path.exists():
+            try:
+                import torch
+                _domain_embeddings = torch.load(str(_precomputed_embeddings_path), map_location="cpu", weights_only=False)
+                logger.info(f"Loaded precomputed domain embeddings from {_precomputed_embeddings_path}")
+            except Exception as e:
+                logger.warning(f"Failed to load precomputed domain embeddings: {e}")
+                _domain_embeddings = {}
+        else:
+            _domain_embeddings = {}
+            
+    if _domain_embeddings and dom_key in _domain_embeddings:
+        return _domain_embeddings[dom_key]
+        
+    # Dynamic fallback only if key missing
     model = get_embed_model()
     kw_by_domain = get_domain_keywords_by_domain()
-    
-    dom_key = domain.lower() if domain else "all"
-    if dom_key not in _domain_embeddings:
-        if dom_key in kw_by_domain:
-            anchors = list(kw_by_domain[dom_key])
-        else:
-            anchors = get_domain_keywords()
-        _domain_embeddings[dom_key] = model.encode(anchors, convert_to_tensor=True)
+    if dom_key in kw_by_domain:
+        anchors = list(kw_by_domain[dom_key])
+    else:
+        anchors = get_domain_keywords()
+    _domain_embeddings[dom_key] = model.encode(anchors, convert_to_tensor=True)
     return _domain_embeddings[dom_key]
+
+def get_keyword_embeddings():
+    return get_domain_embeddings("all")
 
 
 # ── Guard Failure Reasons ──────────────────────────────────
