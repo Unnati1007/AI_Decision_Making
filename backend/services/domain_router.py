@@ -6,7 +6,9 @@ import logging
 import numpy as np
 from typing import Dict
 from backend.retrieval.embedder import embed_query
-from backend.config import DOMAIN_ROUTER_THRESHOLD
+import json
+from pathlib import Path
+from backend.config import CONFIG_DIR, DOMAIN_ROUTER_THRESHOLD
 
 logger = logging.getLogger("intellichoice.domain_router")
 
@@ -29,20 +31,37 @@ DOMAIN_PROTOTYPES: Dict[str, list[str]] = {
     ]
 }
 
+_precomputed_prototypes_path = CONFIG_DIR / "domain_prototypes.json"
 _prototype_vectors = None
 
 def _get_prototype_vectors():
     global _prototype_vectors
-    if _prototype_vectors is None:
-        logger.info("Initializing domain prototype vectors for semantic routing...")
-        _prototype_vectors = {}
-        for domain, texts in DOMAIN_PROTOTYPES.items():
-            vecs = [embed_query(t) for t in texts]
-            avg_vec = np.mean(vecs, axis=0)
-            norm = np.linalg.norm(avg_vec)
-            if norm > 0:
-                avg_vec = avg_vec / norm
-            _prototype_vectors[domain] = avg_vec
+    if _prototype_vectors is not None:
+        return _prototype_vectors
+
+    # Fast path: load precomputed vectors in milliseconds
+    if _precomputed_prototypes_path.exists():
+        try:
+            with open(_precomputed_prototypes_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            _prototype_vectors = {
+                domain: np.array(vec, dtype=np.float32) for domain, vec in data.items()
+            }
+            logger.info(f"Loaded precomputed domain prototype vectors from {_precomputed_prototypes_path}")
+            return _prototype_vectors
+        except Exception as e:
+            logger.warning(f"Failed to load precomputed domain prototypes ({e}). Falling back to dynamic calculation.")
+
+    # Fallback: compute on the fly if precomputed file is missing
+    logger.info("Initializing domain prototype vectors for semantic routing dynamically...")
+    _prototype_vectors = {}
+    for domain, texts in DOMAIN_PROTOTYPES.items():
+        vecs = [embed_query(t) for t in texts]
+        avg_vec = np.mean(vecs, axis=0)
+        norm = np.linalg.norm(avg_vec)
+        if norm > 0:
+            avg_vec = avg_vec / norm
+        _prototype_vectors[domain] = avg_vec
     return _prototype_vectors
 
 def detect_domain(query: str) -> str:

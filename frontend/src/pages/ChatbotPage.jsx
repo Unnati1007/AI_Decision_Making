@@ -150,15 +150,24 @@ export default function ChatPage() {
       clearInterval(stepInterval);
       setIsThinking(false);
       console.error("Backend Turn 1 connection error:", err);
+      const errMsg = String(err?.message || "");
+      const isConnectionIssue =
+        !errMsg ||
+        errMsg.toLowerCase().includes("failed to fetch") ||
+        errMsg.toLowerCase().includes("networkerror") ||
+        errMsg.toLowerCase().includes("timeout") ||
+        errMsg === "Turn 1 request failed";
+
       setMessages((prev) => [
         ...prev,
         {
           id: Date.now() + 2,
           role: "assistant",
           type: "error",
-          text: err.message && err.message !== "Turn 1 request failed"
-            ? err.message
-            : "Unable to connect to the backend server. If the server is in sleep mode (Render free tier cold start), please wait 20-30 seconds and try again.",
+          text: isConnectionIssue
+            ? "The backend server is either warming up from sleep mode (Render free tier cold start) or taking longer than usual to initialize. Please wait 15–20 seconds and click Retry below."
+            : errMsg,
+          retryQuery: query,
         },
       ]);
     }
@@ -395,15 +404,24 @@ export default function ChatPage() {
         clearInterval(turn2Interval);
         setIsThinking(false);
         console.error("Backend Turn 2 connection error:", err);
+        const errMsg = String(err?.message || "");
+        const isConnectionIssue =
+          !errMsg ||
+          errMsg.toLowerCase().includes("failed to fetch") ||
+          errMsg.toLowerCase().includes("networkerror") ||
+          errMsg.toLowerCase().includes("timeout") ||
+          errMsg === "Turn 2 request failed";
+
         setMessages((prev) => [
           ...prev,
           {
             id: Date.now() + 2,
             role: "assistant",
             type: "error",
-            text: err.message && err.message !== "Turn 2 request failed"
-              ? err.message
-              : "Unable to connect to the backend server. If the server is in sleep mode (Render free tier cold start), please wait 20-30 seconds and try again.",
+            text: isConnectionIssue
+              ? "The backend server took longer than expected to generate the decision synthesis. Please wait a moment and click Retry below."
+              : errMsg,
+            retryQuery: activeFlow.originalQuery,
           },
         ]);
       }
@@ -521,9 +539,22 @@ export default function ChatPage() {
                 )}
 
                 {msg.type === "error" && (
-                  <div className="rounded-2xl px-5 py-4 bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 flex gap-3">
-                    <AlertCircle size={18} className="text-amber-600 shrink-0" />
-                    <p className="text-sm font-semibold text-amber-700 dark:text-amber-400">{msg.text}</p>
+                  <div className="rounded-2xl p-5 bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 space-y-3 max-w-xl">
+                    <div className="flex gap-3 items-start">
+                      <AlertCircle size={18} className="text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                      <p className="text-sm font-semibold text-amber-800 dark:text-amber-300 leading-relaxed">{msg.text}</p>
+                    </div>
+                    {msg.retryQuery && (
+                      <div className="pt-2 border-t border-amber-200/60 dark:border-amber-500/20 flex justify-end">
+                        <button
+                          onClick={() => handleSend(msg.retryQuery)}
+                          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg bg-amber-600 hover:bg-amber-700 text-white shadow-xs transition-colors cursor-pointer"
+                        >
+                          <RotateCcw size={13} />
+                          <span>Retry Query</span>
+                        </button>
+                      </div>
+                    )}
                   </div>
                 )}
 
