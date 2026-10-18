@@ -57,16 +57,12 @@ from backend.config import (
     get_nlp_config
 )
 
-_embed_model = None
 _keyword_embeddings = None
 _domain_embeddings = {}
 
 def get_embed_model():
-    global _embed_model
-    if _embed_model is None:
-        logger.info(f"Loading embedding model: {EMBEDDING_MODEL}")
-        _embed_model = SentenceTransformer(EMBEDDING_MODEL)
-    return _embed_model
+    from backend.retrieval.embedder import get_embedder
+    return get_embedder()
 
 def get_keyword_embeddings():
     global _keyword_embeddings
