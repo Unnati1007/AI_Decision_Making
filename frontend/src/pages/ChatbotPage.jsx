@@ -5,8 +5,7 @@ import { validateQuery, matchQueryToDomain, thinkingSteps, isGibberish } from ".
 import { DOMAINS } from "../data/dummyData";
 import { cn } from "../lib/utils";
 import MarkdownRenderer from "../components/MarkdownRenderer";
-
-const API_BASE = import.meta.env.VITE_API_BASE_URL || (typeof window !== "undefined" && window.location.hostname.includes("vercel.app") ? "https://ai-decision-making.onrender.com" : "");
+import { API_QUERY_ENDPOINT } from "../config/api";
 
 export default function ChatPage() {
   const { currentUser, addArchiveEntry } = useApp();
@@ -70,7 +69,7 @@ export default function ChatPage() {
     }, 1100);
 
     try {
-      const res = await fetch(`${API_BASE}/api/query/turn1`, {
+      const res = await fetch(`${API_QUERY_ENDPOINT}/turn1`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -186,7 +185,7 @@ export default function ChatPage() {
       const params = new URLSearchParams();
       if (resource.source_file) params.append("path", resource.source_file);
       if (resource.title) params.append("title", resource.title);
-      const res = await fetch(`${API_BASE}/api/query/source-document?${params.toString()}`);
+      const res = await fetch(`${API_QUERY_ENDPOINT}/source-document?${params.toString()}`);
       if (res.ok) {
         const data = await res.json();
         setSourceContent(data.content || "No document content available.");
@@ -354,7 +353,7 @@ export default function ChatPage() {
       }, 1400);
 
       try {
-        const res = await fetch(`${API_BASE}/api/query/turn2`, {
+        const res = await fetch(`${API_QUERY_ENDPOINT}/turn2`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -414,7 +413,7 @@ export default function ChatPage() {
   const handleResetDecision = async () => {
     if (sessionId) {
       try {
-        await fetch(`${API_BASE}/api/query/session/${sessionId}`, { method: "DELETE" });
+        await fetch(`${API_QUERY_ENDPOINT}/session/${sessionId}`, { method: "DELETE" });
       } catch (e) {
         console.warn("Session reset failed:", e);
       }
